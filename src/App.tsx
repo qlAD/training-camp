@@ -6,20 +6,17 @@ import { PlanDocumentView } from './components/PlanDocumentView';
 import { PosterGeneratorView } from './components/PosterGeneratorView';
 import { SlideDeckView } from './components/SlideDeckView';
 import { Sparkles, ArrowLeft } from 'lucide-react';
+import { COHORTS_LIST, getCohortMaterials } from './data/cohortsRegistry';
 
 export default function App() {
   const [activeCohortId, setActiveCohortId] = useState<string | null>(null);
   const [currentView, setCurrentView] = useState<'overview' | 'plan' | 'poster' | 'slides'>('overview');
   const [selectedDay, setSelectedDay] = useState<number>(1);
 
-  // Trigger PDF Export by utilizing window.print() safely
+  // PDF 导出实际打印由 PlanDocumentView.handlePrintPDF 内部完成，
+  // 此回调仅作埋点/通知用途，避免重复触发 window.print()。
   const handleExportPDF = () => {
-    try {
-      window.print();
-    } catch (err) {
-      console.warn("Print error:", err);
-      alert("请按 Ctrl + P (Mac 上为 Cmd + P) 保存为 PDF 文件。");
-    }
+    // no-op: 打印对话框已由子组件触发
   };
 
   // Trigger Poster PNG download handler
@@ -32,7 +29,7 @@ export default function App() {
   // If user has not selected a cohort yet, render the Bootcamp Portal Landing Page
   if (!activeCohortId) {
     return (
-      <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800 antialiased font-sans">
+      <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800 antialiased font-sans print-reset">
         {/* Minimal Portal Header with Integrated Official Double Logos */}
         <header className="no-print bg-slate-900 border-b border-slate-800 text-white py-3 px-4 sm:px-8 flex items-center justify-between">
           <div className="flex items-center space-x-3">
@@ -64,13 +61,14 @@ export default function App() {
             </div>
           </div>
           <div className="text-xs text-slate-400 font-medium hidden md:block">
-            软件学院 · 2026 暑期集训物料库
+            历届与规划集训期数 · 物料全景库
           </div>
         </header>
 
         {/* Portal Landing Content */}
         <main className="flex-1">
           <BootcampPortal
+            cohorts={COHORTS_LIST}
             onSelectCohort={(cohortId) => {
               setActiveCohortId(cohortId);
               setCurrentView('overview');
@@ -89,17 +87,22 @@ export default function App() {
               </div>
               <span className="font-semibold text-slate-700">软件学院 AI 创新应用社 · 集训营标准化体系全景门户</span>
             </div>
-            <div className="text-slate-400 font-medium">软件学院 · 2026</div>
+            <div className="text-slate-400 font-medium">软件学院 AI 创新应用社 · 历届集训</div>
           </div>
         </footer>
       </div>
     );
   }
 
-  // Workshop view for the active cohort (2026-summer)
+  // Workshop view for the active cohort
+  const materials = activeCohortId ? getCohortMaterials(activeCohortId) : null;
+  if (!materials) {
+    return null;
+  }
+
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800 antialiased font-sans">
-      
+    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800 antialiased font-sans print-reset">
+
       {/* Universal Top Navigation Header */}
       <Navbar
         currentView={currentView}
@@ -109,12 +112,16 @@ export default function App() {
         onExportPDF={handleExportPDF}
         onExportPNG={handleExportPNG}
         onBackToPortal={() => setActiveCohortId(null)}
+        meta={materials.meta}
+        slidesCount={materials.slidesData.length}
       />
 
       {/* Main Content Area */}
       <main className="flex-1">
         {currentView === 'overview' && (
           <MaterialOverview
+            meta={materials.meta}
+            decks={materials.slidesData}
             onSelectPlan={() => setCurrentView('plan')}
             onSelectPoster={() => setCurrentView('poster')}
             onSelectSlideDay={(day) => {
@@ -125,15 +132,17 @@ export default function App() {
         )}
 
         {currentView === 'plan' && (
-          <PlanDocumentView onExportPDF={handleExportPDF} />
+          <PlanDocumentView meta={materials.meta} planData={materials.planData} onExportPDF={handleExportPDF} />
         )}
 
         {currentView === 'poster' && (
-          <PosterGeneratorView />
+          <PosterGeneratorView meta={materials.meta} initialConfig={materials.posterConfig} />
         )}
 
         {currentView === 'slides' && (
           <SlideDeckView
+            meta={materials.meta}
+            decks={materials.slidesData}
             selectedDay={selectedDay}
             setSelectedDay={setSelectedDay}
           />
@@ -158,13 +167,13 @@ export default function App() {
               <span>返回训练营门户</span>
             </button>
             <span className="text-slate-300">|</span>
-            <span className="font-semibold text-slate-700">2026 暑期集训 · 16 大交付物在线物料库</span>
+            <span className="font-semibold text-slate-700">{materials.meta.title} · {materials.meta.materialsCount} 项交付物在线物料库</span>
           </div>
 
           <div className="flex items-center space-x-4 text-slate-400 font-medium">
             <span>软件学院 · AI 创新应用社</span>
             <span>·</span>
-            <span>2026 暑期集训</span>
+            <span>{materials.meta.year} {materials.meta.season}</span>
           </div>
         </div>
       </footer>

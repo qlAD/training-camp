@@ -28,13 +28,16 @@ import {
   AlertTriangle,
   PhoneCall
 } from 'lucide-react';
-import { BOOTCAMP_PLAN_DATA } from '../data/planData';
+import { BootcampCohort, PlanSection } from '../types';
 
 interface PlanDocumentViewProps {
+  meta: BootcampCohort;
+  planData: PlanSection[];
   onExportPDF: () => void;
 }
 
-export const PlanDocumentView: React.FC<PlanDocumentViewProps> = ({ onExportPDF }) => {
+export const PlanDocumentView: React.FC<PlanDocumentViewProps> = ({ meta, planData, onExportPDF }) => {
+  const slidesCount = Math.max(0, meta.materialsCount - 2);
   const [activeSectionId, setActiveSectionId] = useState<string>('section-1');
 
   // Scroll active section into view or spy scroll
@@ -46,92 +49,21 @@ export const PlanDocumentView: React.FC<PlanDocumentViewProps> = ({ onExportPDF 
     }
   };
 
-  // Ultra-robust PDF print handler (handles iframe sandboxes & standalone print)
+  // Direct in-page print. The @media print stylesheet (index.css) handles
+  // @page, watermarks, page numbers, and resets ancestor layout so the
+  // printable document fills the page — no popup window needed.
   const handlePrintPDF = () => {
-    let printTriggered = false;
-
-    // Try direct window.print() if not in constrained cross-origin iframe
     try {
-      if (window.self === window.top) {
-        window.print();
-        printTriggered = true;
-      }
-    } catch (e) {
-      console.warn("Direct window.print skipped:", e);
+      window.focus();
+      window.print();
+    } catch (err) {
+      alert("当前浏览器拦截了自动打印。请直接按下 Ctrl + P (Mac: Cmd + P) 保存为 PDF！");
     }
-
-    // Popup window fallback for iframe / sandbox environments
-    if (!printTriggered) {
-      const docElement = document.querySelector('.printable-document');
-      if (docElement) {
-        const printWin = window.open('', '_blank', 'width=1000,height=1200');
-        if (printWin) {
-          const styleElements = Array.from(document.querySelectorAll('style, link[rel="stylesheet"]'))
-            .map(s => s.outerHTML)
-            .join('\n');
-
-          printWin.document.write(`
-            <!DOCTYPE html>
-            <html>
-              <head>
-                <meta charset="utf-8">
-                <title>《AI 赋能下的全栈开发》暑期训练营 完整方案</title>
-                ${styleElements}
-                <style>
-                  @page { 
-                    size: A4 portrait; 
-                    margin: 15mm 12mm 22mm 12mm; 
-                    @bottom-center {
-                      content: counter(page, decimal-leading-zero) " / " counter(pages, decimal-leading-zero);
-                      font-size: 10pt;
-                      font-family: system-ui, -apple-system, sans-serif;
-                      font-weight: 700;
-                      color: #475569;
-                    }
-                  }
-                  body { background: #ffffff !important; color: #0f172a !important; padding: 0px; font-family: system-ui, -apple-system, sans-serif; }
-                  .no-print { display: none !important; }
-                  .printable-document { border: none !important; border-radius: 0 !important; box-shadow: none !important; margin: 0 !important; padding: 0 !important; }
-                  .print-wm-top { position: fixed !important; top: 1.5cm !important; right: 1.5cm !important; width: 6.5cm !important; height: 6.5cm !important; opacity: 0.12 !important; z-index: 9999 !important; pointer-events: none !important; mix-blend-mode: multiply !important; }
-                  .print-wm-bottom { position: fixed !important; bottom: 1.5cm !important; left: 1.5cm !important; width: 7cm !important; height: 7cm !important; opacity: 0.12 !important; z-index: 9999 !important; pointer-events: none !important; mix-blend-mode: multiply !important; }
-                  .print-avoid-break, tr { page-break-inside: avoid !important; break-inside: avoid !important; }
-                  .rounded-xl, .rounded-2xl { border-radius: 6px !important; }
-                </style>
-              </head>
-              <body>
-                <div class="print-wm-top"><img src="/school-sketch.svg" style="width:100%;height:100%;object-fit:contain;" /></div>
-                <div class="print-wm-bottom"><img src="/club-sketch.svg" style="width:100%;height:100%;object-fit:contain;" /></div>
-                ${docElement.outerHTML}
-                <script>
-                  window.onload = function() {
-                    setTimeout(function() {
-                      window.focus();
-                      window.print();
-                    }, 400);
-                  };
-                </script>
-              </body>
-            </html>
-          `);
-          printWin.document.close();
-          if (onExportPDF) onExportPDF();
-          return;
-        }
-      }
-
-      // Final fallback attempt
-      try {
-        window.print();
-      } catch (err) {
-        alert("当前浏览器拦截了自动打印。请直接按下 Ctrl + P (Mac: Cmd + P) 保存为 PDF！");
-      }
-    }
-
     if (onExportPDF) onExportPDF();
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 print-reset">
       
       {/* Fixed Watermarks for Multi-Page PDF Printing (Faint opacity to prevent overlap) */}
       <div className="hidden print-page-watermark-top pointer-events-none select-none rotate-12">
@@ -151,7 +83,7 @@ export const PlanDocumentView: React.FC<PlanDocumentViewProps> = ({ onExportPDF 
             <span className="text-xs text-slate-400">文件版本 v3.5 | 包含可视化组件与多页排版优化</span>
           </div>
           <h1 className="text-2xl font-extrabold text-slate-900 mt-1">
-            《AI 赋能下的全栈开发》暑期训练营 完整方案
+            {meta.title} · 完整方案
           </h1>
           <p className="text-xs text-slate-500 mt-0.5">
             软件学院实战型集训官方策划案 · 支持一键排版导出为高清 PDF 规范文档
@@ -170,7 +102,7 @@ export const PlanDocumentView: React.FC<PlanDocumentViewProps> = ({ onExportPDF 
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 print-reset">
         
         {/* Table of Contents Sidebar (hidden in print) */}
         <div className="no-print hidden lg:block lg:col-span-1">
@@ -181,7 +113,7 @@ export const PlanDocumentView: React.FC<PlanDocumentViewProps> = ({ onExportPDF 
             </div>
 
             <nav className="space-y-1 max-h-[calc(100vh-220px)] overflow-y-auto pr-1">
-              {BOOTCAMP_PLAN_DATA.map((section) => (
+              {planData.map((section) => (
                 <button
                   key={section.id}
                   onClick={() => scrollToSection(section.id)}
@@ -204,18 +136,18 @@ export const PlanDocumentView: React.FC<PlanDocumentViewProps> = ({ onExportPDF 
         </div>
 
         {/* Main Document Content */}
-        <div className="lg:col-span-3">
+        <div className="lg:col-span-3 print-reset">
           
           <div className="printable-document bg-white rounded-2xl p-6 sm:p-10 border border-slate-200 shadow-xs space-y-10 relative overflow-hidden">
             
             {/* Document Running Header */}
             <div className="flex items-center justify-between pb-3 border-b border-slate-200/80 text-[11px] text-slate-400 font-medium">
               <div className="flex items-center space-x-2">
-                <span className="font-bold text-slate-700">软件学院 2026 年暑期训练营</span>
+                <span className="font-bold text-slate-700">软件学院 {meta.year} 年{meta.season}训练营</span>
                 <span>·</span>
                 <span>官方全公开方案</span>
               </div>
-              <div>文号: SD-AI-2026-07</div>
+              <div>文号: SD-AI-{meta.year}-{meta.id.split('-')[0].slice(-2) || '01'}</div>
             </div>
 
             {/* Document Cover Header */}
@@ -234,55 +166,55 @@ export const PlanDocumentView: React.FC<PlanDocumentViewProps> = ({ onExportPDF 
               </div>
 
               <div>
-                <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-                  《AI 赋能下的全栈开发》暑期训练营 完整方案
-                </h1>
-                <p className="text-slate-600 text-xs sm:text-sm mt-1 max-w-2xl leading-relaxed">
-                  零基础起步 · 14 天完成两个真实线上项目 · 国产 AI 工具链全带练 · Vibe Coding 新范式
-                </p>
-              </div>
+                  <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                    {meta.title} · 完整方案
+                  </h1>
+                  <p className="text-slate-600 text-xs sm:text-sm mt-1 max-w-2xl leading-relaxed">
+                    {meta.subtitle}
+                  </p>
+                </div>
 
-              {/* Executive Highlight Callout Box */}
-              <div className="p-3.5 rounded-xl bg-indigo-50/80 border-l-4 border-indigo-600 text-indigo-950 text-xs font-medium leading-relaxed">
-                <span className="font-bold text-indigo-900 block mb-0.5">📌 方案摘要与核心宗旨：</span>
-                通过 14 天体系化线上集训，引导非计算机专业及低年级学生掌握 AI 辅助编程（Vibe Coding）工具链，从无到有独立完成全栈项目上线，培养适应现代 AI 时代的软件研发与创新思维。
-              </div>
+                {/* Executive Highlight Callout Box */}
+                <div className="p-3.5 rounded-xl bg-indigo-50/80 border-l-4 border-indigo-600 text-indigo-950 text-xs font-medium leading-relaxed">
+                  <span className="font-bold text-indigo-900 block mb-0.5">📌 方案摘要与核心宗旨：</span>
+                  {meta.description}
+                </div>
 
-              {/* 4-Grid Executive Metadata Bar */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-2 text-xs">
-                <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center space-x-2">
-                  <Calendar className="h-4 w-4 text-indigo-600 shrink-0" />
-                  <div>
-                    <span className="text-[10px] text-slate-400 block">集训周期</span>
-                    <span className="font-bold text-slate-800">暑期 14 天 (2026/7/28)</span>
+                {/* 4-Grid Executive Metadata Bar */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-2 text-xs">
+                  <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center space-x-2">
+                    <Calendar className="h-4 w-4 text-indigo-600 shrink-0" />
+                    <div>
+                      <span className="text-[10px] text-slate-400 block">集训周期</span>
+                      <span className="font-bold text-slate-800">{meta.dateRange}</span>
+                    </div>
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center space-x-2">
+                    <GraduationCap className="h-4 w-4 text-indigo-600 shrink-0" />
+                    <div>
+                      <span className="text-[10px] text-slate-400 block">招募对象</span>
+                      <span className="font-bold text-slate-800">{meta.target || '全校低年级 / 零基础'}</span>
+                    </div>
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center space-x-2">
+                    <BadgeCheck className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <div>
+                      <span className="text-[10px] text-slate-400 block">结营证书</span>
+                      <span className="font-bold text-slate-800">软件学院官方颁发</span>
+                    </div>
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center space-x-2">
+                    <DollarSign className="h-4 w-4 text-amber-600 shrink-0" />
+                    <div>
+                      <span className="text-[10px] text-slate-400 block">集训费用</span>
+                      <span className="font-bold text-slate-800">免费 (学院专项支持)</span>
+                    </div>
                   </div>
                 </div>
-                <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center space-x-2">
-                  <GraduationCap className="h-4 w-4 text-indigo-600 shrink-0" />
-                  <div>
-                    <span className="text-[10px] text-slate-400 block">招募对象</span>
-                    <span className="font-bold text-slate-800">全校低年级 / 零基础</span>
-                  </div>
-                </div>
-                <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center space-x-2">
-                  <BadgeCheck className="h-4 w-4 text-emerald-600 shrink-0" />
-                  <div>
-                    <span className="text-[10px] text-slate-400 block">结营证书</span>
-                    <span className="font-bold text-slate-800">软件学院官方颁发</span>
-                  </div>
-                </div>
-                <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center space-x-2">
-                  <DollarSign className="h-4 w-4 text-amber-600 shrink-0" />
-                  <div>
-                    <span className="text-[10px] text-slate-400 block">集训费用</span>
-                    <span className="font-bold text-slate-800">免费 (学院专项支持)</span>
-                  </div>
-                </div>
-              </div>
             </div>
 
             {/* Render Plan Sections */}
-            {BOOTCAMP_PLAN_DATA.map((section, sIndex) => (
+            {planData.map((section, sIndex) => (
               <section key={section.id} id={section.id} className="space-y-6 scroll-mt-24">
                 
                 {/* Section Title Header */}
@@ -421,12 +353,12 @@ export const PlanDocumentView: React.FC<PlanDocumentViewProps> = ({ onExportPDF 
                   </div>
                 ))}
 
-                {/* ENRICHMENT: Visual 14-Day Roadmap Timeline inside Section 3 (课程安排) */}
+                {/* ENRICHMENT: Visual Roadmap Timeline inside Section 3 (课程安排) */}
                 {section.id === 'section-3' && (
                   <div className="space-y-3 pt-2 print-avoid-break">
                     <div className="text-xs font-bold text-slate-800 flex items-center space-x-2">
                       <Clock className="h-4 w-4 text-indigo-600" />
-                      <span>14 天集训阶段 Milestone 进阶图解</span>
+                      <span>{slidesCount} 天集训阶段 Milestone 进阶图解</span>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -674,13 +606,13 @@ export const PlanDocumentView: React.FC<PlanDocumentViewProps> = ({ onExportPDF 
                   <span className="font-bold text-slate-800">策划编制单位：</span> 软件学院 · AI 创新应用社
                 </div>
                 <div>
-                  <span className="font-bold text-slate-800">官方发布日期：</span> 2026 年 7 月 28 日
+                  <span className="font-bold text-slate-800">官方发布日期：</span> {meta.dateRange.split(' ')[0].replace(/\./g, ' 年 ').slice(0, -1)} 月 1 日起
                 </div>
               </div>
 
               <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-center text-xs text-slate-500 space-y-1">
-                <p className="font-bold text-slate-700">《AI 赋能下的全栈开发》暑期训练营 官方策划方案</p>
-                <p className="text-[11px] text-slate-400">文件版本: v3.5 (包含矢量徽标与双水印规范) | 适用周期: 2026年暑期全校招募</p>
+                <p className="font-bold text-slate-700">{meta.title} · 官方策划方案</p>
+                <p className="text-[11px] text-slate-400">文件版本: v{meta.year}.1 (包含矢量徽标与双水印规范) | 适用周期: {meta.year}年{meta.season}全校招募</p>
               </div>
 
               <div className="text-center text-[10px] text-slate-400 font-mono pt-1">

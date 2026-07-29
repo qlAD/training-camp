@@ -19,19 +19,26 @@ import {
   Terminal,
   ArrowRight
 } from 'lucide-react';
-import { ALL_COURSE_DECKS } from '../data/slidesData';
-import { DayCourseDeck, SlideContent } from '../types';
+import { BootcampCohort, DayCourseDeck, SlideContent } from '../types';
 
 interface SlideDeckViewProps {
+  meta: BootcampCohort;
+  decks: DayCourseDeck[];
   selectedDay: number;
   setSelectedDay: (day: number) => void;
 }
 
 export const SlideDeckView: React.FC<SlideDeckViewProps> = ({
+  meta,
+  decks,
   selectedDay,
   setSelectedDay,
 }) => {
-  const currentDeck: DayCourseDeck = ALL_COURSE_DECKS.find((d) => d.day === selectedDay) || ALL_COURSE_DECKS[0];
+  const slidesCount = decks.length;
+  const maxDay = slidesCount > 0 ? Math.max(...decks.map(d => d.day)) : 1;
+  const currentDeck: DayCourseDeck = decks.find((d) => d.day === selectedDay) || decks[0];
+  const currentDeckIdx = currentDeck ? decks.findIndex(d => d.day === currentDeck.day) : 0;
+  const materialNo = currentDeckIdx >= 0 ? currentDeckIdx + 3 : 3; // 方案#1、海报#2 → slides 从 #3 起
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showNotes, setShowNotes] = useState(true);
@@ -39,7 +46,7 @@ export const SlideDeckView: React.FC<SlideDeckViewProps> = ({
   const [isBlackout, setIsBlackout] = useState(false);
   const [copiedText, setCopiedText] = useState<string | null>(null);
 
-  const currentSlide: SlideContent = currentDeck.slides[currentSlideIndex] || currentDeck.slides[0];
+  const currentSlide: SlideContent = currentDeck?.slides[currentSlideIndex] || currentDeck?.slides[0];
 
   // Reset slide index on day change
   useEffect(() => {
@@ -101,7 +108,7 @@ export const SlideDeckView: React.FC<SlideDeckViewProps> = ({
         <div>
           <div className="flex items-center space-x-2">
             <span className="px-2.5 py-0.5 rounded-md text-xs font-bold bg-amber-50 text-amber-700 border border-amber-200">
-              物料 #{selectedDay + 2} · Day {selectedDay} / 14 演示幻灯片
+              物料 #{materialNo} · Day {selectedDay} / {maxDay} 演示幻灯片
             </span>
             <span className="text-xs text-indigo-600 font-semibold">{currentDeck.stageName}</span>
           </div>
@@ -126,11 +133,11 @@ export const SlideDeckView: React.FC<SlideDeckViewProps> = ({
               <ChevronLeft className="h-4 w-4" />
             </button>
             <span className="px-2 text-xs font-bold text-slate-800">
-              Day {selectedDay} / 14
+              Day {selectedDay} / {maxDay}
             </span>
             <button
-              onClick={() => setSelectedDay(Math.min(14, selectedDay + 1))}
-              disabled={selectedDay === 14}
+              onClick={() => setSelectedDay(Math.min(maxDay, selectedDay + 1))}
+              disabled={selectedDay === maxDay}
               className="p-1.5 rounded-lg text-slate-600 hover:text-slate-900 disabled:opacity-40 transition-all"
               title="下一课 Day"
             >

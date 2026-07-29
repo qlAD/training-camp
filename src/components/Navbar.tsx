@@ -11,8 +11,11 @@ import {
   Home,
   ArrowLeft
 } from 'lucide-react';
+import { BootcampCohort } from '../types';
 
 interface NavbarProps {
+  meta: BootcampCohort;
+  slidesCount: number;
   currentView: 'overview' | 'plan' | 'poster' | 'slides';
   setCurrentView: (view: 'overview' | 'plan' | 'poster' | 'slides') => void;
   selectedDay: number;
@@ -23,6 +26,8 @@ interface NavbarProps {
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
+  meta,
+  slidesCount,
   currentView,
   setCurrentView,
   selectedDay,
@@ -31,6 +36,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onExportPNG,
   onBackToPortal,
 }) => {
+  const materialsCount = meta.materialsCount;
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200 shadow-xs no-print">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -74,7 +80,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <div className="flex items-center space-x-2">
                   <span className="font-bold text-slate-900 text-sm tracking-tight group-hover:text-indigo-600 transition-colors">软件学院 AI 创新应用社</span>
                   <span className="inline-flex items-center px-1.5 py-0.5 rounded-md text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-100/80">
-                    16 项交付物
+                    {materialsCount} 项交付物
                   </span>
                 </div>
                 <p className="text-[11px] text-slate-500 font-medium hidden md:block">集训营标准化体系全景门户</p>
@@ -93,7 +99,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               }`}
             >
               <LayoutGrid className="h-4 w-4" />
-              <span>物料大厅 (16)</span>
+              <span>物料大厅 ({materialsCount})</span>
             </button>
 
             <button
@@ -129,7 +135,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               }`}
             >
               <Presentation className="h-4 w-4" />
-              <span>3. 课程幻灯片 (14 课)</span>
+              <span>3. 课程幻灯片 ({slidesCount} 课)</span>
             </button>
           </nav>
 
@@ -144,7 +150,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             currentView === 'overview' ? 'bg-indigo-600 text-white' : 'text-slate-600 bg-white border border-slate-200'
           }`}
         >
-          物料大厅 (16)
+          物料大厅 ({materialsCount})
         </button>
         <button
           onClick={() => setCurrentView('plan')}
@@ -168,7 +174,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             currentView === 'slides' ? 'bg-indigo-600 text-white' : 'text-slate-600 bg-white border border-slate-200'
           }`}
         >
-          14课时幻灯片
+          {slidesCount}课时幻灯片
         </button>
       </div>
     </header>

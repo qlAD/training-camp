@@ -26,77 +26,11 @@ import {
 import { BootcampCohort } from '../types';
 
 interface BootcampPortalProps {
+  cohorts: BootcampCohort[];
   onSelectCohort: (cohortId: string) => void;
 }
 
-export const COHORTS_DATA: BootcampCohort[] = [
-  {
-    id: '2026-summer',
-    year: '2026',
-    season: '暑期',
-    title: '2026 暑期全栈 AI 交付集训营',
-    subtitle: '《AI 赋能下的全栈开发》14 天高强度攻坚',
-    status: 'active',
-    statusText: '资料全量开放 · 16 项交付物',
-    dateRange: '2026.07.01 - 2026.07.14',
-    materialsCount: 16,
-    tags: ['AI 全栈', 'Agent 导学', '14天实战', '完整课件'],
-    description: '软件学院核心集训营。配套完整训练营策划案 (PDF)、高清宣发海报 (PNG) 及 14 课时交互式教学 Slide。',
-    highlights: ['包含 1 个完整 PDF 策划案', '1 个 4K 宣传海报生成器', '14 天全套 16:9 课程幻灯片'],
-    bgGradient: 'from-indigo-600 via-indigo-700 to-violet-800',
-    accentColor: 'indigo',
-  },
-  {
-    id: '2026-winter',
-    year: '2026',
-    season: '寒假',
-    title: '2026 寒假 AI Agent 专修营',
-    subtitle: '自主智能体架构与 Multi-Agent 协作实践',
-    status: 'upcoming',
-    statusText: '筹备中 · 预计 2026.12 开启',
-    dateRange: '2026.12.20 - 2027.01.05',
-    materialsCount: 0,
-    tags: ['Multi-Agent', 'LangGraph', 'RAG 深度检索'],
-    description: '聚焦于多智能体协同、LangChain/LangGraph 编排与大模型微调工程，目前大纲策划中。',
-    highlights: ['Multi-Agent 复杂系统设计', '向量数据库与混合检索', 'AI 驱动自动化测试'],
-    bgGradient: 'from-blue-600 to-cyan-700',
-    accentColor: 'blue',
-  },
-  {
-    id: '2025-summer',
-    year: '2025',
-    season: '暑期',
-    title: '2025 暑期 Web 全栈工程基础营',
-    subtitle: 'TypeScript + React 现代前端实战',
-    status: 'archived',
-    statusText: '往期回顾 · 沉淀归档',
-    dateRange: '2025.07.05 - 2025.07.18',
-    materialsCount: 12,
-    tags: ['React 18', 'TypeScript', 'Node.js API'],
-    description: '前 AI 时代的传统 Web2 全栈实战课程归档，现已完成体系升级并迁移至 2026 暑期体系。',
-    highlights: ['组件化架构演进', 'RESTful API 设计', '响应式布局工程'],
-    bgGradient: 'from-slate-700 to-slate-900',
-    accentColor: 'slate',
-  },
-  {
-    id: '2027-winter',
-    year: '2027',
-    season: '寒假',
-    title: '2027 寒假 具身智能与大模型前沿营',
-    subtitle: '端侧 AI 模型部署与硬件交互',
-    status: 'planning',
-    statusText: '远期规划 · 需求调研中',
-    dateRange: '2027.01 待定',
-    materialsCount: 0,
-    tags: ['端侧 AI', 'WebGPU', 'ONNX Runtime'],
-    description: '规划探索浏览器端 Local AI 运行与端侧推理优化，打造下一代边缘 AI 应用。',
-    highlights: ['WebGPU 浏览器加速', '量化与小模型剪枝', '实时语音交互'],
-    bgGradient: 'from-emerald-700 to-teal-900',
-    accentColor: 'emerald',
-  },
-];
-
-export const BootcampPortal: React.FC<BootcampPortalProps> = ({ onSelectCohort }) => {
+export const BootcampPortal: React.FC<BootcampPortalProps> = ({ cohorts, onSelectCohort }) => {
   // Spotlight index inside the right card widget
   const [spotlightIndex, setSpotlightIndex] = useState<number>(0);
   const [isAutoPlay, setIsAutoPlay] = useState<boolean>(true);
@@ -107,24 +41,35 @@ export const BootcampPortal: React.FC<BootcampPortalProps> = ({ onSelectCohort }
   const [modalCohort, setModalCohort] = useState<BootcampCohort | null>(null);
   const [subscribed, setSubscribed] = useState<boolean>(false);
 
+  // Dynamic counts (replace hardcoded numbers)
+  const countByStatus = {
+    active: cohorts.filter(c => c.status === 'active').length,
+    upcoming: cohorts.filter(c => c.status === 'upcoming').length,
+    archived: cohorts.filter(c => c.status === 'archived').length,
+    planning: cohorts.filter(c => c.status === 'planning').length,
+  };
+  const activeCohort = cohorts.find(c => c.status === 'active');
+  const activeMaterialsCount = activeCohort?.materialsCount ?? 0;
+  const activeSlidesCount = Math.max(0, activeMaterialsCount - 2); // 方案 + 海报占 2 项，其余是 Slide
+
   // Auto-play Spotlight widget
   useEffect(() => {
     if (!isAutoPlay) return;
     const interval = setInterval(() => {
-      setSpotlightIndex((prev) => (prev + 1) % COHORTS_DATA.length);
+      setSpotlightIndex((prev) => (prev + 1) % cohorts.length);
     }, 5000);
     return () => clearInterval(interval);
   }, [isAutoPlay]);
 
   const handleNextSpotlight = () => {
-    setSpotlightIndex((prev) => (prev + 1) % COHORTS_DATA.length);
+    setSpotlightIndex((prev) => (prev + 1) % cohorts.length);
   };
 
   const handlePrevSpotlight = () => {
-    setSpotlightIndex((prev) => (prev - 1 + COHORTS_DATA.length) % COHORTS_DATA.length);
+    setSpotlightIndex((prev) => (prev - 1 + cohorts.length) % cohorts.length);
   };
 
-  const filteredCohorts = COHORTS_DATA.filter((cohort) => {
+  const filteredCohorts = cohorts.filter((cohort) => {
     const matchesStatus = filterStatus === 'all' || cohort.status === filterStatus;
     const matchesSearch = 
       cohort.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -143,7 +88,7 @@ export const BootcampPortal: React.FC<BootcampPortalProps> = ({ onSelectCohort }
     }
   };
 
-  const activeSpotlightCohort = COHORTS_DATA[spotlightIndex];
+  const activeSpotlightCohort = cohorts[spotlightIndex];
 
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
@@ -187,7 +132,7 @@ export const BootcampPortal: React.FC<BootcampPortalProps> = ({ onSelectCohort }
                   </span>
                 </h1>
                 <p className="mt-4 text-sm sm:text-base text-slate-300 leading-relaxed font-normal max-w-2xl">
-                  以 <strong className="text-indigo-200 font-semibold">Vibe Coding</strong> 与 <strong className="text-indigo-200 font-semibold">Agent 辅助导学</strong> 为核心的现代软件全栈教学体系。收录历届集训统一配套策划案 (PDF)、宣传海报 (PNG) 及 14 课时 16:9 交互式 Slide 演示文稿。
+                  以 <strong className="text-indigo-200 font-semibold">Vibe Coding</strong> 与 <strong className="text-indigo-200 font-semibold">Agent 辅助导学</strong> 为核心的现代软件全栈教学体系。收录历届与规划集训统一配套策划案 (PDF)、宣传海报 (PNG) 及全套 16:9 交互式课时讲义 Slide。
                 </p>
               </div>
 
@@ -198,7 +143,7 @@ export const BootcampPortal: React.FC<BootcampPortalProps> = ({ onSelectCohort }
                     <FolderCheck className="h-3.5 w-3.5" />
                     <span>方案库</span>
                   </div>
-                  <div className="text-xl font-bold text-white">4 <span className="text-xs font-normal text-slate-400">期全景</span></div>
+                  <div className="text-xl font-bold text-white">{cohorts.length} <span className="text-xs font-normal text-slate-400">期全景</span></div>
                 </div>
 
                 <div className="bg-slate-900/60 backdrop-blur rounded-xl p-3 border border-slate-800">
@@ -206,7 +151,7 @@ export const BootcampPortal: React.FC<BootcampPortalProps> = ({ onSelectCohort }
                     <Zap className="h-3.5 w-3.5" />
                     <span>当期在线物料</span>
                   </div>
-                  <div className="text-xl font-bold text-white">16 <span className="text-xs font-normal text-slate-400">项完备</span></div>
+                  <div className="text-xl font-bold text-white">{activeMaterialsCount} <span className="text-xs font-normal text-slate-400">项完备</span></div>
                 </div>
 
                 <div className="bg-slate-900/60 backdrop-blur rounded-xl p-3 border border-slate-800">
@@ -214,7 +159,7 @@ export const BootcampPortal: React.FC<BootcampPortalProps> = ({ onSelectCohort }
                     <BookOpen className="h-3.5 w-3.5" />
                     <span>配套讲义 Slide</span>
                   </div>
-                  <div className="text-xl font-bold text-white">14 <span className="text-xs font-normal text-slate-400">课时全套</span></div>
+                  <div className="text-xl font-bold text-white">{activeSlidesCount} <span className="text-xs font-normal text-slate-400">课时全套</span></div>
                 </div>
 
                 <div className="bg-slate-900/60 backdrop-blur rounded-xl p-3 border border-slate-800">
@@ -266,7 +211,7 @@ export const BootcampPortal: React.FC<BootcampPortalProps> = ({ onSelectCohort }
                     </button>
                     
                     <span className="text-[11px] text-slate-400 font-mono">
-                      {spotlightIndex + 1}/{COHORTS_DATA.length}
+                      {spotlightIndex + 1}/{cohorts.length}
                     </span>
 
                     <div className="flex items-center space-x-0.5 ml-1">
@@ -345,7 +290,7 @@ export const BootcampPortal: React.FC<BootcampPortalProps> = ({ onSelectCohort }
                 <div className="pt-3 border-t border-slate-800 flex items-center justify-between">
                   {/* Indicators */}
                   <div className="flex items-center space-x-1.5">
-                    {COHORTS_DATA.map((c, idx) => (
+                    {cohorts.map((c, idx) => (
                       <button
                         key={c.id}
                         onClick={() => setSpotlightIndex(idx)}
@@ -389,24 +334,28 @@ export const BootcampPortal: React.FC<BootcampPortalProps> = ({ onSelectCohort }
               <Layers className="h-5 w-5 text-indigo-600" />
               <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">全部集训期数名录</h2>
               <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-100 text-indigo-700">
-                共 {COHORTS_DATA.length} 期方案
+                共 {cohorts.length} 期方案
               </span>
             </div>
             <p className="mt-1.5 text-xs sm:text-sm text-slate-600">
-              浏览软件学院历届与未来规划集训。点击“2026 暑期”卡片可直接调阅并编辑全量 16 项在线交付物。
+              浏览软件学院历届与未来规划集训。点击「🔥 进行中」卡片可直接调阅该期全量在线交付物。
             </p>
           </div>
 
           {/* Key Quick Stats */}
-          <div className="flex items-center space-x-3 text-xs shrink-0">
-            <span className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200 font-medium">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>1 期资料完备</span>
-            </span>
-            <span className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-blue-50 text-blue-700 border border-blue-200 font-medium">
-              <Clock className="h-3.5 w-3.5" />
-              <span>3 期持续筹备/沉淀</span>
-            </span>
+          <div className="flex items-center space-x-3 text-xs shrink-0 flex-wrap gap-y-2">
+            {countByStatus.active > 0 && (
+              <span className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200 font-medium">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span>{countByStatus.active} 期资料完备</span>
+              </span>
+            )}
+            {countByStatus.upcoming + countByStatus.archived + countByStatus.planning > 0 && (
+              <span className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-blue-50 text-blue-700 border border-blue-200 font-medium">
+                <Clock className="h-3.5 w-3.5" />
+                <span>{countByStatus.upcoming + countByStatus.archived + countByStatus.planning} 期筹备/规划中</span>
+              </span>
+            )}
           </div>
         </div>
 
@@ -415,11 +364,11 @@ export const BootcampPortal: React.FC<BootcampPortalProps> = ({ onSelectCohort }
           {/* Status Tabs */}
           <div className="flex items-center space-x-1.5 overflow-x-auto pb-1 md:pb-0">
             {[
-              { id: 'all', label: `全部期数 (${COHORTS_DATA.length})` },
-              { id: 'active', label: '🔥 进行中/已上线 (1)' },
-              { id: 'upcoming', label: '⏳ 筹备中 (1)' },
-              { id: 'archived', label: '📂 往期归档 (1)' },
-              { id: 'planning', label: '💡 远期规划 (1)' },
+              { id: 'all', label: `全部期数 (${cohorts.length})` },
+              { id: 'active', label: `🔥 进行中/已上线 (${countByStatus.active})` },
+              { id: 'upcoming', label: `⏳ 筹备中 (${countByStatus.upcoming})` },
+              { id: 'archived', label: `📂 往期归档 (${countByStatus.archived})` },
+              { id: 'planning', label: `💡 远期规划 (${countByStatus.planning})` },
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -560,7 +509,7 @@ export const BootcampPortal: React.FC<BootcampPortalProps> = ({ onSelectCohort }
                       {isActive ? (
                         <span className="font-semibold text-indigo-600 flex items-center space-x-1">
                           <FolderCheck className="h-4 w-4" />
-                          <span>16 项完整物料工坊</span>
+                          <span>{cohort.materialsCount} 项完整物料工坊</span>
                         </span>
                       ) : (
                         <span className="text-slate-400 flex items-center space-x-1">
@@ -615,9 +564,15 @@ export const BootcampPortal: React.FC<BootcampPortalProps> = ({ onSelectCohort }
                 <AlertCircle className="h-4 w-4 text-amber-600 shrink-0 mt-0.5" />
                 <div>
                   <p className="font-semibold">暂未开放在线物料编辑</p>
-                  <p className="mt-0.5 text-amber-800">
-                    该期集训目前处于筹备或沉淀阶段。平台目前已全量上线 <strong className="font-bold underline">2026 暑期集训（《AI 赋能下的全栈开发》）</strong> 的 16 项套件物料。
-                  </p>
+                  {activeCohort ? (
+                    <p className="mt-0.5 text-amber-800">
+                      该期集训目前处于筹备或沉淀阶段。平台目前已全量上线 <strong className="font-bold underline">{activeCohort.title}</strong> 的 {activeCohort.materialsCount} 项套件物料，可先前往试阅。
+                    </p>
+                  ) : (
+                    <p className="mt-0.5 text-amber-800">
+                      该期集训目前处于筹备或沉淀阶段。等待上线后即可查阅完整物料。
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -659,17 +614,21 @@ export const BootcampPortal: React.FC<BootcampPortalProps> = ({ onSelectCohort }
             {/* Modal Footer */}
             <div className="bg-slate-50 px-6 py-4 border-t border-slate-100 flex items-center justify-between">
               <span className="text-xs text-slate-500">
-                试阅完备物料？
+                试阅已上线完备物料？
               </span>
-              <button
-                onClick={() => {
-                  setModalCohort(null);
-                  onSelectCohort('2026-summer');
-                }}
-                className="px-3.5 py-1.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-medium rounded-lg transition-all cursor-pointer"
-              >
-                前往 2026 暑期物料工坊 →
-              </button>
+              {activeCohort ? (
+                <button
+                  onClick={() => {
+                    setModalCohort(null);
+                    onSelectCohort(activeCohort.id);
+                  }}
+                  className="px-3.5 py-1.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-medium rounded-lg transition-all cursor-pointer"
+                >
+                  前往 {activeCohort.year} {activeCohort.season} 物料工坊 →
+                </button>
+              ) : (
+                <span className="text-xs text-slate-400">暂无可试阅物料</span>
+              )}
             </div>
           </div>
         </div>

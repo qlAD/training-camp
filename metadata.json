@@ -1,6 +1,6 @@
 {
-  "name": "AI全栈训练营物料工坊",
-  "description": "《AI 赋能下的全栈开发》暑期训练营 16 项完整物料：1 份完整方案 (支持 PDF 导出)、1 张宣传海报 (支持 PNG 导出)、14 课时教学演示幻灯片 (支持全屏教学模式)。",
+  "name": "集训营标准化体系全景门户",
+  "description": "软件学院 AI 创新应用社集训营标准化体系全景门户。聚合历届与未来规划集训期数，每期配套完整训练营策划案 (支持 PDF 导出)、宣传海报 (支持 PNG 导出) 及课时教学演示幻灯片 (支持全屏教学模式)。",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": []
 }

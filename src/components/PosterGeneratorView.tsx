@@ -20,42 +20,21 @@ import {
 } from 'lucide-react';
 import { toPng } from 'html-to-image';
 import confetti from 'canvas-confetti';
-import { PosterConfig } from '../types';
+import { BootcampCohort, PosterConfig } from '../types';
 
 interface PosterGeneratorViewProps {
+  meta: BootcampCohort;
+  initialConfig: PosterConfig;
   onExportSuccess?: () => void;
 }
 
-export const PosterGeneratorView: React.FC<PosterGeneratorViewProps> = () => {
+export const PosterGeneratorView: React.FC<PosterGeneratorViewProps> = ({ meta, initialConfig }) => {
+  const slidesCount = Math.max(0, meta.materialsCount - 2);
   const posterRef = useRef<HTMLDivElement>(null);
   const [isExporting, setIsExporting] = useState(false);
 
   // Poster state configuration
-  const [config, setConfig] = useState<PosterConfig>({
-    theme: 'tech',
-    logoStyle: 'hybrid',
-    showSketchWatermark: true,
-    qrLabel: '扫码进群 · 抢先报名',
-    title: 'AI 赋能下的全栈开发',
-    subtitle: '暑期训练营 · 招募热烈开启',
-    slogan: '14 天，用 AI 做出你的第一个线上项目',
-    targetAudience: '软件学院 2025 级本科生 · 零基础友好',
-    timeLocation: '暑期连续 14 天 每晚 19:00 - 20:30 (企微直播)',
-    contactName: '乔林',
-    contactTitle: '软件学院指导老师 · 营长',
-    contactPhone: '19537178744',
-    organizer: '软件学院 · AI 创新应用社',
-    highlights: [
-      { title: '零基础友好', desc: '不讲繁琐语法，从环境到上线全程带练' },
-      { title: '双项目驱动', desc: '个人作品集主页 + 「此刻」兴趣图文社区' },
-      { title: '国产工具链', desc: 'TRAE CN + 豆包/DeepSeek + Gitee + 阿里云' },
-      { title: 'Vibe Coding', desc: '独创"复制→对话→引导"，AI 写代码人做决策' },
-    ],
-    projects: [
-      { name: '项目一：个人作品集', tag: 'Day 1-4', desc: '快速打造个人名片与全栈作品载体' },
-      { name: '项目二：「此刻」兴趣社区', tag: 'Day 5-14', desc: 'Vue 3 + Spring Boot + MySQL 完整全栈' },
-    ],
-  });
+  const [config, setConfig] = useState<PosterConfig>(initialConfig);
 
   // Handle Custom QR Image File Upload
   const handleQrUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,7 +76,7 @@ export const PosterGeneratorView: React.FC<PosterGeneratorViewProps> = () => {
       
       // Trigger browser download
       const link = document.createElement('a');
-      link.download = `AI全栈训练营_宣传海报_${config.theme}.png`;
+      link.download = `${meta.year}-${meta.season}_宣传海报_${config.theme}.png`;
       link.href = dataUrl;
       link.click();
 
@@ -128,7 +107,7 @@ export const PosterGeneratorView: React.FC<PosterGeneratorViewProps> = () => {
             <span className="text-xs text-slate-400">适配 9:16 / 朋友圈招募海报</span>
           </div>
           <h1 className="text-2xl font-extrabold text-slate-900 mt-1">
-            《14 天，用 AI 做出你的第一个项目》招募海报
+            {meta.title} · 招募海报
           </h1>
           <p className="text-xs text-slate-500 mt-0.5">
             支持 3 种视觉调色风格，一键保存导出为高清 PNG 图片文件
@@ -440,7 +419,7 @@ export const PosterGeneratorView: React.FC<PosterGeneratorViewProps> = () => {
 
                   <div>
                     <span className="text-xs font-bold tracking-wider block">{config.organizer}</span>
-                    <span className="text-[10px] opacity-80 font-medium">软件学院官方社团 · 2026 暑期集训</span>
+                    <span className="text-[10px] opacity-80 font-medium">软件学院官方社团 · {meta.year} {meta.season}集训</span>
                   </div>
                 </div>
 
@@ -500,9 +479,9 @@ export const PosterGeneratorView: React.FC<PosterGeneratorViewProps> = () => {
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs font-bold flex items-center space-x-1">
                     <Flame className="h-3.5 w-3.5 text-orange-500" />
-                    <span>14 天双项目实战演练</span>
+                    <span>{slidesCount} 天项目实战演练</span>
                   </span>
-                  <span className="text-[10px] opacity-70">结营即拥有 2 个线上作品</span>
+                  <span className="text-[10px] opacity-70">结营即拥有可交付项目作品</span>
                 </div>
 
                 <div className="space-y-2 text-xs">
@@ -520,24 +499,26 @@ export const PosterGeneratorView: React.FC<PosterGeneratorViewProps> = () => {
                 </div>
               </div>
 
-              {/* 14 Days Compact Roadmap */}
-              <div className="space-y-1.5 text-center">
-                <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">
-                  14 天极速进化路线图
-                </span>
-                <div className="grid grid-cols-7 gap-1 text-[9px] font-semibold">
-                  {Array.from({ length: 14 }, (_, i) => i + 1).map((day) => (
-                    <div
-                      key={day}
-                      className={`p-1.5 rounded-lg border text-center ${
-                        config.theme === 'modern' ? 'bg-slate-100 border-slate-200' : 'bg-white/10 border-white/10'
-                      }`}
-                    >
-                      D{day}
-                    </div>
-                  ))}
+              {/* Days Compact Roadmap */}
+              {slidesCount > 0 && (
+                <div className="space-y-1.5 text-center">
+                  <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">
+                    {slidesCount} 天极速进化路线图
+                  </span>
+                  <div className={`grid gap-1 text-[9px] font-semibold ${slidesCount <= 7 ? 'grid-cols-' + slidesCount : slidesCount <= 14 ? 'grid-cols-7' : 'grid-cols-8'}`}>
+                    {Array.from({ length: slidesCount }, (_, i) => i + 1).map((day) => (
+                      <div
+                        key={day}
+                        className={`p-1.5 rounded-lg border text-center ${
+                          config.theme === 'modern' ? 'bg-slate-100 border-slate-200' : 'bg-white/10 border-white/10'
+                        }`}
+                      >
+                        D{day}
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
 
               {/* Footer Contact Person Avatar Card & QR Section */}
               <div className={`pt-4 border-t border-current/10 flex items-center justify-between gap-4`}>

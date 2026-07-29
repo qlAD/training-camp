@@ -16,24 +16,30 @@ import {
   Code2,
   BookOpen
 } from 'lucide-react';
-import { ALL_COURSE_DECKS } from '../data/slidesData';
+import { BootcampCohort, DayCourseDeck } from '../types';
 
 interface MaterialOverviewProps {
+  meta: BootcampCohort;
+  decks: DayCourseDeck[];
   onSelectPlan: () => void;
   onSelectPoster: () => void;
   onSelectSlideDay: (day: number) => void;
 }
 
 export const MaterialOverview: React.FC<MaterialOverviewProps> = ({
+  meta,
+  decks,
   onSelectPlan,
   onSelectPoster,
   onSelectSlideDay,
 }) => {
+  const materialsCount = meta.materialsCount;
+  const slidesCount = decks.length;
   const [activeFilter, setActiveFilter] = useState<'all' | 'plan' | 'poster' | 'slides'>('all');
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Filter 14 slide decks
-  const filteredDecks = ALL_COURSE_DECKS.filter((deck) => {
+  // Filter slide decks
+  const filteredDecks = decks.filter((deck) => {
     const query = searchQuery.toLowerCase();
     return (
       deck.title.toLowerCase().includes(query) ||
@@ -58,20 +64,20 @@ export const MaterialOverview: React.FC<MaterialOverviewProps> = ({
         <div className="relative z-10 max-w-3xl space-y-4">
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-400/20 text-indigo-300 text-xs font-semibold">
             <Sparkles className="h-3.5 w-3.5" />
-            <span>训练营物料工坊 · 16 大项目交付物全景矩阵</span>
+            <span>训练营物料工坊 · {materialsCount} 大项目交付物全景矩阵</span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
-            《AI 赋能下的全栈开发》暑期训练营物料库
+            {meta.title} · 物料库
           </h1>
           <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-            根据 《暑期AI全栈训练营方案.md》 精心重构的完整现代 Web 交付集。包含 1 份可导出 PDF 的完整方案、1 张可导出 PNG 的招募宣传海报，以及 14 课时全套交互式教学演示幻灯片。
+            {meta.description} 包含 1 份可导出 PDF 的完整方案、1 张可导出 PNG 的招募宣传海报，以及 {slidesCount} 课时全套交互式教学演示幻灯片。
           </p>
 
           {/* Quick Metrics */}
           <div className="pt-4 grid grid-cols-2 sm:grid-cols-4 gap-4 border-t border-slate-800 text-slate-300 text-xs">
             <div className="flex items-center space-x-2">
               <CheckCircle2 className="h-4 w-4 text-emerald-400" />
-              <span>物料总数：<strong className="text-white font-semibold">16 个</strong></span>
+              <span>物料总数：<strong className="text-white font-semibold">{materialsCount} 个</strong></span>
             </div>
             <div className="flex items-center space-x-2">
               <FileText className="h-4 w-4 text-indigo-400" />
@@ -83,7 +89,7 @@ export const MaterialOverview: React.FC<MaterialOverviewProps> = ({
             </div>
             <div className="flex items-center space-x-2">
               <Presentation className="h-4 w-4 text-amber-400" />
-              <span>演示幻灯片：<strong className="text-white font-semibold">14 课时全套</strong></span>
+              <span>演示幻灯片：<strong className="text-white font-semibold">{slidesCount} 课时全套</strong></span>
             </div>
           </div>
         </div>
@@ -101,7 +107,7 @@ export const MaterialOverview: React.FC<MaterialOverviewProps> = ({
                 : 'text-slate-600 hover:bg-slate-100'
             }`}
           >
-            全部物料 (16)
+            全部物料 ({materialsCount})
           </button>
           <button
             onClick={() => setActiveFilter('plan')}
@@ -131,7 +137,7 @@ export const MaterialOverview: React.FC<MaterialOverviewProps> = ({
                 : 'text-slate-600 hover:bg-slate-100'
             }`}
           >
-            课程幻灯片 (14)
+            课程幻灯片 ({slidesCount})
           </button>
         </div>
 
@@ -176,10 +182,10 @@ export const MaterialOverview: React.FC<MaterialOverviewProps> = ({
                     </div>
 
                     <h3 className="text-lg font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">
-                      《AI 赋能下的全栈开发》暑期训练营 完整方案
+                      {meta.title} · 完整方案
                     </h3>
                     <p className="mt-2 text-xs text-slate-600 leading-relaxed">
-                      涵盖训练营概述、招生信息、8阶段14天课程体系、双项目架构 (个人作品集 + 「此刻」社区)、师资考核、后勤与应急预案等 10 大完整板块。
+                      涵盖训练营概述、招生信息、阶段课程体系、核心项目架构、师资考核、后勤与应急预案等完整策划板块。
                     </p>
 
                     <div className="mt-4 flex flex-wrap gap-2 text-[11px] text-slate-500">
@@ -217,10 +223,10 @@ export const MaterialOverview: React.FC<MaterialOverviewProps> = ({
                     </div>
 
                     <h3 className="text-lg font-bold text-slate-900 group-hover:text-violet-600 transition-colors">
-                      《14 天，用 AI 做出你的第一个项目》宣传招募海报
+                      {meta.title} · 宣传招募海报
                     </h3>
                     <p className="mt-2 text-xs text-slate-600 leading-relaxed">
-                      高清重磅视觉海报，集成核心 Slogan、招生条件、4大特色亮点、14天全景课表、免费说明与报名联系方式。支持 3 种视觉主题风格与一键另存为 PNG。
+                      高清重磅视觉海报，集成核心 Slogan、招生条件、特色亮点、全景课表、免费说明与报名联系方式。支持多种视觉主题风格与一键另存为 PNG。
                     </p>
 
                     <div className="mt-4 flex flex-wrap gap-2 text-[11px] text-slate-500">
@@ -252,7 +258,7 @@ export const MaterialOverview: React.FC<MaterialOverviewProps> = ({
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-base font-bold text-slate-900 flex items-center space-x-2">
                 <Presentation className="h-4 w-4 text-amber-500" />
-                <span>课程演示幻灯片全套 (物料 #3 - #16 · 共 14 课时)</span>
+                <span>课程演示幻灯片全套 (物料 #3 - #{materialsCount} · 共 {slidesCount} 课时)</span>
               </h2>
               <span className="text-xs text-slate-500">点击任意课时卡片直接进入全屏演示模式</span>
             </div>
@@ -268,7 +274,7 @@ export const MaterialOverview: React.FC<MaterialOverviewProps> = ({
                     {/* Header Badge */}
                     <div className="flex items-center justify-between">
                       <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200/60">
-                        物料 #{deck.day + 2} · Day {deck.day}
+                        物料 #{decks.findIndex(d => d.day === deck.day) + 3} · Day {deck.day}
                       </span>
                       <span className="text-[10px] text-slate-400 font-medium">
                         {deck.duration} · {deck.slides.length} 页 Slide

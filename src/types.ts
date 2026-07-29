@@ -13,6 +13,7 @@ export interface BootcampCohort {
   highlights: string[];
   bgGradient: string;
   accentColor: string;
+  target?: string;
 }
 
 export type MaterialType = 'plan' | 'poster' | 'slides';
@@ -117,4 +118,11 @@ export interface DayCourseDeck {
   output: string;
   aiPractice: string;
   slides: SlideContent[];
+}
+
+export interface CohortMaterials {
+  meta: BootcampCohort;
+  planData: PlanSection[];
+  slidesData: DayCourseDeck[];
+  posterConfig: PosterConfig;
 }

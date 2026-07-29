@@ -1,4 +1,4 @@
-import { PlanSection } from '../types';
+import { PlanSection } from '../../../types';
 
 export const BOOTCAMP_PLAN_DATA: PlanSection[] = [
   {
@@ -151,7 +151,7 @@ export const BOOTCAMP_PLAN_DATA: PlanSection[] = [
           headers: ['项目', '时间', '类型', '规模', '定位'],
           rows: [
             ['项目一：个人作品集主页', 'Day 1-4', '前端项目', '3-5 个页面', '快速获得成就感，熟悉 AI 前端开发'],
-            ['项目二：「此刻」兴趣社区', 'Day 5-14', '全栈应用', '5-8 个页面 + 10+ API', '掌握完整全栈开发流程'],
+            ['项目二：「此刻」兴趣图文社区', 'Day 5-14', '全栈应用', '5-8 个页面 + 10+ API', '掌握完整全栈开发流程'],
           ],
         },
       },
@@ -286,4 +286,3 @@ export const BOOTCAMP_PLAN_DATA: PlanSection[] = [
     ],
   },
 ];
-

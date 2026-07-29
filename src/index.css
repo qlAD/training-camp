@@ -84,6 +84,19 @@
     mix-blend-mode: multiply !important;
   }
 
+  /* Reset ancestor wrappers (max-width, padding, grid columns, background)
+     so the printable document fills the A4 page just like a standalone print window. */
+  .print-reset {
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    display: block !important;
+    gap: 0 !important;
+    grid-template-columns: none !important;
+    background: #ffffff !important;
+  }
+
   .printable-document {
     position: relative !important;
     z-index: 1 !important;
