@@ -49,7 +49,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             {onBackToPortal && (
               <button
                 onClick={onBackToPortal}
-                className="inline-flex items-center space-x-1.5 px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg transition-all border border-slate-200"
+                className="inline-flex items-center space-x-1.5 px-2.5 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition-all border border-slate-200"
                 title="返回训练营门户"
               >
                 <ArrowLeft className="h-3.5 w-3.5" />
@@ -142,42 +142,6 @@ export const Navbar: React.FC<NavbarProps> = ({
           </nav>
 
         </div>
-      </div>
-
-      {/* Mobile Sub-navigation */}
-      <div className="md:hidden border-t border-slate-200 bg-slate-50/80 px-4 py-2 flex items-center justify-between overflow-x-auto space-x-2">
-        <button
-          onClick={() => setCurrentView('overview')}
-          className={`whitespace-nowrap px-3 py-1 rounded-md text-xs font-medium ${
-            currentView === 'overview' ? 'bg-indigo-600 text-white' : 'text-slate-600 bg-white border border-slate-200'
-          }`}
-        >
-          物料大厅 ({materialsCount})
-        </button>
-        <button
-          onClick={() => setCurrentView('plan')}
-          className={`whitespace-nowrap px-3 py-1 rounded-md text-xs font-medium ${
-            currentView === 'plan' ? 'bg-indigo-600 text-white' : 'text-slate-600 bg-white border border-slate-200'
-          }`}
-        >
-          完整方案 (PDF)
-        </button>
-        <button
-          onClick={() => setCurrentView('poster')}
-          className={`whitespace-nowrap px-3 py-1 rounded-md text-xs font-medium ${
-            currentView === 'poster' ? 'bg-indigo-600 text-white' : 'text-slate-600 bg-white border border-slate-200'
-          }`}
-        >
-          宣传海报 (PNG)
-        </button>
-        <button
-          onClick={() => setCurrentView('slides')}
-          className={`whitespace-nowrap px-3 py-1 rounded-md text-xs font-medium ${
-            currentView === 'slides' ? 'bg-indigo-600 text-white' : 'text-slate-600 bg-white border border-slate-200'
-          }`}
-        >
-          {slidesCount}课时幻灯片
-        </button>
       </div>
     </header>
   );
