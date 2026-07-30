@@ -27,12 +27,14 @@ import {
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { BootcampCohort } from '../types';
+import { SiteConfig } from '../data/siteConfig';
 
 interface BootcampPortalProps {
   cohorts: BootcampCohort[];
+  siteConfig: SiteConfig;
 }
 
-export const BootcampPortal: React.FC<BootcampPortalProps> = ({ cohorts }) => {
+export const BootcampPortal: React.FC<BootcampPortalProps> = ({ cohorts, siteConfig }) => {
   const router = useRouter();
   // Spotlight index inside the right card widget
   const [spotlightIndex, setSpotlightIndex] = useState<number>(0);
@@ -129,13 +131,13 @@ export const BootcampPortal: React.FC<BootcampPortalProps> = ({ cohorts }) => {
             <div className="lg:col-span-7 space-y-5">
               <div>
                 <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight">
-                  AI 创新应用社
+                  {siteConfig.heroTitle}
                   <span className="block mt-1.5 bg-gradient-to-r from-indigo-300 via-violet-200 to-white bg-clip-text text-transparent">
-                    集训营标准化体系全景门户
+                    {siteConfig.heroSubtitle}
                   </span>
                 </h1>
                 <p className="mt-4 text-sm sm:text-base text-slate-300 leading-relaxed font-normal max-w-2xl">
-                  以 <strong className="text-indigo-200 font-semibold">Vibe Coding</strong> 与 <strong className="text-indigo-200 font-semibold">Agent 辅助导学</strong> 为核心的现代软件全栈教学体系。收录历届与规划集训统一配套策划案 (PDF)、宣传海报 (PNG) 及全套 16:9 交互式课时讲义 Slide。
+                  {siteConfig.heroDescription}
                 </p>
               </div>
 
@@ -170,7 +172,7 @@ export const BootcampPortal: React.FC<BootcampPortalProps> = ({ cohorts }) => {
                     <Users className="h-3.5 w-3.5" />
                     <span>累计覆盖</span>
                   </div>
-                  <div className="text-xl font-bold text-white">120+ <span className="text-xs font-normal text-slate-400">学员</span></div>
+                  <div className="text-xl font-bold text-white">{siteConfig.studentCount}+ <span className="text-xs font-normal text-slate-400">学员</span></div>
                 </div>
               </div>
 

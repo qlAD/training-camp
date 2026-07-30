@@ -2,6 +2,7 @@
 
 import { BootcampPortal } from '@/components/BootcampPortal';
 import { COHORTS_LIST } from '@/data/cohortsRegistry';
+import { SITE_CONFIG } from '@/data/siteConfig';
 
 export default function Home() {
   return (
@@ -32,18 +33,18 @@ export default function Home() {
 
           {/* Two-line Title Text */}
           <div className="flex flex-col justify-center">
-            <span className="font-bold text-sm tracking-tight text-white leading-tight">软件学院 AI 创新应用社</span>
-            <span className="text-[11px] text-slate-400 font-medium leading-tight mt-0.5">集训营标准化体系全景门户</span>
+            <span className="font-bold text-sm tracking-tight text-white leading-tight">{SITE_CONFIG.orgFullName}</span>
+            <span className="text-[11px] text-slate-400 font-medium leading-tight mt-0.5">{SITE_CONFIG.portalTitle}</span>
           </div>
         </div>
         <div className="text-xs text-slate-400 font-medium hidden md:block">
-          历届与规划集训期数 · 物料全景库
+          {SITE_CONFIG.headerSubText}
         </div>
       </header>
 
       {/* Portal Landing Content */}
       <main className="flex-1">
-        <BootcampPortal cohorts={COHORTS_LIST} />
+        <BootcampPortal cohorts={COHORTS_LIST} siteConfig={SITE_CONFIG} />
       </main>
 
       {/* Minimal Portal Footer with Logo Integration */}
@@ -55,9 +56,9 @@ export default function Home() {
               <div className="h-3 w-px bg-slate-300" />
               <img src="/club-logo.svg" alt="AI创新应用社" className="h-5 w-auto object-contain" />
             </div>
-            <span className="font-semibold text-slate-700">软件学院 AI 创新应用社 · 集训营标准化体系全景门户</span>
+            <span className="font-semibold text-slate-700">{SITE_CONFIG.orgFullName} · {SITE_CONFIG.portalTitle}</span>
           </div>
-          <div className="text-slate-400 font-medium">软件学院 AI 创新应用社 · 历届集训</div>
+          <div className="text-slate-400 font-medium">{SITE_CONFIG.footerText}</div>
         </div>
       </footer>
     </div>
