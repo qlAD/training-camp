@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Navbar } from './Navbar';
 import { MaterialOverview } from './MaterialOverview';
@@ -18,6 +18,25 @@ export default function CohortWorkshop({ materials }: CohortWorkshopProps) {
   const router = useRouter();
   const [currentView, setCurrentView] = useState<'overview' | 'plan' | 'poster' | 'slides'>('overview');
   const [selectedDay, setSelectedDay] = useState<number>(1);
+
+  // Preserve scroll position per view so switching tabs doesn't share scroll
+  const scrollPositions = useRef<Record<string, number>>({});
+  const prevView = useRef(currentView);
+
+  useEffect(() => {
+    const prev = prevView.current;
+    if (prev !== currentView) {
+      // Save previous view's scroll
+      scrollPositions.current[prev] = window.scrollY;
+
+      // Restore current view's scroll (or top if first visit)
+      const saved = scrollPositions.current[currentView] ?? 0;
+      // Use a microtask / rAF to wait for the newly rendered view to be in DOM
+      requestAnimationFrame(() => window.scrollTo(0, saved));
+
+      prevView.current = currentView;
+    }
+  }, [currentView]);
 
   // PDF 导出实际打印由 PlanDocumentView.handlePrintPDF 内部完成，
   // 此回调仅作埋点/通知用途，避免重复触发 window.print()。
