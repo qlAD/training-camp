@@ -1,0 +1,156 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f8fafc;
+  --foreground: #1e293b;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-800 antialiased selection:bg-indigo-500 selection:text-white;
+  }
+}
+
+/* Custom Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* High Quality Print Stylesheet for PDF Export */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 15mm 12mm 22mm 12mm;
+    @bottom-center {
+      content: counter(page, decimal-leading-zero) " / " counter(pages, decimal-leading-zero);
+      font-size: 10pt;
+      font-family: system-ui, -apple-system, sans-serif;
+      font-weight: 700;
+      color: #475569;
+    }
+  }
+
+  /* Hide UI navigation, control bars, and action buttons during print/export */
+  header,
+  nav,
+  .no-print,
+  button,
+  .print-hide {
+    display: none !important;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    font-size: 10.5pt !important;
+    line-height: 1.5 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Double Logo Background Watermarks for Print (Appears on EVERY printed page) */
+  .print-page-watermark-top {
+    display: block !important;
+    position: fixed !important;
+    top: 1.5cm !important;
+    right: 1.5cm !important;
+    width: 6.5cm !important;
+    height: 6.5cm !important;
+    opacity: 0.12 !important;
+    z-index: 9999 !important;
+    pointer-events: none !important;
+    mix-blend-mode: multiply !important;
+  }
+
+  .print-page-watermark-bottom {
+    display: block !important;
+    position: fixed !important;
+    bottom: 1.5cm !important;
+    left: 1.5cm !important;
+    width: 7cm !important;
+    height: 7cm !important;
+    opacity: 0.12 !important;
+    z-index: 9999 !important;
+    pointer-events: none !important;
+    mix-blend-mode: multiply !important;
+  }
+
+  /* Reset ancestor wrappers (max-width, padding, grid columns, background)
+     so the printable document fills the A4 page just like a standalone print window. */
+  .print-reset {
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    display: block !important;
+    gap: 0 !important;
+    grid-template-columns: none !important;
+    background: #ffffff !important;
+  }
+
+  .printable-document {
+    position: relative !important;
+    z-index: 1 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+  }
+
+  /* Optimized Page Break Management (allows sections and lists to flow naturally while keeping atomic cards intact) */
+  .print-avoid-break,
+  .print-card,
+  tr,
+  blockquote {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Reduce heavy rounded corners in print to avoid awkward cutoffs */
+  .rounded-2xl,
+  .rounded-xl,
+  .rounded-lg {
+    border-radius: 6px !important;
+  }
+
+  h1, h2, h3, h4 {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+  }
+
+  .page-break {
+    page-break-before: always !important;
+    break-before: page !important;
+  }
+
+  /* Print contrast adjustment for dark blocks */
+  .bg-slate-900,
+  .bg-indigo-950 {
+    background-color: #0f172a !important;
+    color: #ffffff !important;
+  }
+}
