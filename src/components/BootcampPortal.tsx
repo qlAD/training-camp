@@ -344,22 +344,6 @@ export const BootcampPortal: React.FC<BootcampPortalProps> = ({ cohorts }) => {
               浏览软件学院历届与未来规划集训。点击「🔥 进行中」卡片可直接调阅该期全量在线交付物。
             </p>
           </div>
-
-          {/* Key Quick Stats */}
-          <div className="flex items-center space-x-3 text-xs shrink-0 flex-wrap gap-y-2">
-            {countByStatus.active > 0 && (
-              <span className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200 font-medium">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span>{countByStatus.active} 期资料完备</span>
-              </span>
-            )}
-            {countByStatus.upcoming + countByStatus.archived + countByStatus.planning > 0 && (
-              <span className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-blue-50 text-blue-700 border border-blue-200 font-medium">
-                <Clock className="h-3.5 w-3.5" />
-                <span>{countByStatus.upcoming + countByStatus.archived + countByStatus.planning} 期筹备/规划中</span>
-              </span>
-            )}
-          </div>
         </div>
 
         {/* Filter & Search Bar */}
