@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { 
   Sparkles, 
@@ -23,14 +25,15 @@ import {
   Layers,
   ArrowDown
 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { BootcampCohort } from '../types';
 
 interface BootcampPortalProps {
   cohorts: BootcampCohort[];
-  onSelectCohort: (cohortId: string) => void;
 }
 
-export const BootcampPortal: React.FC<BootcampPortalProps> = ({ cohorts, onSelectCohort }) => {
+export const BootcampPortal: React.FC<BootcampPortalProps> = ({ cohorts }) => {
+  const router = useRouter();
   // Spotlight index inside the right card widget
   const [spotlightIndex, setSpotlightIndex] = useState<number>(0);
   const [isAutoPlay, setIsAutoPlay] = useState<boolean>(true);
@@ -81,7 +84,7 @@ export const BootcampPortal: React.FC<BootcampPortalProps> = ({ cohorts, onSelec
 
   const handleCardClick = (cohort: BootcampCohort) => {
     if (cohort.status === 'active') {
-      onSelectCohort(cohort.id);
+      router.push(`/cohort/${cohort.id}`);
     } else {
       setModalCohort(cohort);
       setSubscribed(false);
@@ -620,7 +623,7 @@ export const BootcampPortal: React.FC<BootcampPortalProps> = ({ cohorts, onSelec
                 <button
                   onClick={() => {
                     setModalCohort(null);
-                    onSelectCohort(activeCohort.id);
+                    router.push(`/cohort/${activeCohort.id}`);
                   }}
                   className="px-3.5 py-1.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-medium rounded-lg transition-all cursor-pointer"
                 >

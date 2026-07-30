@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useRef } from 'react';
 import { 
   Download, 
@@ -341,7 +343,7 @@ export const PosterGeneratorView: React.FC<PosterGeneratorViewProps> = ({ meta, 
           </div>
 
           <div className="pt-3 border-t border-slate-100 text-[11px] text-slate-500 space-y-1">
-            <p>💡 提示：点击右上角 "保存为 PNG 图片" 即可导出高清海报用于社交媒体群发招募。</p>
+            <p>💡 提示：点击右上角 &quot;保存为 PNG 图片&quot; 即可导出高清海报用于社交媒体群发招募。</p>
           </div>
         </div>
 

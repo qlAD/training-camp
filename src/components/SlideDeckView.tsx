@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { 
   ChevronLeft, 
@@ -40,18 +42,24 @@ export const SlideDeckView: React.FC<SlideDeckViewProps> = ({
   const currentDeckIdx = currentDeck ? decks.findIndex(d => d.day === currentDeck.day) : 0;
   const materialNo = currentDeckIdx >= 0 ? currentDeckIdx + 3 : 3; // 方案#1、海报#2 → slides 从 #3 起
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+  const [prevSelectedDay, setPrevSelectedDay] = useState(selectedDay);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showNotes, setShowNotes] = useState(true);
   const [showGridModal, setShowGridModal] = useState(false);
   const [isBlackout, setIsBlackout] = useState(false);
   const [copiedText, setCopiedText] = useState<string | null>(null);
 
+  // Reset slide index on day change (adjust state during render instead of effect)
+  if (prevSelectedDay !== selectedDay) {
+    setPrevSelectedDay(selectedDay);
+    setCurrentSlideIndex(0);
+  }
+
   const currentSlide: SlideContent = currentDeck?.slides[currentSlideIndex] || currentDeck?.slides[0];
 
-  // Reset slide index on day change
-  useEffect(() => {
-    setCurrentSlideIndex(0);
-  }, [selectedDay]);
+  const toggleFullscreen = () => {
+    setIsFullscreen((prev) => !prev);
+  };
 
   // Keyboard Navigation Controls
   useEffect(() => {
@@ -87,10 +95,6 @@ export const SlideDeckView: React.FC<SlideDeckViewProps> = ({
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [currentSlideIndex, currentDeck.slides.length, isFullscreen, showGridModal]);
-
-  const toggleFullscreen = () => {
-    setIsFullscreen((prev) => !prev);
-  };
 
   const copyToClipboard = (text: string, label: string) => {
     navigator.clipboard.writeText(text);
