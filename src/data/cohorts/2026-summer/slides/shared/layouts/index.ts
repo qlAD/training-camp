@@ -1,0 +1,16 @@
+// 通用 Layout 组件 barrel 导出
+export { CoverSlide } from './CoverSlide';
+export { AgendaSlide } from './AgendaSlide';
+export { ConceptSlide } from './ConceptSlide';
+export { ComparisonSlide } from './ComparisonSlide';
+export { CodeBoxSlide } from './CodeBoxSlide';
+export { TerminalSlide } from './TerminalSlide';
+export { StepsSlide } from './StepsSlide';
+export { PromptSlide } from './PromptSlide';
+export { ExerciseSlide } from './ExerciseSlide';
+export { SummarySlide } from './SummarySlide';
+export { QuizSlide } from './QuizSlide';
+export { DiagramSlide } from './DiagramSlide';
+export { TimelineSlide } from './TimelineSlide';
+export { EffectSlide } from './EffectSlide';
+export { AnimationSlide } from './AnimationSlide';

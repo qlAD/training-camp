@@ -1,4 +1,4 @@
-import { DayCourseDeck } from '../../../types';
+import { DayDeckRenderer } from '../../../types';
 import { day01Deck } from './slides/day-01';
 import { day02Deck } from './slides/day-02';
 import { day03Deck } from './slides/day-03';
@@ -14,7 +14,8 @@ import { day12Deck } from './slides/day-12';
 import { day13Deck } from './slides/day-13';
 import { day14Deck } from './slides/day-14';
 
-export const ALL_COURSE_DECKS: DayCourseDeck[] = [
+// 14 天 deck：每天 20 页自定义 slide 组件，由 day-XX.tsx 直接导出 DayDeckRenderer
+export const ALL_COURSE_DECKS: DayDeckRenderer[] = [
   day01Deck,
   day02Deck,
   day03Deck,

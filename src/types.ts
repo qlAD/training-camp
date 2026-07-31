@@ -1,3 +1,5 @@
+import type React from 'react';
+
 export interface BootcampCohort {
   id: string;
   year: string;
@@ -123,6 +125,12 @@ export interface DayCourseDeck {
 export interface CohortMaterials {
   meta: BootcampCohort;
   planData: PlanSection[];
-  slidesData: DayCourseDeck[];
+  slidesData: DayDeckRenderer[];
   posterConfig: PosterConfig;
+}
+
+// 每日幻灯片渲染器：meta 供外壳使用（缩略图/备注/导航），Render 渲染对应 slide 组件
+export interface DayDeckRenderer {
+  meta: DayCourseDeck;
+  Render: React.FC<{ slideIndex: number }>;
 }

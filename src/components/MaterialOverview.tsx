@@ -18,11 +18,11 @@ import {
   Code2,
   BookOpen
 } from 'lucide-react';
-import { BootcampCohort, DayCourseDeck } from '../types';
+import { BootcampCohort, DayDeckRenderer } from '../types';
 
 interface MaterialOverviewProps {
   meta: BootcampCohort;
-  decks: DayCourseDeck[];
+  decks: DayDeckRenderer[];
   onSelectPlan: () => void;
   onSelectPoster: () => void;
   onSelectSlideDay: (day: number) => void;
@@ -43,11 +43,12 @@ export const MaterialOverview: React.FC<MaterialOverviewProps> = ({
   // Filter slide decks
   const filteredDecks = decks.filter((deck) => {
     const query = searchQuery.toLowerCase();
+    const m = deck.meta;
     return (
-      deck.title.toLowerCase().includes(query) ||
-      deck.subtitle.toLowerCase().includes(query) ||
-      deck.stageName.toLowerCase().includes(query) ||
-      deck.output.toLowerCase().includes(query)
+      m.title.toLowerCase().includes(query) ||
+      m.subtitle.toLowerCase().includes(query) ||
+      m.stageName.toLowerCase().includes(query) ||
+      m.output.toLowerCase().includes(query)
     );
   });
 
@@ -266,42 +267,44 @@ export const MaterialOverview: React.FC<MaterialOverviewProps> = ({
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-              {filteredDecks.map((deck) => (
+              {filteredDecks.map((deck) => {
+                const m = deck.meta;
+                return (
                 <div
-                  key={deck.day}
-                  onClick={() => onSelectSlideDay(deck.day)}
+                  key={m.day}
+                  onClick={() => onSelectSlideDay(m.day)}
                   className="group bg-white rounded-2xl p-4 border border-slate-200 hover:border-indigo-400 shadow-xs hover:shadow-md transition-all cursor-pointer flex flex-col justify-between"
                 >
                   <div className="space-y-2.5">
                     {/* Header Badge */}
                     <div className="flex items-center justify-between">
                       <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200/60">
-                        物料 #{decks.findIndex(d => d.day === deck.day) + 3} · Day {deck.day}
+                        物料 #{decks.findIndex(d => d.meta.day === m.day) + 3} · Day {m.day}
                       </span>
                       <span className="text-[10px] text-slate-400 font-medium">
-                        {deck.duration} · {deck.slides.length} 页 Slide
+                        {m.duration} · {m.slides.length} 页 Slide
                       </span>
                     </div>
 
                     {/* Stage Name */}
                     <span className="block text-[10px] font-semibold tracking-wider text-indigo-600 uppercase">
-                      {deck.stageName}
+                      {m.stageName}
                     </span>
 
                     {/* Course Title */}
                     <h3 className="text-sm font-bold text-slate-900 group-hover:text-indigo-600 transition-colors line-clamp-2">
-                      {deck.title.split('—')[1] || deck.title}
+                      {m.title.split('—')[1] || m.title}
                     </h3>
 
                     {/* Subtitle */}
                     <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
-                      {deck.subtitle}
+                      {m.subtitle}
                     </p>
 
                     {/* Deliverable Tag */}
                     <div className="pt-2 border-t border-slate-100 flex items-center space-x-1.5 text-[11px] text-slate-600">
                       <CheckCircle2 className="h-3 w-3 text-emerald-500 shrink-0" />
-                      <span className="truncate">产出: {deck.output}</span>
+                      <span className="truncate">产出: {m.output}</span>
                     </div>
                   </div>
 
@@ -317,7 +320,8 @@ export const MaterialOverview: React.FC<MaterialOverviewProps> = ({
                     </span>
                   </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
 
             {filteredDecks.length === 0 && (
