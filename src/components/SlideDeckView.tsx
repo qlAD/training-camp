@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   ChevronLeft,
   ChevronRight,
@@ -34,7 +34,7 @@ export const SlideDeckView: React.FC<SlideDeckViewProps> = ({
   const currentDeckIdx = currentDeck
     ? decks.findIndex((d) => d.meta.day === currentDeck.meta.day)
     : 0;
-  const materialNo = currentDeckIdx >= 0 ? currentDeckIdx + 3 : 3; // 方案#1、海报#2 → slides 从 #3 起
+  const materialNo = currentDeckIdx >= 0 ? currentDeckIdx + 3 : 3;
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [prevSelectedDay, setPrevSelectedDay] = useState(selectedDay);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -42,7 +42,9 @@ export const SlideDeckView: React.FC<SlideDeckViewProps> = ({
   const [showGridModal, setShowGridModal] = useState(false);
   const [isBlackout, setIsBlackout] = useState(false);
 
-  // Reset slide index on day change (adjust state during render instead of effect)
+  // 舞台区域 ref：只针对舞台（slide 渲染区域）调用全屏
+  const stageRef = useRef<HTMLDivElement | null>(null);
+
   if (prevSelectedDay !== selectedDay) {
     setPrevSelectedDay(selectedDay);
     setCurrentSlideIndex(0);
@@ -51,13 +53,51 @@ export const SlideDeckView: React.FC<SlideDeckViewProps> = ({
   const slidesLength = currentDeck.meta.slides.length;
   const currentSlide = currentDeck.meta.slides[currentSlideIndex] || currentDeck.meta.slides[0];
 
-  const toggleFullscreen = () => {
-    setIsFullscreen((prev) => !prev);
+  // 真正的全屏切换：使用 Fullscreen API 针对舞台区域
+  const toggleFullscreen = async () => {
+    const stageEl = stageRef.current;
+    if (!stageEl) return;
+
+    try {
+      if (!document.fullscreenElement) {
+        // 进入全屏：只把舞台区域全屏
+        await stageEl.requestFullscreen();
+      } else {
+        // 退出全屏
+        await document.exitFullscreen();
+      }
+    } catch (err) {
+      console.warn('全屏切换失败:', err);
+    }
   };
+
+  // 监听 fullscreenchange 事件，同步 isFullscreen 状态（应对按 ESC 原生退出全屏等场景）
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      const isFs = !!document.fullscreenElement;
+      setIsFullscreen(isFs);
+      // 若退出全屏时处于黑屏状态，保持黑屏不变（由 B 键独立控制）
+    };
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+  }, []);
 
   // Keyboard Navigation Controls
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      // ESC 键优先处理：关闭预览 / 退出全屏
+      if (e.key === 'Escape') {
+        // 先关预览
+        if (showGridModal) {
+          e.preventDefault();
+          setShowGridModal(false);
+          return;
+        }
+        // 全屏由 Fullscreen API 的原生 ESC 处理，此处不需要 setIsFullscreen(false)
+        return;
+      }
+
+      // 预览打开时，允许 ESC（已在上面处理），其他按键暂时屏蔽避免误翻页
       if (showGridModal) return;
 
       if (e.key === 'ArrowRight' || e.key === 'Space') {
@@ -79,28 +119,20 @@ export const SlideDeckView: React.FC<SlideDeckViewProps> = ({
       } else if (e.key === 'o' || e.key === 'O') {
         e.preventDefault();
         setShowGridModal((prev) => !prev);
-      } else if (e.key === 'Escape') {
-        if (isFullscreen) {
-          setIsFullscreen(false);
-        }
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentSlideIndex, slidesLength, isFullscreen, showGridModal]);
+  }, [currentSlideIndex, slidesLength, showGridModal]);
 
   const Render = currentDeck.Render;
 
   return (
     <div
-      className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6 ${
-        isFullscreen
-          ? 'fixed inset-0 z-50 bg-slate-950 p-6 overflow-hidden max-w-none flex flex-col justify-between'
-          : ''
-      }`}
+      className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6`}
     >
-      {/* Top Header Bar & Day Switcher (hidden in full screen unless hovered) */}
+      {/* Top Header Bar & Day Switcher */}
       <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4 no-print">
         <div>
           <div className="flex items-center space-x-2">
@@ -171,45 +203,60 @@ export const SlideDeckView: React.FC<SlideDeckViewProps> = ({
         </div>
       </div>
 
-      {/* Main Slide Deck Canvas Stage Frame */}
-      <div className="relative">
-        {isBlackout ? (
-          <div
-            onClick={() => setIsBlackout(false)}
-            className="w-full aspect-video bg-black rounded-3xl flex items-center justify-center text-slate-600 text-sm cursor-pointer select-none"
-          >
-            屏幕暂停中 (按 B 键恢复)
-          </div>
-        ) : (
-          <div className="w-full aspect-video max-h-[720px] bg-slate-900 text-white rounded-3xl shadow-2xl border border-slate-800 overflow-hidden flex flex-col justify-between relative">
-            {/* 双 SVG 建筑速写水印（保留） */}
-            <DualSketchWatermark />
-
-            {/* 顶部勋章标题栏（保留） */}
-            <MedalHeaderBar
-              selectedDay={selectedDay}
-              currentSlideIndex={currentSlideIndex}
-              slidesLength={slidesLength}
-              stageName={currentDeck.meta.stageName}
-              output={currentDeck.meta.output}
-            />
-
-            {/* Slide 渲染引擎：分发到 day-XX.tsx 的自定义 slide 组件 */}
-            <div className="p-6 sm:p-10 flex-1 overflow-y-auto relative z-10">
-              <Render slideIndex={currentSlideIndex} />
+      {/* Main Slide Deck Canvas Stage Frame —— 这就是舞台区域，全屏只针对这里 */}
+      <div
+        ref={stageRef}
+        className={`relative w-full ${
+          isFullscreen
+            ? 'fixed inset-0 z-50 bg-slate-950 p-6 rounded-none border-none shadow-none overflow-hidden flex items-center justify-center'
+            : ''
+        }`}
+      >
+        <div
+          className={`stage-scroll-scope w-full aspect-video ${
+            isFullscreen ? 'h-full max-h-full max-w-[calc(100vh*16/9)]' : 'max-h-[720px]'
+          } bg-slate-900 text-white rounded-3xl shadow-2xl border border-slate-800 overflow-clip flex flex-col justify-between relative ${
+            isFullscreen ? 'rounded-none border-none shadow-none' : ''
+          }`}
+        >
+          {isBlackout ? (
+            <div
+              onClick={() => setIsBlackout(false)}
+              className="w-full h-full bg-black flex items-center justify-center text-slate-600 text-sm cursor-pointer select-none"
+            >
+              屏幕暂停中 (按 B 键恢复)
             </div>
+          ) : (
+            <>
+              {/* 双 SVG 建筑速写水印（保留） */}
+              <DualSketchWatermark />
 
-            {/* 底部控制状态栏（保留） */}
-            <ControlStatusBar
-              currentSlideIndex={currentSlideIndex}
-              slidesLength={slidesLength}
-              onPrev={() => setCurrentSlideIndex((prev) => Math.max(0, prev - 1))}
-              onNext={() =>
-                setCurrentSlideIndex((prev) => Math.min(slidesLength - 1, prev + 1))
-              }
-            />
-          </div>
-        )}
+              {/* 顶部勋章标题栏（保留） */}
+              <MedalHeaderBar
+                selectedDay={selectedDay}
+                currentSlideIndex={currentSlideIndex}
+                slidesLength={slidesLength}
+                stageName={currentDeck.meta.stageName}
+                output={currentDeck.meta.output}
+              />
+
+              {/* Slide 渲染引擎：分发到 day-XX.tsx 的自定义 slide 组件 */}
+              <div className="p-6 sm:p-10 flex-1 min-h-0 overflow-y-auto relative z-10">
+                <Render slideIndex={currentSlideIndex} />
+              </div>
+
+              {/* 底部控制状态栏（保留） */}
+              <ControlStatusBar
+                currentSlideIndex={currentSlideIndex}
+                slidesLength={slidesLength}
+                onPrev={() => setCurrentSlideIndex((prev) => Math.max(0, prev - 1))}
+                onNext={() =>
+                  setCurrentSlideIndex((prev) => Math.min(slidesLength - 1, prev + 1))
+                }
+              />
+            </>
+          )}
+        </div>
       </div>
 
       {/* Speaker Notes Drawer (Instructor's View) */}

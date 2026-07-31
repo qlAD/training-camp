@@ -27,12 +27,12 @@ export const TerminalSlide: React.FC<TerminalSlideProps> = ({
   takeaway,
   prompt = '$',
 }) => (
-  <div className="space-y-4 max-w-5xl">
+  <div className="h-full flex flex-col min-h-0 space-y-4 max-w-5xl">
     <div>
       <h2 className="text-2xl font-bold text-white tracking-tight">{title}</h2>
       {subtitle && <p className="text-xs text-indigo-300 mt-1">{subtitle}</p>}
     </div>
-    <div className="rounded-2xl border border-slate-800 bg-black overflow-hidden">
+    <div className="flex-1 min-h-0 flex flex-col rounded-2xl border border-slate-800 bg-black overflow-hidden">
       <div className="px-4 py-2 bg-slate-900 border-b border-slate-800 flex items-center space-x-2">
         <div className="flex space-x-1.5">
           <span className="h-3 w-3 rounded-full bg-rose-500/80"></span>
@@ -44,7 +44,7 @@ export const TerminalSlide: React.FC<TerminalSlideProps> = ({
           <span>bash — terminal</span>
         </div>
       </div>
-      <div className="p-4 space-y-3 font-mono text-xs leading-relaxed">
+      <div className="flex-1 min-h-0 overflow-y-auto p-4 space-y-3 font-mono text-xs leading-relaxed">
         {commands.map((c, i) => (
           <div key={i} className="space-y-1">
             {c.comment && (

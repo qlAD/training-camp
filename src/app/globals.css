@@ -37,6 +37,26 @@
   background: #94a3b8;
 }
 
+/* Stage-internal scroll areas: dark theme thin scrollbar (overrides global light style) */
+.stage-scroll-scope * {
+  scrollbar-width: thin;
+  scrollbar-color: #475569 transparent;
+}
+.stage-scroll-scope *::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.stage-scroll-scope *::-webkit-scrollbar-track {
+  background: transparent;
+}
+.stage-scroll-scope *::-webkit-scrollbar-thumb {
+  background: #475569;
+  border-radius: 9999px;
+}
+.stage-scroll-scope *::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
 /* Shared keyframes for shared slide components (code / callouts / data-display / interactions) */
 @keyframes cds-fade-in { from { opacity: 0; } to { opacity: 1; } }
 @keyframes cds-slide-up { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }

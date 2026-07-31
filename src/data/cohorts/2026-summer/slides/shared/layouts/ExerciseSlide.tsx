@@ -19,7 +19,7 @@ export const ExerciseSlide: React.FC<ExerciseSlideProps> = ({
   submissionText = '完成后截图发到企微群打卡，助教实时点评！',
   showTaskNumbers = true,
 }) => (
-  <div className="space-y-6 max-w-3xl">
+  <div className="h-full flex flex-col min-h-0 space-y-6 max-w-3xl">
     <div>
       <div className="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-md bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-[11px] font-bold mb-2">
         <ClipboardList className="h-3.5 w-3.5" />
@@ -30,7 +30,7 @@ export const ExerciseSlide: React.FC<ExerciseSlideProps> = ({
         <p className="text-xs sm:text-sm text-emerald-300 font-semibold mt-1">{subtitle}</p>
       )}
     </div>
-    <div className="p-6 rounded-2xl bg-emerald-950/40 border border-emerald-500/40 space-y-3">
+    <div className="flex-1 min-h-0 overflow-y-auto p-6 rounded-2xl bg-emerald-950/40 border border-emerald-500/40 space-y-3">
       <h3 className="text-xs font-bold uppercase tracking-wider text-emerald-300 flex items-center space-x-2">
         <CheckCircle2 className="h-4 w-4" />
         <span>实操跟练步骤清单</span>

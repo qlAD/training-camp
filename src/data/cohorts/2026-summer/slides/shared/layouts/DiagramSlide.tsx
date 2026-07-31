@@ -23,7 +23,7 @@ export const DiagramSlide: React.FC<DiagramSlideProps> = ({
   takeaway,
   badgeText = '架构图解',
 }) => (
-  <div className="space-y-4 max-w-5xl">
+  <div className="h-full flex flex-col min-h-0 space-y-4 max-w-5xl">
     <div>
       <div className="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-md bg-cyan-500/15 border border-cyan-500/30 text-cyan-300 text-[11px] font-bold mb-2">
         <Network className="h-3.5 w-3.5" />
@@ -32,8 +32,8 @@ export const DiagramSlide: React.FC<DiagramSlideProps> = ({
       <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">{title}</h2>
       {subtitle && <p className="text-xs sm:text-sm text-indigo-300 mt-1">{subtitle}</p>}
     </div>
-    <div className="rounded-2xl border border-slate-800 bg-slate-950/60 p-6 flex items-center justify-center min-h-[280px]">
-      <div className="w-full">{children}</div>
+    <div className="flex-1 min-h-0 flex items-start justify-center overflow-y-auto rounded-2xl border border-slate-800 bg-slate-950/60 p-6 min-h-[280px]">
+      <div className="w-full my-auto">{children}</div>
     </div>
     {caption && (
       <div className="text-[11px] text-slate-400 italic text-center">{caption}</div>

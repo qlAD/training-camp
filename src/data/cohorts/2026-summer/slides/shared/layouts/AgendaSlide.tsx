@@ -21,7 +21,7 @@ export const AgendaSlide: React.FC<AgendaSlideProps> = ({
   objectives,
   objectiveCountLabel,
 }) => (
-  <div className="space-y-6 max-w-4xl">
+  <div className="h-full flex flex-col min-h-0 space-y-6 max-w-4xl">
     <div className="flex items-start justify-between gap-4">
       <div>
         <div className="inline-flex items-center space-x-2 px-2.5 py-1 rounded-md bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-[11px] font-bold mb-2">
@@ -37,7 +37,7 @@ export const AgendaSlide: React.FC<AgendaSlideProps> = ({
         </span>
       )}
     </div>
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+    <div className="flex-1 min-h-0 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 gap-3">
       {objectives.map((obj, i) => (
         <div
           key={i}

@@ -31,12 +31,12 @@ export const ComparisonSlide: React.FC<ComparisonSlideProps> = ({
   keyTakeaway,
   contrastIcons = true,
 }) => (
-  <div className="space-y-6 max-w-5xl">
+  <div className="h-full flex flex-col min-h-0 space-y-6 max-w-5xl">
     <div>
       <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">{title}</h2>
       {subtitle && <p className="text-xs sm:text-sm text-indigo-300 mt-1">{subtitle}</p>}
     </div>
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="flex-1 min-h-0 overflow-y-auto grid grid-cols-1 md:grid-cols-2 gap-4">
       <div className="p-5 rounded-2xl bg-slate-800/50 border border-slate-700/80 space-y-3">
         <div className="flex items-center justify-between pb-2 border-b border-slate-700">
           <h3 className="text-sm font-bold text-slate-300">{left.title}</h3>

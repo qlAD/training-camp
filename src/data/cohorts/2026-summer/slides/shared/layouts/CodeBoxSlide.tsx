@@ -38,12 +38,12 @@ export const CodeBoxSlide: React.FC<CodeBoxSlideProps> = ({
   const highlightSet = new Set(highlightLines);
 
   return (
-    <div className="space-y-4 max-w-5xl">
+    <div className="h-full flex flex-col min-h-0 space-y-4 max-w-5xl">
       <div>
         <h2 className="text-2xl font-bold text-white tracking-tight">{title}</h2>
         {subtitle && <p className="text-xs text-indigo-300 mt-1">{subtitle}</p>}
       </div>
-      <div className="rounded-2xl border border-slate-800 bg-slate-950 overflow-hidden text-xs">
+      <div className="flex-1 min-h-0 flex flex-col rounded-2xl border border-slate-800 bg-slate-950 overflow-hidden text-xs">
         <div className="px-4 py-2 bg-slate-900 border-b border-slate-800 flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <FileCode className="h-4 w-4 text-indigo-400" />
@@ -64,7 +64,7 @@ export const CodeBoxSlide: React.FC<CodeBoxSlideProps> = ({
             <span>{copied ? '已复制' : '复制代码'}</span>
           </button>
         </div>
-        <div className="overflow-x-auto">
+        <div className="flex-1 min-h-0 overflow-auto">
           <pre className="p-4 text-emerald-300 font-mono text-xs leading-relaxed">
             <code>
               {lines.map((line, i) => {

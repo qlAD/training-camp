@@ -27,7 +27,7 @@ export const StepsSlide: React.FC<StepsSlideProps> = ({
   const colsClass =
     columns === 2 ? 'sm:grid-cols-2' : columns === 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-2 md:grid-cols-4';
   return (
-    <div className="space-y-6 max-w-5xl">
+    <div className="h-full flex flex-col min-h-0 space-y-6 max-w-5xl">
       <div>
         <div className="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-md bg-amber-500/15 border border-amber-500/30 text-amber-300 text-[11px] font-bold mb-2">
           <Footprints className="h-3.5 w-3.5" />
@@ -36,7 +36,7 @@ export const StepsSlide: React.FC<StepsSlideProps> = ({
         <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">{title}</h2>
         {subtitle && <p className="text-xs sm:text-sm text-indigo-300 mt-1">{subtitle}</p>}
       </div>
-      <div className={`grid grid-cols-1 ${colsClass} gap-3`}>
+      <div className={`flex-1 min-h-0 overflow-y-auto grid grid-cols-1 ${colsClass} gap-3`}>
         {steps.map((st, i) => (
           <div
             key={st.num}

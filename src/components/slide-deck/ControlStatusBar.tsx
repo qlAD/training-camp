@@ -14,7 +14,7 @@ export const ControlStatusBar: React.FC<ControlStatusBarProps> = ({
   onPrev,
   onNext,
 }) => (
-  <div className="p-4 bg-slate-950 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+  <div className="p-4 shrink-0 bg-slate-950 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
     <div className="flex items-center space-x-2">
       <button
         onClick={onPrev}

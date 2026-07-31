@@ -19,7 +19,7 @@ export const ConceptSlide: React.FC<ConceptSlideProps> = ({
   keyTakeaway,
   badgeText = '核心概念',
 }) => (
-  <div className="space-y-6 max-w-4xl">
+  <div className="h-full flex flex-col min-h-0 space-y-6 max-w-4xl">
     <div>
       <div className="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-md bg-indigo-500/15 border border-indigo-500/30 text-indigo-300 text-[11px] font-bold mb-2">
         <Sparkles className="h-3 w-3" />
@@ -29,7 +29,7 @@ export const ConceptSlide: React.FC<ConceptSlideProps> = ({
       {subtitle && <p className="text-xs sm:text-sm text-indigo-300 mt-1">{subtitle}</p>}
     </div>
     {bullets && bullets.length > 0 && (
-      <div className="space-y-3">
+      <div className="flex-1 min-h-0 overflow-y-auto space-y-3">
         {bullets.map((bullet, idx) => (
           <div
             key={idx}

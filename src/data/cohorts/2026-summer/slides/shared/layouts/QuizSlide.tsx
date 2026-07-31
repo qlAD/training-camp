@@ -35,7 +35,7 @@ export const QuizSlide: React.FC<QuizSlideProps> = ({
   };
 
   return (
-    <div className="space-y-5 max-w-4xl">
+    <div className="h-full flex flex-col min-h-0 space-y-5 max-w-4xl">
       <div>
         <div className="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-md bg-fuchsia-500/15 border border-fuchsia-500/30 text-fuchsia-300 text-[11px] font-bold mb-2">
           <HelpCircle className="h-3.5 w-3.5" />
@@ -44,7 +44,7 @@ export const QuizSlide: React.FC<QuizSlideProps> = ({
         <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">{title}</h2>
         {subtitle && <p className="text-xs sm:text-sm text-indigo-300 mt-1">{subtitle}</p>}
       </div>
-      <div className="space-y-4">
+      <div className="flex-1 min-h-0 overflow-y-auto space-y-4">
         {questions.map((q, qIdx) => {
           const picked = picks[qIdx];
           const answered = picked !== null;

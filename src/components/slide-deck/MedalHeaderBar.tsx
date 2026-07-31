@@ -16,7 +16,7 @@ export const MedalHeaderBar: React.FC<MedalHeaderBarProps> = ({
   stageName,
   output,
 }) => (
-  <div className="p-6 sm:p-8 flex items-center justify-between border-b border-slate-800/80 relative z-10">
+  <div className="p-6 sm:p-8 shrink-0 flex items-center justify-between border-b border-slate-800/80 relative z-10">
     <div className="flex items-center space-x-3">
       <div className="flex items-center space-x-2 bg-slate-800/90 border border-slate-700/80 px-2.5 py-1 rounded-xl shrink-0 shadow-xs">
         <img src="/school-logo.svg" alt="软件学院" className="h-5 w-auto object-contain" />

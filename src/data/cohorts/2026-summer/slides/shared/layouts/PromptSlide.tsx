@@ -36,7 +36,7 @@ export const PromptSlide: React.FC<PromptSlideProps> = ({
     setTimeout(() => setCopied(false), 2000);
   };
   return (
-    <div className="space-y-4 max-w-5xl">
+    <div className="h-full flex flex-col min-h-0 space-y-4 max-w-5xl">
       <div>
         <div className="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-md bg-amber-500/15 border border-amber-500/30 text-amber-300 text-[11px] font-bold mb-2">
           <Wand2 className="h-3.5 w-3.5" />
@@ -45,7 +45,7 @@ export const PromptSlide: React.FC<PromptSlideProps> = ({
         <h2 className="text-2xl font-bold text-white tracking-tight">{title}</h2>
         {subtitle && <p className="text-xs text-indigo-300 mt-1">{subtitle}</p>}
       </div>
-      <div className="rounded-2xl border border-amber-500/40 bg-slate-950 overflow-hidden text-xs">
+      <div className="flex-1 min-h-0 flex flex-col rounded-2xl border border-amber-500/40 bg-slate-950 overflow-hidden text-xs">
         <div className="px-4 py-2.5 bg-amber-500/10 border-b border-amber-500/30 flex items-center justify-between">
           <div className="flex items-center space-x-2 text-amber-300 font-bold">
             <Terminal className="h-4 w-4" />
@@ -59,7 +59,7 @@ export const PromptSlide: React.FC<PromptSlideProps> = ({
             <span>{copied ? '提示词已复制' : '一键复制 Prompt'}</span>
           </button>
         </div>
-        <div className="p-4 space-y-3">
+        <div className="flex-1 min-h-0 overflow-y-auto p-4 space-y-3">
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-[11px] text-slate-400 pb-2 border-b border-slate-800">
             <div><strong className="text-amber-400">角色：</strong> {role}</div>
             <div><strong className="text-amber-400">任务：</strong> {task}</div>
