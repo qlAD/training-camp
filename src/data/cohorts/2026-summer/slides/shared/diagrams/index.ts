@@ -1,9 +1,0 @@
-// 通用 Diagram 图解组件 barrel 导出
-export { ArchitectureDiagram } from './ArchitectureDiagram';
-export { ERDiagram } from './ERDiagram';
-export { NetworkTopologyDiagram } from './NetworkTopologyDiagram';
-export { ComponentTreeDiagram } from './ComponentTreeDiagram';
-export { MindMapDiagram } from './MindMapDiagram';
-export { FlowchartDiagram } from './FlowchartDiagram';
-export { PyramidDiagram } from './PyramidDiagram';
-export { QuadrantDiagram } from './QuadrantDiagram';
