@@ -56,17 +56,15 @@ export const Shot09Badges: React.FC = () => (
     <StageBackground />
     <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-6 px-10">
       <RevealBlock index={0} className="text-center">
-        <NeonTitle text="今天先认识五位搭档" at={0} />
+        <NeonTitle text="今天先认识三位工具搭档" at={0} />
       </RevealBlock>
       <RevealBlock index={1} className="w-full">
         <BadgeWall
           at={1}
           badges={[
-            { name: 'TRAE CN', icon: <Code2 className="h-5 w-5" />, desc: 'AI 编程助手' },
-            { name: '豆包', icon: <Sparkles className="h-5 w-5" />, desc: '大模型引擎' },
+            { name: 'TRAE IDE', icon: <Code2 className="h-5 w-5" />, desc: 'AI 编程助手' },         
             { name: 'DeepSeek', icon: <Brain className="h-5 w-5" />, desc: '深度推理模型' },
             { name: 'Gitee', icon: <GitBranch className="h-5 w-5" />, desc: '代码托管平台' },
-            { name: '阿里云', icon: <Cloud className="h-5 w-5" />, desc: '云服务器部署' },
           ]}
         />
         <p className="mt-4 text-center text-[11px] text-slate-500">今天先把它们认个脸熟，后面每天都要打交道</p>
@@ -142,7 +140,7 @@ export const Shot12Skeleton: React.FC = () => (
 
 /* ---------- 镜头 13：CSS 化妆 ---------- */
 export const Shot13Makeup: React.FC = () => (
-  <SceneSlide sceneCount={5}>
+  <SceneSlide sceneCount={10}>
     <StageBackground variant="code" />
     <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-5 px-10">
       <RevealBlock index={0} className="text-center">

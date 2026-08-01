@@ -38,7 +38,7 @@ export const cohort_2026_summer: SummerCohortMaterials = {
     ],
     bgGradient: 'from-indigo-600 via-indigo-700 to-violet-800',
     accentColor: 'indigo',
-    target: '全校低年级 / 零基础',
+    target: '软件学院 2025 级',
     officialPublishDate: '2026 年 8 月 1 日起',
   } satisfies CohortMaterialsCore<any, SummerMetaExtra>['meta'],
   planData: BOOTCAMP_PLAN_DATA,

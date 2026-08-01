@@ -46,7 +46,7 @@ export const BOOTCAMP_PLAN_DATA: PlanSection<SummerPlanEnrichment>[] = [
           '零基础友好 — 不要求任何编程经验，课程中不会讲太多的代码部分，从装环境到部署上线全程带练',
           '双项目驱动 — 个人作品集 + 「此刻」兴趣社区，兼顾成就感和深度',
           '国产工具链 — TRAE IDE + DeepSeek V3 API + Gitee + 阿里云，全链路国产',
-          'Vibe Coding 教学法 — 独创"复制→对话→引导"三阶段进阶，不是教语言，是教"怎么用 AI 做产品"',
+          'Vibe Coding 教学法 — 复制→对话→引导，三阶段进阶，不是教语言，是教"怎么用 AI 做产品"',
           '结营即有产出 — 每个学员结营时拥有 2 个可访问的线上项目 + Gitee 仓库',
         ],
       },
@@ -93,7 +93,7 @@ export const BOOTCAMP_PLAN_DATA: PlanSection<SummerPlanEnrichment>[] = [
         table: {
           headers: ['项目', '安排'],
           rows: [
-            ['时间', '暑期（具体日期待定），连续 14 天'],
+            ['时间', '8 月 10 日 - 8 月 23 日，连续 14 天'],
             ['每日课时', '19:00 — 20:30'],
             ['形式', '企业微信直播授课 + 企业微信群日常沟通'],
             ['打卡', '每日在企业微信群提交学习成果'],
@@ -202,7 +202,7 @@ export const BOOTCAMP_PLAN_DATA: PlanSection<SummerPlanEnrichment>[] = [
             phase: '阶段四 · 部署与路演 (Day 13 - 14)',
             tag: '冲刺',
             tone: 'amber',
-            desc: '阿里云云主机部署、公网域名绑定、线上作品展览与软件学院官方结营颁奖。',
+            desc: '阿里云云主机部署、公网域名绑定、线上作品展览与学院/社团官方结营颁奖。',
           },
         ],
       },
@@ -253,7 +253,7 @@ export const BOOTCAMP_PLAN_DATA: PlanSection<SummerPlanEnrichment>[] = [
           '公网 HTTP 独立部署域名',
           'Gitee 规范代码提交记录',
           'AI 提示词案例与提问集',
-          '软件学院官方结营证明',
+          '学院/社团官方结营证明',
         ],
       },
     ],
@@ -281,7 +281,7 @@ export const BOOTCAMP_PLAN_DATA: PlanSection<SummerPlanEnrichment>[] = [
             name: '乔林 营长 / 导师',
             role: '指导老师',
             tone: 'indigo',
-            desc: '软件学院指导老师，负责课程顶层架构设计与大模型应用技术把关。',
+            desc: '软件学院助教，负责课程顶层架构设计与大模型应用技术把关。',
           },
           {
             name: 'AI 创新应用社讲师团',
@@ -322,7 +322,7 @@ export const BOOTCAMP_PLAN_DATA: PlanSection<SummerPlanEnrichment>[] = [
       },
       {
         title: '6.2 结营证书与认证',
-        content: '达到 60 分以上颁发软件学院官方训练营结营证明；优秀学员颁发优秀学员荣誉证书。',
+        content: '达到 60 分以上颁发学院/社团官方训练营结营证明；优秀学员颁发优秀学员荣誉证书。',
       },
       {
         title: '6.3 模拟毕业设计奖励',
@@ -456,7 +456,7 @@ export const BOOTCAMP_PLAN_DATA: PlanSection<SummerPlanEnrichment>[] = [
       },
       {
         title: '10.2 官方咨询与联系方式',
-        content: '软件学院指导老师：乔林 (电话/企微: 19537178744)。欢迎扫码咨询训练营详细事宜。',
+        content: '软件学院助教：乔林 (电话/企微: 19537178744)。欢迎扫码咨询训练营详细事宜。',
       },
     ],
     enrichments: [
@@ -469,8 +469,8 @@ export const BOOTCAMP_PLAN_DATA: PlanSection<SummerPlanEnrichment>[] = [
             desc: '扫码关注软件学院官方年级群招募通知，扫码填写企业微信报名表即可一键入群。',
           },
           {
-            title: '📞 官方指导老师',
-            desc: '软件学院 乔林老师 (电话/企微: 19537178744) | AI 创新应用社讲师团',
+            title: '📞 官方指导',
+            desc: '软件学院助教 乔林 (电话/企微: 19537178744) | AI 创新应用社讲师团',
           },
         ],
       },

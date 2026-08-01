@@ -5,12 +5,63 @@ import {
   QrCode,
   Phone,
   Flame,
+  Rocket,
+  TerminalSquare,
+  Layout,
+  FileCode2,
+  Server,
+  Database,
+  CloudUpload,
+  Trophy,
+  type LucideIcon,
 } from 'lucide-react';
 import type { BootcampCohortCore, PosterConfig } from '@/lib';
 import type { SummerMetaExtra } from '../types';
 
+/** stagesRoadmap 的 index → 图标映射（8 大阶段对应 8 个不同 lucide 图标，简洁有辨识度） */
+const STAGE_ICON_MAP: Record<number, LucideIcon> = {
+  1: Rocket,      // 开场与准备
+  2: TerminalSquare, // 环境与原理
+  3: Layout,      // 前端基础
+  4: FileCode2,   // 现代前端 (Vue + 组件)
+  5: Server,      // 初始后端
+  6: Database,    // 生态力量（数据库 + 联调 + 提示词）
+  7: CloudUpload, // 部署运维
+  8: Trophy,      // 完结路演
+};
+
+/**
+ * 2026-summer 期数专属的 Day 路线图卡片信息（局部定义，不污染全局 PosterConfigCore）。
+ * 共享层（lib/types/poster.ts）故意不包含此字段，避免每个期数都要跟随变动。
+ */
+export interface SummerRoadmapDay {
+  day: number;
+  title: string;
+  /** 可选：Day 覆盖区间，如 "Day 8 - 9"，未提供时使用 day 默认 */
+  range?: string;
+  /** 可选：阶段编号徽章，如 ①② */
+  tag?: string;
+}
+
+/**
+ * 2026-summer 期数专属的「N 大阶段」路线图（8~10 张卡片，高度可控不溢出海报画布）。
+ * 优先显示 stagesRoadmap，其次 dayRoadmap，最后回退到 D1、D2... 数字占位。
+ */
+export interface SummerRoadmapStage {
+  index: number;
+  title: string;
+  /** 该阶段覆盖的 Day 区间，如 "Day 4 - 5" */
+  range: string;
+}
+
+/** 期数专属的海报扩展配置：与共享 PosterConfig 做交叉类型，不污染全局。 */
+export interface SummerPosterConfigExtra {
+  dayRoadmap?: SummerRoadmapDay[];
+  stagesRoadmap?: SummerRoadmapStage[];
+}
+
 export interface SummerPosterLayoutProps {
-  config: PosterConfig;
+  config: PosterConfig & SummerPosterConfigExtra;
   meta: BootcampCohortCore<SummerMetaExtra>;
   canvasRef?: React.RefObject<HTMLDivElement | null>;
   isExporting?: boolean;
@@ -117,7 +168,7 @@ export const SummerPosterLayout: React.FC<SummerPosterLayoutProps> = ({
           <div className={`px-2.5 py-1 rounded-full text-[10px] font-bold border ${
             config.theme === 'tech' ? 'bg-amber-400/10 text-amber-300 border-amber-400/30' : 'bg-indigo-500/10 text-indigo-500 border-indigo-500/30'
           }`}>
-            全程免费 · 软件学院指导
+            免费报名 · 软件学院指导
           </div>
         </div>
 
@@ -194,22 +245,93 @@ export const SummerPosterLayout: React.FC<SummerPosterLayoutProps> = ({
 
         {/* Days Compact Roadmap */}
         {slidesCount > 0 && (
-          <div className="space-y-1.5 text-center">
-            <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">
-              {slidesCount} 天极速进化路线图
-            </span>
-            <div className={`grid gap-1 text-[9px] font-semibold ${roadmapGridClass}`}>
-              {Array.from({ length: slidesCount }, (_, i) => i + 1).map((day) => (
-                <div
-                  key={day}
-                  className={`p-1.5 rounded-lg border text-center ${
-                    config.theme === 'modern' ? 'bg-slate-100 border-slate-200' : 'bg-white/10 border-white/10'
-                  }`}
-                >
-                  D{day}
-                </div>
-              ))}
+          <div className="space-y-1.5">
+            <div className="text-center text-[10px] font-bold uppercase tracking-wider opacity-70">
+              {config.stagesRoadmap
+                ? '8 大成长阶段'
+                : config.dayRoadmap
+                ? `${config.dayRoadmap.length} 天课程全景`
+                : `${slidesCount} 天极速进化路线图`}
             </div>
+            {config.stagesRoadmap && config.stagesRoadmap.length > 0 ? (
+              <div className="grid grid-cols-4 gap-2 text-[10px]">
+                {config.stagesRoadmap.map((s) => {
+                  const Icon = STAGE_ICON_MAP[s.index] || Sparkles;
+                  return (
+                    <div
+                      key={s.index}
+                      className={`relative rounded-lg p-2 text-center border ${
+                        config.theme === 'modern'
+                          ? 'bg-slate-50 border-slate-200 text-slate-800'
+                          : 'bg-white/5 border-white/10 text-white'
+                      }`}
+                    >
+                      <div className="relative mx-auto mb-1 w-8 h-8 flex items-center justify-center">
+                        {/* 图标徽章（容器 32 不变，图标 14 → 16，strokeWidth 加粗 2.5） */}
+                        <div
+                          className={`w-8 h-8 rounded-lg flex items-center justify-center ${
+                            config.theme === 'modern'
+                              ? 'bg-indigo-600 text-white'
+                              : 'bg-indigo-500/20 text-indigo-300 border border-indigo-400/30'
+                          }`}
+                        >
+                          <Icon className="w-5 h-5" strokeWidth={2.75} />
+                        </div>
+                        {/* 阶段序号（保留位置不变，Dayxx 挪到标题右上角） */}
+                        <span
+                          className={`absolute -right-1 -bottom-1 w-3.5 h-3.5 rounded-full flex items-center justify-center font-black text-[8px] ${
+                            config.theme === 'modern'
+                              ? 'bg-white text-indigo-600 border border-slate-200'
+                              : 'bg-slate-900 text-amber-400 border border-amber-400/40'
+                          }`}
+                        >
+                          {s.index}
+                        </span>
+                      </div>
+                      {/* 第二行：阶段名称 + Dayxx 小标签（一行解决，不再开第三行） */}
+                      <div className="flex items-baseline justify-center gap-1 min-w-0">
+                        <span className="font-bold text-[11px] leading-tight truncate">
+                          {s.title}
+                        </span>
+                        <span
+                          className={`shrink-0 text-[8px] font-semibold opacity-70 ${
+                            config.theme === 'modern' ? 'text-slate-500' : 'text-slate-300'
+                          }`}
+                        >
+                          · {s.range.replace('Day ', '')}
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            ) : config.dayRoadmap && config.dayRoadmap.length > 0 ? (
+              <div className={`grid gap-1 text-[9px] font-semibold ${roadmapGridClass}`}>
+                {config.dayRoadmap.map((d) => (
+                  <div
+                    key={d.day}
+                    className={`p-1.5 rounded-lg border text-center ${
+                      config.theme === 'modern' ? 'bg-slate-100 border-slate-200' : 'bg-white/10 border-white/10'
+                    }`}
+                  >
+                    {d.title}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className={`grid gap-1 text-[9px] font-semibold ${roadmapGridClass}`}>
+                {Array.from({ length: slidesCount }, (_, i) => i + 1).map((day) => (
+                  <div
+                    key={day}
+                    className={`p-1.5 rounded-lg border text-center ${
+                      config.theme === 'modern' ? 'bg-slate-100 border-slate-200' : 'bg-white/10 border-white/10'
+                    }`}
+                  >
+                    D{day}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
 
@@ -245,7 +367,7 @@ export const SummerPosterLayout: React.FC<SummerPosterLayoutProps> = ({
                     ? 'bg-amber-400/20 text-amber-300 border-amber-400/40'
                     : 'bg-indigo-500/20 text-indigo-300 border-indigo-400/40'
                 }`}>
-                  {config.contactTitle || '软件学院指导老师'}
+                  {config.contactTitle || '软件学院指导'}
                 </span>
               </div>
               <div className="flex items-center space-x-1 text-[11px] opacity-90 font-medium truncate">

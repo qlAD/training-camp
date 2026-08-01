@@ -127,17 +127,17 @@ export const day01Deck: DayDeckRenderer = {
         subtitle: '全链路国产工具',
         layout: 'steps',
         instructorNotes:
-          '三段链路逐段展开：生成（TRAE CN/豆包/DeepSeek）→ 托管（Gitee）→ 部署（阿里云）。强调国产、免费、一站打通。',
+          '三段链路逐段展开：生成（TRAE IDE/DeepSeek）→ 托管（Gitee）→ 部署（阿里云）。强调国产、免费、一站打通。',
         keyTakeaway: '工具链三段：生成 / 托管 / 部署，全链路国产',
       },
       {
         id: 'd1-s09',
         title: '今天先认识五位搭档',
-        subtitle: 'TRAE CN · 豆包 · DeepSeek · Gitee · 阿里云',
+        subtitle: 'TRAE IDE · DeepSeek · Gitee · 阿里云',
         layout: 'concept',
         instructorNotes:
-          '五枚徽章逐个弹入。今天只要求"认个脸熟"，后面每天都会深入使用。不展开细节，保持节奏。',
-        keyTakeaway: '五位搭档：TRAE CN / 豆包 / DeepSeek / Gitee / 阿里云',
+          '三位徽章逐个弹入。今天只要求"认个脸熟"，后面每天都会深入使用。不展开细节，保持节奏。',
+        keyTakeaway: '三位工具搭档：TRAE IDE / DeepSeek / Gitee',
       },
       {
         id: 'd1-s10',

@@ -428,14 +428,14 @@ export const SummerPlanLayout: React.FC<SummerPlanLayoutProps> = ({
             <GraduationCap className="h-4 w-4 text-indigo-600 shrink-0" />
             <div>
               <span className="text-[10px] text-slate-400 block">招募对象</span>
-              <span className="font-bold text-slate-800">{meta.target || '全校低年级 / 零基础'}</span>
+              <span className="font-bold text-slate-800">{meta.target}</span>
             </div>
           </div>
           <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center space-x-2">
             <BadgeCheck className="h-4 w-4 text-emerald-600 shrink-0" />
             <div>
               <span className="text-[10px] text-slate-400 block">结营证书</span>
-              <span className="font-bold text-slate-800">官方颁发</span>
+              <span className="font-bold text-slate-800">官方/社团颁发</span>
             </div>
           </div>
           <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center space-x-2">
