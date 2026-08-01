@@ -22,8 +22,9 @@ export const ControlStatusBar: React.FC<ControlStatusBarProps> = ({
     'p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-all disabled:opacity-30 disabled:hover:bg-white/10';
 
   return (
-    <div className="px-5 py-2.5 shrink-0 border-t border-white/10 flex items-center justify-between gap-4 text-xs text-slate-300 relative z-10">
-      <div className="flex items-center gap-2">
+    <div className="absolute bottom-0 left-0 right-0 px-5 py-2.5 shrink-0 flex items-center justify-between gap-4 text-xs text-slate-300 z-20 pointer-events-none">
+      {/* 外层完全透明，内层交互节点重开 pointer-events */}
+      <div className="flex items-center gap-2 pointer-events-auto">
         <button onClick={onPrev} disabled={currentSlideIndex === 0} className={ctrlBtn} title="上一页">
           <ChevronLeft className="h-4 w-4" />
         </button>

@@ -9,7 +9,7 @@ export const DualSketchWatermark: React.FC = () => (
         className="w-full h-full object-contain brightness-125"
       />
     </div>
-    <div className="absolute -bottom-6 left-2 w-44 h-44 opacity-35 invert pointer-events-none select-none transform -rotate-12">
+    <div className="absolute -bottom-2 left-2 w-44 h-44 opacity-35 invert pointer-events-none select-none transform -rotate-12">
       <img
         src="/club-sketch.svg"
         alt="社团 Sketch 课件水印"
