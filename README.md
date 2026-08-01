@@ -83,6 +83,24 @@ npm run build
 npm run start
 ```
 
+### Docker Compose 部署
+
+项目通过 `output: "standalone"` 输出最小化运行产物，配合多阶段 Dockerfile 构建轻量生产镜像。
+
+**前置要求**：已安装 [Docker](https://www.docker.com/) 与 [Docker Compose](https://docs.docker.com/compose/)。
+
+```bash
+# 构建并启动容器
+docker compose up -d --build
+```
+
+- 访问 [http://localhost:3000](http://localhost:3000)
+- 查看日志：`docker compose logs -f`
+- 停止并移除容器：`docker compose down`
+- 重启容器：`docker compose restart`
+
+端口映射可在 `docker-compose.yml` 中调整（`"3000:3000"` 为「宿主机端口:容器端口」）。
+
 ## 功能模块详解
 
 ### 集训营门户首页
@@ -187,10 +205,13 @@ training-camp/
 │   │       └── 2026-winter/        # 2026 寒假营（planning，空壳）
 │   │           └── index.ts
 │   └── types.ts                    # 全局 TypeScript 类型（8 个核心接口）
-├── next.config.ts                  # Next.js 配置
+├── next.config.ts                  # Next.js 配置（output: standalone）
 ├── postcss.config.mjs              # PostCSS + Tailwind 4 配置
 ├── eslint.config.mjs               # ESLint 9 配置
 ├── tsconfig.json                   # TypeScript 配置（严格模式）
+├── Dockerfile                      # 多阶段 Docker 构建
+├── docker-compose.yml              # Docker Compose 编排
+├── .dockerignore                   # Docker 构建忽略清单
 └── package.json
 ```
 

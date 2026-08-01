@@ -1,0 +1,12 @@
+services:
+  training-camp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: training-camp:latest
+    container_name: training-camp
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
