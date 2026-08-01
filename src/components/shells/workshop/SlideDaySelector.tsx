@@ -41,7 +41,7 @@ export const SlideDaySelector: React.FC<SlideDaySelectorProps> = ({
   readyMap,
   className = '',
   headerText = '课程日',
-  accentTone = 'sky',
+  accentTone = 'indigo',
 }) => {
   const total = Math.max(1, maxDay);
   return (

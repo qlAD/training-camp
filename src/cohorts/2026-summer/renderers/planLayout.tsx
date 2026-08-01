@@ -390,12 +390,12 @@ export const SummerPlanLayout: React.FC<SummerPlanLayoutProps> = ({
       {/* 封面标题 */}
       <div className="border-b border-slate-200 pb-8 space-y-5 text-center sm:text-left relative z-10 print-avoid-break">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center space-x-2 bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-200 shadow-2xs">
+          <div className="flex items-center space-x-2 bg-slate-50 px-2.5 h-9 rounded-lg border border-slate-200 shadow-2xs">
             <img src="/school-logo.svg" alt="软件学院 Logo" className="h-6 w-auto object-contain" />
             <div className="h-4 w-px bg-slate-300" />
             <img src="/club-logo.svg" alt="AI创新应用社 Logo" className="h-6 w-auto object-contain" />
           </div>
-          <div className="inline-block px-3 py-1 rounded-md bg-indigo-50 border border-indigo-200 text-indigo-700 text-xs font-bold uppercase tracking-wider">
+          <div className="flex items-center justify-center px-3 h-9 rounded-md bg-indigo-50 border border-indigo-200 text-indigo-700 text-xs font-bold uppercase tracking-wider">
             AI 创新应用社 官方策划案
           </div>
         </div>

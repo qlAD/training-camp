@@ -48,8 +48,8 @@ export default function Home() {
 
       {/* Minimal Portal Footer with Logo Integration */}
       <footer className="no-print border-t border-slate-200 bg-white py-6 text-center text-xs text-slate-500">
-        <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="flex items-center space-x-2.5">
+        <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-0 sm:space-x-2.5">
             <div className="flex items-center space-x-1.5 px-2 py-1 bg-slate-100 rounded-lg border border-slate-200">
               <img src="/school-logo.svg" alt="软件学院" className="h-5 w-auto object-contain" />
               <div className="h-3 w-px bg-slate-300" />
@@ -57,7 +57,7 @@ export default function Home() {
             </div>
             <span className="font-semibold text-slate-700">{SITE_CONFIG.orgFullName} · {SITE_CONFIG.portalTitle}</span>
           </div>
-          <div className="text-slate-400 font-medium">{SITE_CONFIG.footerText}</div>
+          <div className="text-slate-400 font-medium leading-relaxed">{SITE_CONFIG.footerText}</div>
         </div>
       </footer>
     </div>

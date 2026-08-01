@@ -19,6 +19,11 @@ import {
   ZoomIn,
   ZoomOut,
   RotateCcw,
+  LayoutGrid,
+  FileText,
+  Image as ImageIcon,
+  Presentation,
+  MonitorX,
 } from 'lucide-react';
 
 import { Navbar } from '@/components/shells/portal/Navbar';
@@ -118,11 +123,42 @@ export default function CohortWorkshop({ materials }: CohortWorkshopProps) {
     materials.posterConfig
   );
   const [posterZoom, setPosterZoom] = useState<number>(1);
+  const [posterAvailableWidth, setPosterAvailableWidth] = useState<number>(540);
+  const posterStageOuterRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     // 切期数时重置为初始配置
     setPosterConfig(materials.posterConfig);
     setPosterZoom(1);
   }, [materials]);
+  // ResizeObserver: 观测滚动容器可用宽度（不被自身缩放影响，避免回路）
+  useEffect(() => {
+    if (currentView !== 'poster') return;
+    const el = posterStageOuterRef.current;
+    if (!el) return;
+    const compute = () => {
+      const w = el.getBoundingClientRect().width;
+      if (w > 0) {
+        setPosterAvailableWidth((prev) =>
+          Math.abs(w - prev) > 1 ? w : prev
+        );
+      }
+    };
+    compute();
+    const ro = new ResizeObserver(() => compute());
+    ro.observe(el);
+    window.addEventListener('resize', compute);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener('resize', compute);
+    };
+  }, [currentView]);
+  // 默认适配缩放：可用宽度 < 540 时等比缩小，避免挤压；超出 540 时不放大（留白居中）
+  const posterAutoFitScale = Math.min(1, posterAvailableWidth / 540);
+  // 最终缩放：自适应基础 × 用户手动点击的 zoom 倍率
+  const posterFinalScale = posterAutoFitScale * posterZoom;
+  // 占位容器精确尺寸 = 缩放后真实视觉尺寸，保证不溢出、不撑破相邻布局
+  const posterScaledWidth = 540 * posterFinalScale;
+  const posterScaledHeight = 960 * posterFinalScale;
 
   /* ============================================================
    * 3) 🎬 幻灯片视图专属状态（从旧 SlideDeckView 搬共享交互）
@@ -302,7 +338,7 @@ export default function CohortWorkshop({ materials }: CohortWorkshopProps) {
         slidesCount={materials.slidesData.length}
       />
 
-      <main className="flex-1">
+      <main className="flex-1 pb-20 md:pb-0">
         {/* ========= 视图 0：概览 ========= */}
         {currentView === 'overview' && (
           <MaterialOverview
@@ -499,28 +535,41 @@ export default function CohortWorkshop({ materials }: CohortWorkshopProps) {
                 />
               </aside>
 
-              <div className="lg:col-span-3 xl:col-span-3 w-full flex flex-col items-center justify-start py-2 overflow-x-auto pb-8">
-                {/* scale 包装器：用 mx-auto + origin-top 保证居中且从顶开始缩放，
-                    transform scale 不占 DOM 空间，外层加 pb-8/overflow-x-auto 兜底 */}
+              <div
+                ref={posterStageOuterRef}
+                className="lg:col-span-3 xl:col-span-3 w-full overflow-auto scrollbar-hidden py-2 pb-8 min-w-0"
+              >
+                {/* 占位容器：宽高精确 = 540 × 960 缩放后的真实视觉尺寸，
+                    保证 transform scale 后不向下溢出、不撑破布局；zoom>1 时外层 overflow-auto 提供滚动查看 */}
                 <div
-                  className="origin-top mx-auto transition-transform w-full flex justify-center"
-                  style={{ transform: `scale(${posterZoom})` }}
+                  className="relative mx-auto shrink-0"
+                  style={{
+                    width: `${posterScaledWidth}px`,
+                    height: `${posterScaledHeight}px`,
+                  }}
                 >
-                  {PosterRenderer ? (
-                    <PosterRenderer
-                      config={posterConfig}
-                      meta={materials.meta}
-                      canvasRef={posterCanvasRef}
-                      isExporting={false}
-                    />
-                  ) : (
-                    <div
-                      ref={posterCanvasRef}
-                      className="w-[540px] rounded-3xl border-2 border-dashed border-slate-300 bg-white aspect-[9/16] flex items-center justify-center text-slate-400 text-sm"
-                    >
-                      本期未配置 posterLayoutRenderer
-                    </div>
-                  )}
+                  {/* 内层：absolute 脱离文档流，从左上角 origin-top-left 按最终比例整体 scale，
+                      海报内容始终保持 540px 基准不挤压 */}
+                  <div
+                    className="absolute top-0 left-0 origin-top-left transition-transform"
+                    style={{ transform: `scale(${posterFinalScale})` }}
+                  >
+                    {PosterRenderer ? (
+                      <PosterRenderer
+                        config={posterConfig}
+                        meta={materials.meta}
+                        canvasRef={posterCanvasRef}
+                        isExporting={false}
+                      />
+                    ) : (
+                      <div
+                        ref={posterCanvasRef}
+                        className="w-[540px] shrink-0 rounded-3xl border-2 border-dashed border-slate-300 bg-white aspect-[9/16] flex items-center justify-center text-slate-400 text-sm"
+                      >
+                        本期未配置 posterLayoutRenderer
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -707,6 +756,28 @@ export default function CohortWorkshop({ materials }: CohortWorkshopProps) {
                       </>
                     )}
                   </div>
+
+                  {/* 小屏尺寸过小提示遮罩：仅 < md 且非全屏时显示，覆盖舞台避免内容挤压 */}
+                  {!isFullscreen && (
+                    <div className="md:hidden absolute inset-0 z-40 rounded-3xl overflow-hidden pointer-events-auto">
+                      <div className="w-full h-full bg-slate-950/95 backdrop-blur-xl flex flex-col items-center justify-center p-6 sm:p-8 text-center space-y-4">
+                        <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-400/20">
+                          <MonitorX className="h-9 w-9 sm:h-10 sm:w-10 text-amber-400" />
+                        </div>
+                        <div className="space-y-2">
+                          <h3 className="text-white font-bold text-base sm:text-lg">
+                            当前屏幕尺寸过小
+                          </h3>
+                          <p className="text-slate-400 text-xs sm:text-sm leading-relaxed max-w-[260px] mx-auto">
+                            幻灯片演示建议在 768px 以上宽度的屏幕上浏览
+                          </p>
+                          <p className="text-amber-400/90 text-[11px] sm:text-xs font-semibold">
+                            请使用电脑或平板横屏展示
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* 讲师备注 */}
@@ -770,34 +841,96 @@ export default function CohortWorkshop({ materials }: CohortWorkshopProps) {
 
       {/* ========= 底栏 ========= */}
       <footer className="no-print border-t border-slate-200 bg-white py-6 mt-12 text-center text-xs text-slate-500">
-        <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="flex items-center space-x-3">
+        <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-0 sm:space-x-3">
             <div className="flex items-center space-x-1.5 px-2 py-1 bg-slate-100 rounded-lg border border-slate-200 shadow-2xs">
               <img src="/school-logo.svg" alt="软件学院" className="h-5 w-auto object-contain" />
               <div className="h-3 w-px bg-slate-300" />
               <img src="/club-logo.svg" alt="AI创新应用社" className="h-5 w-auto object-contain" />
             </div>
-            <button
-              onClick={() => router.push('/')}
-              className="font-semibold text-indigo-600 hover:text-indigo-800 hover:underline flex items-center space-x-1"
-            >
-              <ArrowLeft className="h-3 w-3" />
-              <span>返回训练营门户</span>
-            </button>
-            <span className="text-slate-300">|</span>
-            <span className="font-semibold text-slate-700">
-              {materials.meta.title} · {materials.meta.materialsCount} 项交付物在线物料库
-            </span>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-0">
+              <button
+                onClick={() => router.push('/')}
+                className="font-semibold text-indigo-600 hover:text-indigo-800 hover:underline flex items-center justify-center space-x-1"
+              >
+                <ArrowLeft className="h-3 w-3" />
+                <span>返回训练营门户</span>
+              </button>
+              <span className="hidden sm:inline text-slate-300 mx-2">|</span>
+              <span className="font-semibold text-slate-700">
+                {materials.meta.title} · {materials.meta.materialsCount} 项交付物在线物料库
+              </span>
+            </div>
           </div>
-          <div className="flex items-center space-x-4 text-slate-400 font-medium">
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-slate-400 font-medium leading-relaxed">
             <span>软件学院 · AI 创新应用社</span>
-            <span>·</span>
+            <span className="hidden sm:inline">·</span>
             <span>
               {materials.meta.year} {materials.meta.season}
             </span>
           </div>
         </div>
       </footer>
+
+      {/* 小屏占位：滚动到最底部时为悬浮 Dashbar 预留空间，避免遮住 footer；背景与 footer 统一 */}
+      <div className="md:hidden h-[72px] shrink-0 bg-white" aria-hidden="true" />
+
+      {/* ========= 小屏悬浮 Dashbar（物料大厅/方案/海报/幻灯片 快速切换入口） ========= */}
+      <nav className="md:hidden no-print fixed bottom-3 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-1.5rem)] max-w-sm">
+        <div className="relative">
+          <div className="absolute inset-0 rounded-2xl bg-white border border-slate-200/80 shadow-lg" />
+          <div className="relative grid grid-cols-4 items-center p-1 rounded-2xl">
+            {([
+              {
+                id: 'overview' as const,
+                label: '物料大厅',
+                Icon: LayoutGrid,
+                activeColor: 'text-indigo-600',
+                activeBg: 'bg-indigo-50 border-indigo-100',
+              },
+              {
+                id: 'plan' as const,
+                label: '训练营方案',
+                Icon: FileText,
+                activeColor: 'text-emerald-600',
+                activeBg: 'bg-emerald-50 border-emerald-100',
+              },
+              {
+                id: 'poster' as const,
+                label: '宣传海报',
+                Icon: ImageIcon,
+                activeColor: 'text-amber-600',
+                activeBg: 'bg-amber-50 border-amber-100',
+              },
+              {
+                id: 'slides' as const,
+                label: '课程幻灯片',
+                Icon: Presentation,
+                activeColor: 'text-rose-600',
+                activeBg: 'bg-rose-50 border-rose-100',
+              },
+            ]).map(({ id, label, Icon, activeColor, activeBg }) => {
+              const active = currentView === id;
+              return (
+                <button
+                  key={id}
+                  onClick={() => setCurrentView(id)}
+                  className={`relative flex flex-col items-center justify-center gap-0.5 py-2 px-1 rounded-xl transition-all ${
+                    active
+                      ? `${activeBg} border ${activeColor} font-semibold`
+                      : 'text-slate-500 hover:text-slate-800 hover:bg-slate-100/60 border border-transparent'
+                  }`}
+                >
+                  <Icon className={`h-4.5 w-4.5 ${active ? activeColor : 'text-slate-500'}`} />
+                  <span className={`text-[10px] leading-tight text-center ${active ? activeColor : 'text-slate-600'}`}>
+                    {label}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </nav>
     </div>
   );
 }

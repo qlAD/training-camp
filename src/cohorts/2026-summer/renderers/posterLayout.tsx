@@ -42,9 +42,9 @@ export const SummerPosterLayout: React.FC<SummerPosterLayoutProps> = ({
   return (
     <div
       ref={canvasRef}
-      className={`w-full max-w-[540px] ${
-        isExporting ? 'rounded-none border-0 shadow-none' : 'rounded-3xl shadow-2xl border-2'
-      } overflow-hidden transition-all relative ${
+      className={`w-[540px] shrink-0 ${
+        isExporting ? 'rounded-none border-0 shadow-none' : 'rounded-3xl border-2'
+      } overflow-hidden transition-all relative aspect-[9/16] ${
         config.theme === 'tech'
           ? 'bg-gradient-to-b from-slate-950 via-slate-900 to-indigo-950 text-white border-amber-500/30'
           : config.theme === 'academic'

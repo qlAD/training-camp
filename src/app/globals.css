@@ -37,6 +37,15 @@
   background: #94a3b8;
 }
 
+/* Hide scrollbar but keep scroll ability (cross-browser) */
+.scrollbar-hidden {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
 /* Stage-internal scroll areas: dark theme thin scrollbar (overrides global light style) */
 .stage-scroll-scope * {
   scrollbar-width: thin;

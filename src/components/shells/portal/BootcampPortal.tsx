@@ -350,7 +350,7 @@ export const BootcampPortal: React.FC<BootcampPortalProps> = ({ cohorts, siteCon
         {/* Filter & Search Bar */}
         <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           {/* Status Tabs */}
-          <div className="flex items-center space-x-1.5 overflow-x-auto pb-1 md:pb-0">
+          <div className="flex items-center space-x-1.5 overflow-x-auto scrollbar-hidden">
             {[
               { id: 'all', label: `全部期数 (${cohorts.length})` },
               { id: 'active', label: `🔥 进行中/已上线 (${countByStatus.active})` },

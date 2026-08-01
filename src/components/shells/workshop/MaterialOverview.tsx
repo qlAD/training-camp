@@ -258,12 +258,15 @@ export const MaterialOverview: React.FC<MaterialOverviewProps> = ({
         {/* Section 2: 14 Course Slide Decks */}
         {showSlides && (
           <div>
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-base font-bold text-slate-900 flex items-center space-x-2">
-                <Presentation className="h-4 w-4 text-amber-500" />
-                <span>课程演示幻灯片全套 (物料 #3 - #{materialsCount} · 共 {slidesCount} 课时)</span>
+            <div className="flex items-center justify-between gap-3 mb-4">
+              <h2 className="text-base font-bold text-slate-900 flex items-start space-x-2 min-w-0">
+                <Presentation className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" />
+                <div className="flex flex-col gap-0.5 min-w-0">
+                  <span className="whitespace-nowrap">课程演示幻灯片全套</span>
+                  <span className="text-slate-500 font-medium text-[11px] sm:text-xs">(物料 #3 - #{materialsCount} · 共 {slidesCount} 课时)</span>
+                </div>
               </h2>
-              <span className="text-xs text-slate-500">点击任意课时卡片直接进入全屏演示模式</span>
+              <span className="text-[12px] sm:text-xs text-slate-500 text-right shrink-0 leading-snug max-w-[45%] sm:max-w-none">点击任意课时卡片直接进入全屏演示模式</span>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
