@@ -1,8 +1,7 @@
 'use client';
 
-import { BootcampPortal } from '@/components/BootcampPortal';
-import { COHORTS_LIST } from '@/data/cohortsRegistry';
-import { SITE_CONFIG } from '@/data/siteConfig';
+import { BootcampPortal } from '@/components/shells/portal/BootcampPortal';
+import { COHORTS_LIST, SITE_CONFIG } from '@/registry';
 
 export default function Home() {
   return (
