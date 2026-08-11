@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { BookOpen, Search } from 'lucide-react';
@@ -7,7 +7,7 @@ import { useTimeline } from '../scene/TimelineScene';
 import { EASE } from '../scene/theme';
 
 interface PhoneBookProps {
-  /** 时间轴位置 */
+  /* 时间轴位置 */
   at: number;
   className?: string;
 }
@@ -18,7 +18,7 @@ const ENTRIES: [string, string][] = [
   ['gitee.com', '120.55.55.55'],
 ];
 
-/** DNS 通讯录：域名→IP 翻译（0 封面 1-3 条目 4 高亮 5 总结） */
+/* DNS 通讯录：域名→IP 翻译（0 封面 1-3 条目 4 高亮 5 总结） */
 export const PhoneBook: React.FC<PhoneBookProps> = ({ at, className = '' }) => {
   const { active } = useTimeline();
   const s = (i: number) => active >= at + i;

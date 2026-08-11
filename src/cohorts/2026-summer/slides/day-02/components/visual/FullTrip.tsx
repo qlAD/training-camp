@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { MousePointerClick, Search, Send, Server, Download, Eye } from 'lucide-react';
@@ -7,7 +7,7 @@ import { useTimeline } from '../scene/TimelineScene';
 import { EASE } from '../scene/theme';
 
 interface FullTripProps {
-  /** 时间轴位置 */
+  /* 时间轴位置 */
   at: number;
   className?: string;
 }
@@ -21,7 +21,7 @@ const STEPS = [
   { icon: Eye, label: '渲染页面' },
 ];
 
-/** 一次完整旅程：六段流水线逐段点亮（0-5 六段 6 总结），7 段 */
+/* 一次完整旅程：六段流水线逐段点亮（0-5 六段 6 总结），7 段 */
 export const FullTrip: React.FC<FullTripProps> = ({ at, className = '' }) => {
   const { active } = useTimeline();
   const s = (i: number) => active >= at + i;

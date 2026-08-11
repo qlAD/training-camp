@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion } from 'motion/react';
@@ -14,14 +14,14 @@ export interface NetNode {
 }
 
 interface NetworkMeshProps {
-  /** 时间轴位置：active >= at 后节点/连线逐项点亮 */
+  /* 时间轴位置：active >= at 后节点/连线逐项点亮 */
   at: number;
   nodes: NetNode[];
   edges?: [string, string][];
   className?: string;
 }
 
-/** 网络拓扑：hub 先现 → 节点逐颗弹出 → 连线逐条点亮并脉冲，营造"网"的生长感 */
+/* 网络拓扑：hub 先现 → 节点逐颗弹出 → 连线逐条点亮并脉冲，营造"网"的生长感 */
 export const NetworkMesh: React.FC<NetworkMeshProps> = ({ at, nodes, edges = [], className = '' }) => {
   const { active } = useTimeline();
   const pos = (id: string) => nodes.find((n) => n.id === id)!;

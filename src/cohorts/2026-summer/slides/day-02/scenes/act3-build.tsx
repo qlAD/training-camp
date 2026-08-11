@@ -1,153 +1,151 @@
 'use client';
 
 import React from 'react';
+import { motion } from 'motion/react';
 import { TimelineScene } from '../components/scene/TimelineScene';
 import { RevealLayer } from '../components/kinetic/RevealLayer';
 import { GlowTitle } from '../components/kinetic/GlowTitle';
 import { PopCards } from '../components/kinetic/PopCards';
 import { NetGrid } from '../components/fx/NetGrid';
-import { FullTrip } from '../components/visual/FullTrip';
-import { TerminalTape, InstallJob } from '../components/visual/TerminalTape';
-import { GitPush } from '../components/visual/GitPush';
-import { MiniQuiz, QuizQ } from '../components/visual/MiniQuiz';
+import { DataRipple } from '../components/fx/DataRipple';
+import { GitFlow } from '../components/visual/GitFlow';
+import { Checkoff } from '../components/visual/Checkoff';
+import { EASE, COLORS } from '../components/scene/theme';
 
-/* ---------- 镜头 13：一次完整旅程 ---------- */
-export const Shot13Trip: React.FC = () => (
-  <TimelineScene length={7}>
-    <NetGrid />
-    <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-6 px-10">
-      <RevealLayer index={0}>
-        <GlowTitle text="一次完整的旅程" sub="点击 → DNS → 请求 → 响应 → 渲染" />
-      </RevealLayer>
-      <RevealLayer index={1} className="w-full">
-        <FullTrip at={1} />
-      </RevealLayer>
-    </div>
-  </TimelineScene>
-);
-
-/* ---------- 镜头 14：装好三件套 ---------- */
-const INSTALL_JOBS: InstallJob[] = [
-  {
-    title: 'JDK 21',
-    cmd: 'java --version',
-    lines: [
-      '下载 JDK 21 …',
-      '配置 JAVA_HOME …',
-      '检测安装 …',
-    ],
-    ok: 'openjdk 21.0.2 ✓',
-  },
-  {
-    title: 'Node.js',
-    cmd: 'node -v',
-    lines: [
-      '下载 Node 20 LTS …',
-      'npm 注册 …',
-      '检测安装 …',
-    ],
-    ok: 'v20.11.1 ✓',
-  },
-  {
-    title: 'Git',
-    cmd: 'git --version',
-    lines: [
-      '下载 Git 2.43 …',
-      '初始化全局配置 …',
-      '检测安装 …',
-    ],
-    ok: 'git version 2.43.0 ✓',
-  },
+/* ---------- 镜头 14：今日实操清单 ---------- */
+const STEP_CARDS = [
+  { icon: '⌨️', title: '终端命令反复练', desc: 'ls / cd / mkdir / touch 滚瓜烂熟' },
+  { icon: '🌿', title: 'Git Gitee 完整推拉', desc: 'init → add → commit → push → pull' },
+  { icon: '📝', title: '独立写 Markdown 文档', desc: '标题 / 列表 / 代码块 / 引用 / 链接' },
+  { icon: '🔥', title: 'TRAE IDE 打开项目', desc: '工程目录 · 文件树 · 终端集成' },
 ];
 
-export const Shot14Install: React.FC = () => (
-  <TimelineScene length={3}>
-    <NetGrid />
-    <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-6 px-10">
+export const Shot14HandsOn: React.FC = () => (
+  <TimelineScene length={5}>
+    <DataRipple />
+    <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-5 px-10">
       <RevealLayer index={0}>
-        <GlowTitle text="装好三件套" sub="JDK · Node.js · Git —— 装完验证版本号" />
+        <GlowTitle text="今天的实操" sub="四件事，一件件过手" />
       </RevealLayer>
-      <RevealLayer index={1} className="w-full">
-        <TerminalTape at={1} jobs={INSTALL_JOBS} />
+      <div className="grid w-full max-w-3xl grid-cols-2 gap-3">
+        {STEP_CARDS.map((card, i) => (
+          <RevealLayer key={card.title} index={i + 1}>
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45, ease: EASE }}
+              className="flex items-start gap-3 rounded-2xl border border-white/10 bg-slate-950/50 p-4"
+              style={{
+                boxShadow: `0 0 16px ${COLORS.sky}22`,
+                borderColor: `${COLORS.sky}33`,
+              }}
+            >
+              <span className="text-2xl">{card.icon}</span>
+              <div>
+                <p className="font-bold text-slate-100">{card.title}</p>
+                <p className="mt-0.5 text-xs text-slate-400">{card.desc}</p>
+              </div>
+            </motion.div>
+          </RevealLayer>
+        ))}
+      </div>
+      <RevealLayer index={5}>
+        <p className="bg-gradient-to-r from-sky-200 via-teal-200 to-lime-200 bg-clip-text text-center text-base font-black text-transparent">
+          让每一件工具都听你使唤
+        </p>
       </RevealLayer>
     </div>
   </TimelineScene>
 );
 
-/* ---------- 镜头 15：代码放进云端 ---------- */
-export const Shot15Git: React.FC = () => (
+/* ---------- 镜头 15：代码版本托管闭环 ---------- */
+export const Shot15VersionFlow: React.FC = () => (
+  <TimelineScene length={5}>
+    <NetGrid />
+    <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-6 px-10">
+      <RevealLayer index={0}>
+        <GlowTitle text="代码版本托管闭环" sub="先 pull 后 push，养成肌肉记忆" />
+      </RevealLayer>
+      <RevealLayer index={1} className="w-full">
+        <GitFlow at={1} />
+      </RevealLayer>
+      <RevealLayer index={5}>
+        <p className="bg-gradient-to-r from-sky-200 via-teal-200 to-lime-200 bg-clip-text text-center text-base font-black text-transparent">
+          先 pull 后推是好习惯，养成肌肉记忆
+        </p>
+      </RevealLayer>
+    </div>
+  </TimelineScene>
+);
+
+/* ---------- 镜头 16：作业与自测清单 ---------- */
+const HOMEWORK_ITEMS = [
+  '写 Markdown 笔记',
+  '初始化 homework Git 仓库',
+  '关联 Gitee 远程',
+  '推送所有作业',
+];
+
+const SELF_CHECK_ITEMS = [
+  '能在终端用 ls / cd 浏览目录',
+  '能用 git init 初始化仓库',
+  '能用 git add + git commit 提交文件',
+  '能关联 Gitee 远程仓库',
+  '能用 git push 推送代码',
+  '能用 git pull 拉取更新',
+  '能用 Markdown 写一篇笔记',
+];
+
+export const Shot16Homework: React.FC = () => (
   <TimelineScene length={6}>
-    <NetGrid />
-    <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-6 px-10">
+    <DataRipple />
+    <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-4 px-10">
       <RevealLayer index={0}>
-        <GlowTitle text="把代码放进云端" sub="git init → add → commit → push" />
+        <GlowTitle text="今日作业" />
       </RevealLayer>
       <RevealLayer index={1} className="w-full">
-        <GitPush at={1} />
+        <Checkoff at={1} items={HOMEWORK_ITEMS} />
       </RevealLayer>
-    </div>
-  </TimelineScene>
-);
-
-/* ---------- 镜头 16：三题验收 ---------- */
-const QUIZ: QuizQ[] = [
-  {
-    q: 'DNS 的主要作用是？',
-    options: ['把域名翻译成 IP', '给网页加锁', '加速网络下载'],
-    answer: 0,
-    explain: 'DNS 就是互联网的通讯录：记名字，翻译成数字。',
-  },
-  {
-    q: 'URL 里的 https:// 叫做？',
-    options: ['域名', '端口', '协议'],
-    answer: 2,
-    explain: '协议告诉浏览器「怎么寄信」：https 是加密传输。',
-  },
-  {
-    q: '打开网页看到 404，最可能的原因是？',
-    options: ['服务器崩了', '页面不存在', '网络断了'],
-    answer: 1,
-    explain: '404 = 地址写错或内容不存在，先检查你的 URL。',
-  },
-];
-
-export const Shot16Quiz: React.FC = () => (
-  <TimelineScene length={2}>
-    <NetGrid />
-    <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-6 px-10">
-      <RevealLayer index={0}>
-        <GlowTitle text="三题验收" sub="点一点，答对才算吸收" />
+      <RevealLayer index={4}>
+        <p className="text-sm font-bold text-teal-300">7 项自测清单</p>
       </RevealLayer>
-      <RevealLayer index={1} className="w-full">
-        <MiniQuiz questions={QUIZ} />
+      <RevealLayer index={5} className="w-full">
+        <Checkoff at={5} items={SELF_CHECK_ITEMS} />
+      </RevealLayer>
+      <RevealLayer index={6}>
+        <p className="bg-gradient-to-r from-sky-200 via-teal-200 to-lime-200 bg-clip-text text-center text-base font-black text-transparent">
+          7 项自测清单确保完整
+        </p>
       </RevealLayer>
     </div>
   </TimelineScene>
 );
 
 /* ---------- 镜头 17：总结预告 ---------- */
+const TAKEAWAYS = ['计算机底层认知', '工具链配齐', '第一个云端仓库'];
+
 export const Shot17Summary: React.FC = () => (
-  <TimelineScene length={7}>
+  <TimelineScene length={5}>
     <NetGrid />
     <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-5 px-10">
       <RevealLayer index={0}>
-        <GlowTitle text="今天收获" />
+        <GlowTitle text="Day 2 总结" />
       </RevealLayer>
       <RevealLayer index={1} className="w-full">
-        <PopCards at={1} words={['看得懂 DNS', '看得懂 HTTP', '环境三件套就绪', '代码进了 Gitee']} />
+        <PopCards at={1} words={TAKEAWAYS} />
       </RevealLayer>
-      <RevealLayer index={5} className="w-full">
+      <RevealLayer index={3} className="w-full">
         <div className="mx-auto flex w-full max-w-md items-center gap-4 rounded-2xl border border-amber-400/30 bg-amber-400/10 px-5 py-3.5 shadow-[0_0_24px_rgba(251,191,36,0.15)]">
           <span className="font-mono text-2xl font-black text-amber-300">DAY 3</span>
           <div className="text-left">
-            <p className="font-bold text-amber-100">给网页化妆</p>
+            <p className="font-bold text-amber-100">前端三剑客 + Vibe Coding 标准化</p>
             <p className="text-[11px] text-amber-200/70">HTML / CSS / JavaScript 极速入门</p>
           </div>
         </div>
       </RevealLayer>
-      <RevealLayer index={6}>
-        <p className="bg-gradient-to-r from-sky-200 via-teal-200 to-lime-200 bg-clip-text text-center text-lg font-black text-transparent">
-          Internet is our world. Build it, one request at a time.
+      <RevealLayer index={5}>
+        <p className="bg-gradient-to-r from-sky-200 via-teal-200 to-lime-200 bg-clip-text text-center text-base font-black text-transparent">
+          三收获 + 明日预告
         </p>
       </RevealLayer>
     </div>

@@ -1,37 +1,37 @@
-'use client';
+﻿'use client';
 
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
 
 export interface TimelineValue {
-  /** 当前已揭示的场景块数量（0 ~ length） */
+  /* 当前已揭示的场景块数量（0 ~ length） */
   active: number;
-  /** 时间轴总长 */
+  /* 时间轴总长 */
   total: number;
-  /** 全部揭示完成 */
+  /* 全部揭示完成 */
   completed: boolean;
 }
 
 const TimelineContext = createContext<TimelineValue>({ active: 0, total: 0, completed: false });
 
-/** 读取时间轴进度：visual/kinetic 组件通过它驱动自身动效 */
+/* 读取时间轴进度：visual/kinetic 组件通过它驱动自身动效 */
 export const useTimeline = () => useContext(TimelineContext);
 
 interface TimelineSceneProps {
-  /** 时间轴总长 = 场景块数量 */
+  /* 时间轴总长 = 场景块数量 */
   length: number;
-  /** 首块延迟（ms），默认 400 */
+  /* 首块延迟（ms），默认 400 */
   firstDelay?: number;
-  /** 块间隔（ms），默认 800 */
+  /* 块间隔（ms），默认 800 */
   stepDelay?: number;
-  /** 挂载即播，默认 true（视频感核心） */
+  /* 挂载即播，默认 true（视频感核心） */
   autoPlay?: boolean;
-  /** 全部揭示完成回调 */
+  /* 全部揭示完成回调 */
   onDone?: () => void;
   className?: string;
   children: React.ReactNode;
 }
 
-/**
+/*
  * 镜头容器：时间轴挂载即播、逐块推进。
  * 子元素用 <RevealLayer index={n}> 分块；visual 组件通过 useTimeline() 读取 active 驱动自身进度。
  * 约束：所有 setState 放在定时器回调内（规避 react-hooks/set-state-in-effect）；

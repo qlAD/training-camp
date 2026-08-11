@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion } from 'motion/react';
@@ -13,12 +13,12 @@ export interface PipelineStage {
 
 interface PipelineFlowProps {
   stages: PipelineStage[];
-  /** 起始场景序号：step k 点亮第 k 段（k=1..6） */
+  /* 起始场景序号：step k 点亮第 k 段（k=1..6） */
   at?: number;
   className?: string;
 }
 
-/** 流水线流光：分段从左到右依次点亮推进 + 进度条（镜头 14） */
+/* 流水线流光：分段从左到右依次点亮推进 + 进度条（镜头 14） */
 export const PipelineFlow: React.FC<PipelineFlowProps> = ({ stages, at = 0, className = '' }) => {
   const { active } = useScene();
   const step = Math.max(0, active - at);

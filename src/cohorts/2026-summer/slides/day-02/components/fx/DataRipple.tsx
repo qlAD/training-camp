@@ -1,9 +1,9 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion } from 'motion/react';
 
-/** 数据脉冲：从中心向外的双层扩散圆环（无限循环，作为镜头氛围） */
+/* 数据脉冲：从中心向外的双层扩散圆环（无限循环，作为镜头氛围） */
 export const DataRipple: React.FC<{ color?: string; className?: string }> = ({
   color = 'rgba(56,189,248,0.5)',
   className = '',

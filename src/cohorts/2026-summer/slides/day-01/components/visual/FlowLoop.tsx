@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion } from 'motion/react';
@@ -6,14 +6,14 @@ import { useScene } from '../scene/SceneSlide';
 import { COLORS, EASE } from '../scene/theme';
 
 interface FlowLoopProps {
-  /** 闭环节点（5 个） */
+  /* 闭环节点（5 个） */
   nodes: string[];
-  /** 起始场景序号：step k 点亮第 k 个节点（k=1..5），step 6 回流 */
+  /* 起始场景序号：step k 点亮第 k 个节点（k=1..5），step 6 回流 */
   at?: number;
   className?: string;
 }
 
-/** 闭环圆环：节点逐一点亮 + 环线流动 + 末节点回流（镜头 6） */
+/* 闭环圆环：节点逐一点亮 + 环线流动 + 末节点回流（镜头 6） */
 export const FlowLoop: React.FC<FlowLoopProps> = ({ nodes, at = 0, className = '' }) => {
   const { active } = useScene();
   const step = Math.max(0, active - at);

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
@@ -6,12 +6,12 @@ import { useStage } from '../scene/StageClock';
 import { EASE } from '../scene/theme';
 
 interface EventDemoProps {
-  /** 时间轴位置：active >= at+1 时展示"已点击"效果（自动连播也看得到） */
+  /* 时间轴位置：active >= at+1 时展示"已点击"效果（自动连播也看得到） */
   at: number;
   className?: string;
 }
 
-/** JS 交互 demo：真实可点的按钮（点击换字换色）；setState 全在点击事件回调 */
+/* JS 交互 demo：真实可点的按钮（点击换字换色）；setState 全在点击事件回调 */
 export const EventDemo: React.FC<EventDemoProps> = ({ at, className = '' }) => {
   const { active } = useStage();
   const [clicked, setClicked] = useState(false);

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion } from 'motion/react';
@@ -6,14 +6,14 @@ import { useStage } from '../scene/StageClock';
 import { EASE } from '../scene/theme';
 
 interface BrowserPreviewProps {
-  /** 时间轴位置：active >= at 时视口出现 */
+  /* 时间轴位置：active >= at 时视口出现 */
   at: number;
   title?: string;
   className?: string;
   children?: React.ReactNode;
 }
 
-/** 浏览器视口：仿浏览器窗口壳（地址栏 + 内容区），内容由调用方提供（实时渲染预览） */
+/* 浏览器视口：仿浏览器窗口壳（地址栏 + 内容区），内容由调用方提供（实时渲染预览） */
 export const BrowserPreview: React.FC<BrowserPreviewProps> = ({
   at,
   title = 'localhost',

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useMemo } from 'react';
 import { motion } from 'motion/react';
@@ -7,7 +7,7 @@ interface ParticleFieldProps {
   count?: number;
 }
 
-/** 漂浮粒子：transform/opacity 无限动画，数量 ≤20 保证性能 */
+/* 漂浮粒子：transform/opacity 无限动画，数量 ≤20 保证性能 */
 export const ParticleField: React.FC<ParticleFieldProps> = ({ count = 14 }) => {
   const particles = useMemo(
     () =>

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { User, Database, Globe } from 'lucide-react';
@@ -7,7 +7,7 @@ import { useTimeline } from '../scene/TimelineScene';
 import { EASE } from '../scene/theme';
 
 interface DNSTripProps {
-  /** 时间轴位置 */
+  /* 时间轴位置 */
   at: number;
   className?: string;
 }
@@ -20,7 +20,7 @@ const STOPS = [
   { icon: Database, label: '权威 DNS', sub: '最终答案' },
 ];
 
-/** DNS 解析旅程：逐跳查询（0-4 各节点 5 拿到IP回流 6 总结），6+ 段 */
+/* DNS 解析旅程：逐跳查询（0-4 各节点 5 拿到IP回流 6 总结），6+ 段 */
 export const DNSTrip: React.FC<DNSTripProps> = ({ at, className = '' }) => {
   const { active } = useTimeline();
   const s = (i: number) => active >= at + i;

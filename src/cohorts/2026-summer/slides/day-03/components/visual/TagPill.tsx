@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion } from 'motion/react';
@@ -6,13 +6,13 @@ import { useStage } from '../scene/StageClock';
 import { EASE } from '../scene/theme';
 
 interface TagPillProps {
-  /** 时间轴位置 */
+  /* 时间轴位置 */
   at: number;
   tags: { tag: string; example: string; cls?: string }[];
   className?: string;
 }
 
-/** 标签墙：HTML 标签逐个点亮，预览区对应出现示例内容（代码与预览联动） */
+/* 标签墙：HTML 标签逐个点亮，预览区对应出现示例内容（代码与预览联动） */
 export const TagPill: React.FC<TagPillProps> = ({ at, tags, className = '' }) => {
   const { active } = useStage();
   const s = (i: number) => active >= at + i;

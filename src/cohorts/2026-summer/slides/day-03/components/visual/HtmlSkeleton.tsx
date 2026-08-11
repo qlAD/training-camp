@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion } from 'motion/react';
@@ -6,7 +6,7 @@ import { useStage } from '../scene/StageClock';
 import { EASE } from '../scene/theme';
 
 interface HtmlSkeletonProps {
-  /** 时间轴位置 */
+  /* 时间轴位置 */
   at: number;
   className?: string;
 }
@@ -23,7 +23,7 @@ const TREE = [
   { level: 0, text: '</html>', tag: 'html' as const },
 ];
 
-/** HTML 骨架：结构树逐节点点亮（html/head/body 三层拆解） */
+/* HTML 骨架：结构树逐节点点亮（html/head/body 三层拆解） */
 export const HtmlSkeleton: React.FC<HtmlSkeletonProps> = ({ at, className = '' }) => {
   const { active } = useStage();
   const s = (i: number) => active >= at + i;

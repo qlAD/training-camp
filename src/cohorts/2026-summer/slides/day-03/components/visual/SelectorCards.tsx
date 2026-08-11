@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion } from 'motion/react';
@@ -6,7 +6,7 @@ import { useStage } from '../scene/StageClock';
 import { EASE } from '../scene/theme';
 
 interface SelectorCardsProps {
-  /** 时间轴位置 */
+  /* 时间轴位置 */
   at: number;
   className?: string;
 }
@@ -35,7 +35,7 @@ const SELECTORS = [
   },
 ];
 
-/** CSS 选择器三兄弟：标签 / 类 / ID 三张代码卡逐张弹入（0-2 卡片 3 总结） */
+/* CSS 选择器三兄弟：标签 / 类 / ID 三张代码卡逐张弹入（0-2 卡片 3 总结） */
 export const SelectorCards: React.FC<SelectorCardsProps> = ({ at, className = '' }) => {
   const { active } = useStage();
   const s = (i: number) => active >= at + i;

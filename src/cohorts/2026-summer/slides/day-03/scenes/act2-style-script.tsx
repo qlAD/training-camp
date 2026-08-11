@@ -4,57 +4,166 @@ import React from 'react';
 import { StageClock } from '../components/scene/StageClock';
 import { RevealFade } from '../components/kinetic/RevealFade';
 import { BigTitle } from '../components/kinetic/BigTitle';
+import { ChipPop } from '../components/kinetic/ChipPop';
 import { EditorGrid } from '../components/fx/EditorGrid';
-import { CodeWindow, CodeLine } from '../components/visual/CodeWindow';
-import { BrowserPreview } from '../components/visual/BrowserPreview';
+import { GlowDot } from '../components/fx/GlowDot';
+import { PlanSpecCompare } from '../components/visual/PlanSpecCompare';
+import { HtmlSkeleton } from '../components/visual/HtmlSkeleton';
 import { SelectorCards } from '../components/visual/SelectorCards';
-import { BoxModelView } from '../components/visual/BoxModelView';
 import { EventDemo } from '../components/visual/EventDemo';
+import { Trinity } from '../components/visual/Trinity';
+import { Plug, Settings, Key, CheckCircle2, Cpu } from 'lucide-react';
 
-/* ---------- 镜头 7：CSS 给标签上妆 ---------- */
-const SHOT07_LINES: CodeLine[] = [
-  { text: 'h1 {', color: '#38BDF8' },
-  { text: '  color: #38bdf8;', color: '#38BDF8' },
-  { text: '  font-size: 40px;', color: '#38BDF8' },
-  { text: '}', color: '#38BDF8' },
+/* ---------- 镜头 7：TRAE IDE 插件管理 ---------- */
+const PLUGINS = [
+  { name: 'TRAE AI', desc: '核心智能编程助手', status: '已安装', tone: 'text-emerald-300 border-emerald-400/30 bg-emerald-400/10' },
+  { name: 'Prettier', desc: '代码格式化工具', status: '已安装', tone: 'text-emerald-300 border-emerald-400/30 bg-emerald-400/10' },
+  { name: 'ESLint', desc: '代码规范检查', status: '已安装', tone: 'text-emerald-300 border-emerald-400/30 bg-emerald-400/10' },
+  { name: 'GitLens', desc: 'Git 增强工具', status: '推荐安装', tone: 'text-sky-300 border-sky-400/30 bg-sky-400/10' },
 ];
 
-export const Shot07Makeup: React.FC = () => (
+export const Shot07Plugins: React.FC = () => (
   <StageClock length={6}>
     <EditorGrid />
-    <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-4 px-10">
+    <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-5 px-10">
       <RevealFade index={0}>
-        <BigTitle text="CSS：给标签上妆" sub="color · background · font-size" />
+        <BigTitle text="TRAE IDE 插件管理" sub="工欲善其事，必先利其器" />
       </RevealFade>
       <RevealFade index={1} className="w-full">
-        <div className="mx-auto flex w-full max-w-3xl items-stretch gap-4">
-          <div className="min-w-0 flex-1">
-            <CodeWindow at={1} lines={SHOT07_LINES} title="style.css" badge="CSS" badgeTone="css" />
-          </div>
-          <div className="w-48 shrink-0 self-center">
-            <BrowserPreview at={1}>
-              <div className="px-4 py-5 text-center">
-                <p className="text-2xl font-black text-sky-500">你好，我是李明</p>
-                <p className="mt-1 text-xs text-slate-500">加了 CSS，标题变蓝、变大了</p>
+        <div className="mx-auto w-full max-w-xl space-y-2">
+          {PLUGINS.map((p, i) => (
+            <RevealFade key={p.name} index={1 + i}>
+              <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-slate-950/40 px-4 py-3">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-800/60">
+                  <Plug className="h-4 w-4 text-sky-300" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-bold text-slate-100">{p.name}</p>
+                  <p className="text-[11px] text-slate-400">{p.desc}</p>
+                </div>
+                <span className={`rounded-md border px-2 py-0.5 font-mono text-[10px] font-bold ${p.tone}`}>
+                  {p.status}
+                </span>
               </div>
-            </BrowserPreview>
-          </div>
+            </RevealFade>
+          ))}
         </div>
       </RevealFade>
       <RevealFade index={5}>
-        <p className="text-sm font-medium text-slate-300">同样的 HTML，加上 CSS 就换了一身妆</p>
+        <p className="text-sm font-medium text-slate-300">打开扩展面板（⌘⇧X），按需安装即可</p>
       </RevealFade>
     </div>
   </StageClock>
 );
 
-/* ---------- 镜头 8：选择器三兄弟 ---------- */
-export const Shot08Selectors: React.FC = () => (
+/* ---------- 镜头 8：DeepSeek API 接入 ---------- */
+export const Shot08APISetup: React.FC = () => (
+  <StageClock length={7}>
+    <EditorGrid />
+    <GlowDot />
+    <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-5 px-10">
+      <RevealFade index={0}>
+        <BigTitle text="DeepSeek API 接入" sub="三步打通 AI 编程通道" />
+      </RevealFade>
+      <RevealFade index={1} className="w-full">
+        <div className="mx-auto grid w-full max-w-3xl grid-cols-1 gap-4 md:grid-cols-3">
+          {[
+            {
+              step: 1,
+              title: '获取 API Key',
+              desc: '登录 platform.deepseek.com 申请密钥',
+              icon: Key,
+              cls: 'border-orange-400/40 bg-orange-400/10',
+              iconCls: 'text-orange-300',
+              numCls: 'bg-orange-400 text-slate-950',
+            },
+            {
+              step: 2,
+              title: '配置到 TRAE',
+              desc: '设置 → 模型管理 → 填入 API Key',
+              icon: Settings,
+              cls: 'border-sky-400/40 bg-sky-400/10',
+              iconCls: 'text-sky-300',
+              numCls: 'bg-sky-400 text-slate-950',
+            },
+            {
+              step: 3,
+              title: '选择模型',
+              desc: '选 deepseek-chat，开始对话编程',
+              icon: Cpu,
+              cls: 'border-amber-400/40 bg-amber-400/10',
+              iconCls: 'text-amber-300',
+              numCls: 'bg-amber-400 text-slate-950',
+            },
+          ].map((item) => {
+            const Icon = item.icon;
+            return (
+              <div key={item.step} className={`relative flex flex-col gap-3 rounded-2xl border p-4 ${item.cls}`}>
+                <span
+                  className={`absolute -top-2 left-4 flex h-5 w-5 items-center justify-center rounded-full font-mono text-[10px] font-black ${item.numCls}`}
+                >
+                  {item.step}
+                </span>
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-950/50">
+                  <Icon className={`h-5 w-5 ${item.iconCls}`} />
+                </div>
+                <p className="text-sm font-bold text-slate-100">{item.title}</p>
+                <p className="text-[11px] leading-relaxed text-slate-400">{item.desc}</p>
+              </div>
+            );
+          })}
+        </div>
+      </RevealFade>
+      <RevealFade index={6}>
+        <div className="mx-auto flex max-w-md items-center gap-2 rounded-xl border border-emerald-400/30 bg-emerald-400/10 px-4 py-2">
+          <CheckCircle2 className="h-4 w-4 text-emerald-300" />
+          <span className="text-sm font-bold text-emerald-200">连接成功！可以开始 Vibe Coding 了</span>
+        </div>
+      </RevealFade>
+    </div>
+  </StageClock>
+);
+
+/* ---------- 镜头 9：Plan vs Spec 模式 ---------- */
+export const Shot09PlanSpec: React.FC = () => (
   <StageClock length={5}>
     <EditorGrid />
     <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-5 px-10">
       <RevealFade index={0}>
-        <BigTitle text="选择器三兄弟" sub="标签 · 类 · ID" />
+        <BigTitle text="Plan vs Spec 模式" sub="两种节奏，各有所长" />
+      </RevealFade>
+      <RevealFade index={1} className="w-full">
+        <PlanSpecCompare at={1} />
+      </RevealFade>
+    </div>
+  </StageClock>
+);
+
+/* ---------- 镜头 10：HTML 骨架 ---------- */
+export const Shot10HTML: React.FC = () => (
+  <StageClock length={8}>
+    <EditorGrid />
+    <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-5 px-10">
+      <RevealFade index={0}>
+        <BigTitle text="HTML 骨架" sub="结构是页面的地基" />
+      </RevealFade>
+      <RevealFade index={1} className="w-full">
+        <HtmlSkeleton at={1} />
+      </RevealFade>
+      <RevealFade index={5} className="w-full">
+        <Trinity at={5} />
+      </RevealFade>
+    </div>
+  </StageClock>
+);
+
+/* ---------- 镜头 11：CSS 皮肤 ---------- */
+export const Shot11CSS: React.FC = () => (
+  <StageClock length={5}>
+    <EditorGrid />
+    <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-5 px-10">
+      <RevealFade index={0}>
+        <BigTitle text="CSS 皮肤" sub="选择器 + 属性，定制你的风格" />
       </RevealFade>
       <RevealFade index={1} className="w-full">
         <SelectorCards at={1} />
@@ -63,28 +172,14 @@ export const Shot08Selectors: React.FC = () => (
   </StageClock>
 );
 
-/* ---------- 镜头 9：盒模型与布局 ---------- */
-export const Shot09Box: React.FC = () => (
-  <StageClock length={6}>
+/* ---------- 镜头 12：JS 交互 ---------- */
+export const Shot12JS: React.FC = () => (
+  <StageClock length={5}>
     <EditorGrid />
+    <GlowDot />
     <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-5 px-10">
       <RevealFade index={0}>
-        <BigTitle text="盒模型与布局" sub="每一块内容都是一个「盒子」" />
-      </RevealFade>
-      <RevealFade index={1} className="w-full">
-        <BoxModelView at={1} />
-      </RevealFade>
-    </div>
-  </StageClock>
-);
-
-/* ---------- 镜头 10：JS 让页面动起来 ---------- */
-export const Shot10Event: React.FC = () => (
-  <StageClock length={4}>
-    <EditorGrid />
-    <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-5 px-10">
-      <RevealFade index={0}>
-        <BigTitle text="JS：让页面动起来" sub="一次点击，一次响应" />
+        <BigTitle text="JS 交互" sub="一次点击，页面就活了" />
       </RevealFade>
       <RevealFade index={1} className="w-full">
         <EventDemo at={1} />
@@ -93,61 +188,23 @@ export const Shot10Event: React.FC = () => (
   </StageClock>
 );
 
-/* ---------- 镜头 11：JS 三件套 ---------- */
-const SHOT11_LINES: CodeLine[] = [
-  { text: 'let name = "李明";', color: '#FBBF24' },
-  { text: 'function hello() {', color: '#FBBF24' },
-  { text: '  alert("你好，" + name);', color: '#FBBF24' },
-  { text: '}', color: '#FBBF24' },
-  { text: '// 变量 · 函数 · 事件', color: '#8B93A7' },
-];
-
-export const Shot11JSTrio: React.FC = () => (
+/* ---------- 镜头 13：三剑客协作 ---------- */
+export const Shot13Trio: React.FC = () => (
   <StageClock length={7}>
     <EditorGrid />
-    <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-4 px-10">
+    <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-5 px-10">
       <RevealFade index={0}>
-        <BigTitle text="JS 三件套" sub="变量 · 函数 · 事件" />
+        <BigTitle text="三剑客协作" sub="HTML 结构 · CSS 样式 · JS 行为" />
       </RevealFade>
       <RevealFade index={1} className="w-full">
-        <div className="mx-auto w-full max-w-2xl">
-          <CodeWindow at={1} lines={SHOT11_LINES} title="script.js" badge="JS" badgeTone="js" />
-        </div>
+        <Trinity at={1} />
       </RevealFade>
-      <RevealFade index={6}>
-        <p className="text-sm font-medium text-slate-300">变量存数据，函数写动作，事件等触发 —— JS 就是这三件事</p>
-      </RevealFade>
-    </div>
-  </StageClock>
-);
-
-/* ---------- 镜头 12：一个完整交互 ---------- */
-const SHOT12_LINES: CodeLine[] = [
-  { text: 'const btn = document.querySelector("button");', color: '#FBBF24' },
-  { text: 'btn.onclick = () => {', color: '#FBBF24' },
-  { text: '  title.textContent = "学会了 JS 🎉";', color: '#FBBF24' },
-  { text: '};', color: '#FBBF24' },
-];
-
-export const Shot12FullEvent: React.FC = () => (
-  <StageClock length={6}>
-    <EditorGrid />
-    <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-4 px-10">
-      <RevealFade index={0}>
-        <BigTitle text="一个完整交互" sub="三行代码，整页响应" />
-      </RevealFade>
-      <RevealFade index={1} className="w-full">
-        <div className="mx-auto flex w-full max-w-3xl items-stretch gap-4">
-          <div className="min-w-0 flex-1">
-            <CodeWindow at={1} lines={SHOT12_LINES} title="script.js" badge="JS" badgeTone="js" />
-          </div>
-          <div className="w-64 shrink-0 self-center">
-            <EventDemo at={1} />
-          </div>
-        </div>
-      </RevealFade>
-      <RevealFade index={5}>
-        <p className="text-sm font-medium text-slate-300">结构交给 HTML，妆交给 CSS，心跳交给 JS</p>
+      <RevealFade index={5} className="w-full">
+        <ChipPop
+          at={5}
+          tone="ok"
+          words={['结构归 HTML', '样式归 CSS', '行为归 JS', '分工协作，缺一不可']}
+        />
       </RevealFade>
     </div>
   </StageClock>

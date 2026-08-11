@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion } from 'motion/react';
@@ -10,7 +10,7 @@ interface NodeOrbitProps {
   className?: string;
 }
 
-/** 环绕节点光点：多个光点沿圆周公转（无限循环，网络感氛围） */
+/* 环绕节点光点：多个光点沿圆周公转（无限循环，网络感氛围） */
 export const NodeOrbit: React.FC<NodeOrbitProps> = ({
   count = 6,
   radius = 110,

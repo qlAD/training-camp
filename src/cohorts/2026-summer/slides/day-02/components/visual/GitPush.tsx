@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { Cloud, GitBranch } from 'lucide-react';
@@ -7,7 +7,7 @@ import { useTimeline } from '../scene/TimelineScene';
 import { EASE } from '../scene/theme';
 
 interface GitPushProps {
-  /** 时间轴位置 */
+  /* 时间轴位置 */
   at: number;
   className?: string;
 }
@@ -19,7 +19,7 @@ const CMDS = [
   { cmd: 'git push origin main', out: '→ gitee.com/you/portfolio' },
 ];
 
-/** git 四步 → Gitee 云端（0-3 命令 4 云仓库 5 总结） */
+/* git 四步 → Gitee 云端（0-3 命令 4 云仓库 5 总结） */
 export const GitPush: React.FC<GitPushProps> = ({ at, className = '' }) => {
   const { active } = useTimeline();
   const s = (i: number) => active >= at + i;

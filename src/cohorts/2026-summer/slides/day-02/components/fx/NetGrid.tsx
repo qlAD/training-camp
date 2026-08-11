@@ -1,8 +1,8 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 
-/** 网络网格底纹：青色细网格，中心渐隐，营造拓扑底感 */
+/* 网络网格底纹：青色细网格，中心渐隐，营造拓扑底感 */
 export const NetGrid: React.FC<{ className?: string }> = ({ className = '' }) => (
   <div
     aria-hidden

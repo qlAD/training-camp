@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion } from 'motion/react';
@@ -6,13 +6,13 @@ import { useTimeline } from '../scene/TimelineScene';
 import { EASE } from '../scene/theme';
 
 interface IPPlateProps {
-  /** 时间轴位置 */
+  /* 时间轴位置 */
   at: number;
   segments?: string[];
   className?: string;
 }
 
-/** IP 地址牌：点分十进制四段逐段点亮（0 标题 1-4 四段 5 总结） */
+/* IP 地址牌：点分十进制四段逐段点亮（0 标题 1-4 四段 5 总结） */
 export const IPPlate: React.FC<IPPlateProps> = ({
   at,
   segments = ['172', '16', '0', '1'],

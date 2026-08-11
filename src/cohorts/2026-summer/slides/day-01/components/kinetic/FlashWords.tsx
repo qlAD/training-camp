@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -7,14 +7,14 @@ import { EASE, TEXT_GRADIENT } from '../scene/theme';
 
 interface FlashWordsProps {
   words: string[];
-  /** 起始场景序号 */
+  /* 起始场景序号 */
   at?: number;
-  /** 每词停留（ms） */
+  /* 每词停留（ms） */
   interval?: number;
   className?: string;
 }
 
-/** 大字快闪：关键词逐词高速缩放+模糊入场，循环播完常驻最后一词 */
+/* 大字快闪：关键词逐词高速缩放+模糊入场，循环播完常驻最后一词 */
 export const FlashWords: React.FC<FlashWordsProps> = ({
   words,
   at = 0,

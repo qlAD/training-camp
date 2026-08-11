@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { Monitor, Server, ArrowRight, ArrowLeft } from 'lucide-react';
@@ -7,14 +7,14 @@ import { useTimeline } from '../scene/TimelineScene';
 import { EASE } from '../scene/theme';
 
 interface ClientServerProps {
-  /** 时间轴位置 */
+  /* 时间轴位置 */
   at: number;
   request?: string;
   response?: string;
   className?: string;
 }
 
-/** 浏览器 ↔ 服务器：左浏览器右服务器，请求/响应双向流光（0 浏览器 1 请求 2 服务器 3 响应 4 总结） */
+/* 浏览器 ↔ 服务器：左浏览器右服务器，请求/响应双向流光（0 浏览器 1 请求 2 服务器 3 响应 4 总结） */
 export const ClientServer: React.FC<ClientServerProps> = ({
   at,
   request = 'GET /index.html',

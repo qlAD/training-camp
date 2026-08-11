@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion } from 'motion/react';
@@ -14,12 +14,12 @@ export interface CompareSide {
 interface CompareCardsProps {
   left: CompareSide;
   right: CompareSide;
-  /** 起始场景序号：step1 左卡、step2 中间箭头、step3 右卡 */
+  /* 起始场景序号：step1 左卡、step2 中间箭头、step3 右卡 */
   at?: number;
   className?: string;
 }
 
-/** 左右对比卡 + 中间流动箭头「旧 → 新」（镜头 5） */
+/* 左右对比卡 + 中间流动箭头「旧 → 新」（镜头 5） */
 export const CompareCards: React.FC<CompareCardsProps> = ({ left, right, at = 0, className = '' }) => {
   const { active } = useScene();
   const step = Math.max(0, active - at);

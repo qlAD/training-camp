@@ -1,13 +1,13 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion } from 'motion/react';
 import { useStage } from '../scene/StageClock';
 
 interface ChipPopProps {
-  /** 快闪关键词 / 徽章文字 */
+  /* 快闪关键词 / 徽章文字 */
   words: string[];
-  /** 时间轴位置：active >= at 后开始弹入 */
+  /* 时间轴位置：active >= at 后开始弹入 */
   at: number;
   tone?: 'html' | 'css' | 'js' | 'ok';
   className?: string;
@@ -20,7 +20,7 @@ const TONE_CLS = {
   ok: 'border-lime-400/30 bg-lime-400/10 text-lime-100 shadow-[0_0_20px_rgba(163,230,53,0.15)]',
 } as const;
 
-/** 卡片弹入：时间轴每推进一块弹出下一张卡（弹入后保持） */
+/* 卡片弹入：时间轴每推进一块弹出下一张卡（弹入后保持） */
 export const ChipPop: React.FC<ChipPopProps> = ({ words, at, tone = 'html', className = '' }) => {
   const { active } = useStage();
   const shown = Math.max(0, active - at);

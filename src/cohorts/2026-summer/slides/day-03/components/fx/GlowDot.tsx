@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion } from 'motion/react';
@@ -9,7 +9,7 @@ interface GlowDotProps {
   className?: string;
 }
 
-/** 语法辉光点：多颗小光点缓慢漂移（编辑器氛围） */
+/* 语法辉光点：多颗小光点缓慢漂移（编辑器氛围） */
 export const GlowDot: React.FC<GlowDotProps> = ({ color = 'rgba(56,189,248,0.5)', count = 5, className = '' }) => {
   const seeds = [22, 41, 63, 78, 35, 12, 55, 90];
   return (

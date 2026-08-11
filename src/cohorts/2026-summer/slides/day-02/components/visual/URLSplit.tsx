@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion } from 'motion/react';
@@ -6,7 +6,7 @@ import { useTimeline } from '../scene/TimelineScene';
 import { EASE } from '../scene/theme';
 
 interface URLSplitProps {
-  /** 时间轴位置 */
+  /* 时间轴位置 */
   at: number;
   parts?: { label: string; value: string }[];
   className?: string;
@@ -20,7 +20,7 @@ const DEFAULT_PARTS = [
   { label: '参数', value: '?lang=zh' },
 ];
 
-/** URL 拆解：五个组成部分逐段点亮（0 整条URL 1-5 分段标签 6 总结） */
+/* URL 拆解：五个组成部分逐段点亮（0 整条URL 1-5 分段标签 6 总结） */
 export const URLSplit: React.FC<URLSplitProps> = ({ at, parts = DEFAULT_PARTS, className = '' }) => {
   const { active } = useTimeline();
   const s = (i: number) => active >= at + i;

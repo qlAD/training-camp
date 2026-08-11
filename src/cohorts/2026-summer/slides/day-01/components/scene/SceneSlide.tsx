@@ -1,13 +1,13 @@
-'use client';
+﻿'use client';
 
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
 
 export interface SceneContextValue {
-  /** 当前已揭示的场景块数量（0 ~ total） */
+  /* 当前已揭示的场景块数量（0 ~ total） */
   active: number;
-  /** 场景块总数 */
+  /* 场景块总数 */
   total: number;
-  /** 全部场景是否揭示完成 */
+  /* 全部场景是否揭示完成 */
   completed: boolean;
 }
 
@@ -16,21 +16,21 @@ const SceneContext = createContext<SceneContextValue>({ active: 0, total: 0, com
 export const useScene = () => useContext(SceneContext);
 
 interface SceneSlideProps {
-  /** 场景块总数 = 时间轴长度 */
+  /* 场景块总数 = 时间轴长度 */
   sceneCount: number;
-  /** 首块延迟（ms），默认 400 */
+  /* 首块延迟（ms），默认 400 */
   initialDelay?: number;
-  /** 块间隔（ms），默认 800 */
+  /* 块间隔（ms），默认 800 */
   blockInterval?: number;
-  /** 挂载即播，默认 true（视频感核心） */
+  /* 挂载即播，默认 true（视频感核心） */
   autoPlay?: boolean;
-  /** 全部场景揭示完成回调 */
+  /* 全部场景揭示完成回调 */
   onSceneComplete?: () => void;
   className?: string;
   children: React.ReactNode;
 }
 
-/**
+/*
  * 镜头容器：activeScene 时间轴自动推进（挂载即播）。
  * 子元素用 <RevealBlock index={n}> 分块；visual 组件通过 useScene() 读取 active 驱动自身进度。
  */

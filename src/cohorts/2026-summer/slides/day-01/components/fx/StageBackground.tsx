@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { GradientRibbon } from './GradientRibbon';
@@ -9,11 +9,11 @@ import { PerspectiveGrid } from './PerspectiveGrid';
 import { RIBBON_A, RIBBON_B, RIBBON_C } from '../scene/theme';
 
 interface StageBackgroundProps {
-  /** code = 叠加透视科技网格（代码/渲染类镜头） */
+  /* code = 叠加透视科技网格（代码/渲染类镜头） */
   variant?: 'default' | 'code';
 }
 
-/**
+/*
  * 舞台氛围层：流体光带 + 辉光 + 粒子 + 代码母题（绝对定位，内容需 z-10）。
  * 注意：深空底色由舞台外壳统一提供（SlideDeckView 舞台根节点），本组件不再绘制不透明底色，
  * 以保证顶栏/内容区/底栏背景一致，且底部双 SVG 水印可透出。

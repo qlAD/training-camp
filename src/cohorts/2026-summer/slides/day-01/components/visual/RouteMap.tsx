@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion } from 'motion/react';
@@ -8,12 +8,12 @@ import { Flag } from 'lucide-react';
 
 interface RouteMapProps {
   stations: string[];
-  /** 起始场景序号：step k 点亮第 k 站（k=1..5），step 6 旗帜落地 */
+  /* 起始场景序号：step k 点亮第 k 站（k=1..5），step 6 旗帜落地 */
   at?: number;
   className?: string;
 }
 
-/** 路线图：横向进度线逐站点亮 + 终点旗帜（镜头 3） */
+/* 路线图：横向进度线逐站点亮 + 终点旗帜（镜头 3） */
 export const RouteMap: React.FC<RouteMapProps> = ({ stations, at = 0, className = '' }) => {
   const { active } = useScene();
   const step = Math.max(0, active - at);

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion } from 'motion/react';
@@ -6,7 +6,7 @@ import { useStage } from '../scene/StageClock';
 import { EASE } from '../scene/theme';
 
 interface RouteNodesProps {
-  /** 时间轴位置 */
+  /* 时间轴位置 */
   at: number;
   stops: { label: string; sub: string; tone: 'html' | 'css' | 'js' | 'ok' }[];
   className?: string;
@@ -19,7 +19,7 @@ const TONE = {
   ok: { dot: 'bg-lime-400', ring: 'border-lime-400/40', text: 'text-lime-100' },
 } as const;
 
-/** 路线节点：横向五站逐点亮起（编辑器主题：圆点 + 卡片 + 流动虚线） */
+/* 路线节点：横向五站逐点亮起（编辑器主题：圆点 + 卡片 + 流动虚线） */
 export const RouteNodes: React.FC<RouteNodesProps> = ({ at, stops, className = '' }) => {
   const { active } = useStage();
   const s = (i: number) => active >= at + i;

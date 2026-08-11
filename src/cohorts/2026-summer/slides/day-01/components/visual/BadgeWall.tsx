@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion, Variants } from 'motion/react';
@@ -13,12 +13,12 @@ export interface BadgeItem {
 
 interface BadgeWallProps {
   badges: BadgeItem[];
-  /** 起始场景序号：到达后全部徽章轻弹簧逐个弹入 */
+  /* 起始场景序号：到达后全部徽章轻弹簧逐个弹入 */
   at?: number;
   className?: string;
 }
 
-/** 徽章墙：徽章轻弹簧逐个弹入（镜头 9） */
+/* 徽章墙：徽章轻弹簧逐个弹入（镜头 9） */
 export const BadgeWall: React.FC<BadgeWallProps> = ({ badges, at = 0, className = '' }) => {
   const { active } = useScene();
   const started = active > at;

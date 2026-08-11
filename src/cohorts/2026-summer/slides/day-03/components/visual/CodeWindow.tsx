@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion } from 'motion/react';
@@ -7,17 +7,17 @@ import { EASE } from '../scene/theme';
 
 export interface CodeLine {
   text: string;
-  /** 行级颜色：HTML 橙 / CSS 蓝 / JS 黄 / 注释灰，缺省用窗口默认色 */
+  /* 行级颜色：HTML 橙 / CSS 蓝 / JS 黄 / 注释灰，缺省用窗口默认色 */
   color?: string;
 }
 
 interface CodeWindowProps {
-  /** 时间轴位置：active >= at 后逐行揭示 */
+  /* 时间轴位置：active >= at 后逐行揭示 */
   at: number;
   lines: CodeLine[];
-  /** 窗口标题（文件标签名） */
+  /* 窗口标题（文件标签名） */
   title?: string;
-  /** 右上角语言徽章 */
+  /* 右上角语言徽章 */
   badge?: string;
   badgeTone?: 'html' | 'css' | 'js';
   className?: string;
@@ -29,7 +29,7 @@ const BADGE_TONE = {
   js: 'text-amber-300 bg-amber-400/15 border-amber-400/30',
 } as const;
 
-/** 代码窗口：标题栏 + 行号 + 语法高亮，逐行揭示（编辑器主题核心组件） */
+/* 代码窗口：标题栏 + 行号 + 语法高亮，逐行揭示（编辑器主题核心组件） */
 export const CodeWindow: React.FC<CodeWindowProps> = ({
   at,
   lines,

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { Bone, Palette, Sparkles } from 'lucide-react';
@@ -6,7 +6,7 @@ import { motion } from 'motion/react';
 import { useStage } from '../scene/StageClock';
 
 interface TrinityProps {
-  /** 时间轴位置 */
+  /* 时间轴位置 */
   at: number;
   className?: string;
 }
@@ -41,7 +41,7 @@ const CARDS = [
   },
 ];
 
-/** 网页三位一体：HTML/CSS/JS 三张卡逐张弹入（0-2 卡片 3 总结） */
+/* 网页三位一体：HTML/CSS/JS 三张卡逐张弹入（0-2 卡片 3 总结） */
 export const Trinity: React.FC<TrinityProps> = ({ at, className = '' }) => {
   const { active } = useStage();
   const s = (i: number) => active >= at + i;

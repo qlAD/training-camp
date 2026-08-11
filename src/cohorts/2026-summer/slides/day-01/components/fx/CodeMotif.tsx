@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useMemo } from 'react';
 import { motion } from 'motion/react';
@@ -22,7 +22,7 @@ const DEFAULT_LINES = [
   '<p>Hello, Web!</p>',
 ];
 
-/** 漂浮代码行装饰：半透明等宽字体，角落/背景散落，缓慢浮动 */
+/* 漂浮代码行装饰：半透明等宽字体，角落/背景散落，缓慢浮动 */
 export const CodeMotif: React.FC<CodeMotifProps> = ({ lines, count = 6 }) => {
   const pool = lines && lines.length > 0 ? lines : DEFAULT_LINES;
   const items = useMemo(

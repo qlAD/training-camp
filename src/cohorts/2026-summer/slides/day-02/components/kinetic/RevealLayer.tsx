@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { AnimatePresence, motion } from 'motion/react';
@@ -6,13 +6,13 @@ import { useTimeline } from '../scene/TimelineScene';
 import { EASE } from '../scene/theme';
 
 interface RevealLayerProps {
-  /** 时间轴位置：active >= index 时该层出现 */
+  /* 时间轴位置：active >= index 时该层出现 */
   index: number;
   className?: string;
   children: React.ReactNode;
 }
 
-/** 揭示层：时间轴推进到 index 时淡入 + 上浮出现（挂载即播驱动） */
+/* 揭示层：时间轴推进到 index 时淡入 + 上浮出现（挂载即播驱动） */
 export const RevealLayer: React.FC<RevealLayerProps> = ({ index, className = '', children }) => {
   const { active } = useTimeline();
   const visible = active >= index;

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
@@ -7,15 +7,15 @@ import { FONT_MONO } from '../scene/theme';
 
 interface TypewriterProps {
   lines: string[];
-  /** 起始场景序号 */
+  /* 起始场景序号 */
   at?: number;
-  /** 每字间隔（ms） */
+  /* 每字间隔（ms） */
   speed?: number;
   className?: string;
   minLines?: number;
 }
 
-/** 打字机效果：逐字打出 + 光标闪烁（代码/提示词用） */
+/* 打字机效果：逐字打出 + 光标闪烁（代码/提示词用） */
 export const Typewriter: React.FC<TypewriterProps> = ({
   lines,
   at = 0,

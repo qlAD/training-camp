@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion } from 'motion/react';
@@ -13,12 +13,12 @@ export interface ChainSegment {
 
 interface ChainMapProps {
   segments: ChainSegment[];
-  /** 起始场景序号：step k 展开第 k 段（k=1..3） */
+  /* 起始场景序号：step k 展开第 k 段（k=1..3） */
   at?: number;
   className?: string;
 }
 
-/** 链路地图：「生成—托管—部署」三段逐段展开（镜头 8） */
+/* 链路地图：「生成—托管—部署」三段逐段展开（镜头 8） */
 export const ChainMap: React.FC<ChainMapProps> = ({ segments, at = 0, className = '' }) => {
   const { active } = useScene();
   const step = Math.max(0, active - at);

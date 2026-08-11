@@ -1,9 +1,9 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion } from 'motion/react';
 
-/** 闪烁光标：编辑器式块状光标，无限呼吸闪烁 */
+/* 闪烁光标：编辑器式块状光标，无限呼吸闪烁 */
 export const CursorBlink: React.FC<{ color?: string; className?: string }> = ({
   color = 'rgba(249,115,22,0.8)',
   className = '',

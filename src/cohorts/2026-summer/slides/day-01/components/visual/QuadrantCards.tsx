@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion } from 'motion/react';
@@ -14,12 +14,12 @@ export interface RoleCard {
 
 interface QuadrantCardsProps {
   roles: RoleCard[];
-  /** 起始场景序号：step 1 中心方向盘，step 2..5 四卡依次点亮 */
+  /* 起始场景序号：step 1 中心方向盘，step 2..5 四卡依次点亮 */
   at?: number;
   className?: string;
 }
 
-/** 中心隐喻图标 + 四卡环绕依次点亮（镜头 7） */
+/* 中心隐喻图标 + 四卡环绕依次点亮（镜头 7） */
 export const QuadrantCards: React.FC<QuadrantCardsProps> = ({ roles, at = 0, className = '' }) => {
   const { active } = useScene();
   const step = Math.max(0, active - at);

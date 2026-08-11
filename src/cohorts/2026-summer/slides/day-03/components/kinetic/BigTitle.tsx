@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion } from 'motion/react';
@@ -11,7 +11,7 @@ interface BigTitleProps {
   className?: string;
 }
 
-/** 霓虹大标题：橙→蓝→金渐变 + 光晕，入场上浮 + 去模糊 */
+/* 霓虹大标题：橙→蓝→金渐变 + 光晕，入场上浮 + 去模糊 */
 export const BigTitle: React.FC<BigTitleProps> = ({ text, sub, size = 'xl', className = '' }) => {
   const base = size === 'xl' ? 'text-3xl sm:text-4xl' : 'text-2xl sm:text-3xl';
   return (

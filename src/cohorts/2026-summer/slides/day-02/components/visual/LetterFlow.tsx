@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { Mail, ArrowRight } from 'lucide-react';
@@ -7,7 +7,7 @@ import { useTimeline } from '../scene/TimelineScene';
 import { EASE } from '../scene/theme';
 
 interface LetterFlowProps {
-  /** 时间轴位置 */
+  /* 时间轴位置 */
   at: number;
   method?: string;
   path?: string;
@@ -16,7 +16,7 @@ interface LetterFlowProps {
   className?: string;
 }
 
-/** HTTP 请求/响应信封：请求行 → 请求头 → 寄出 → 响应回信（0-4 五段） */
+/* HTTP 请求/响应信封：请求行 → 请求头 → 寄出 → 响应回信（0-4 五段） */
 export const LetterFlow: React.FC<LetterFlowProps> = ({
   at,
   method = 'GET',

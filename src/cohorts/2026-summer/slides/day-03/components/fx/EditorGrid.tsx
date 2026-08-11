@@ -1,8 +1,8 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 
-/** 代码编辑器网格底纹：细网格中心渐隐，营造编辑区氛围 */
+/* 代码编辑器网格底纹：细网格中心渐隐，营造编辑区氛围 */
 export const EditorGrid: React.FC<{ className?: string }> = ({ className = '' }) => (
   <div
     aria-hidden

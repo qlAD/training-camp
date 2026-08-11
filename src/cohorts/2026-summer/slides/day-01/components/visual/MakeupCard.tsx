@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion } from 'motion/react';
@@ -21,7 +21,7 @@ const STEPS = [
   { code: 'p  { color: rgba(255,255,255,0.82); line-height: 1.55; }', step: 8 },
 ];
 
-/** 上妆卡：HTML 骨头从 step0 就一直存在（灰扑扑挤在一起），8 步只改 CSS 把它一点点「化漂亮」 */
+/* 上妆卡：HTML 骨头从 step0 就一直存在（灰扑扑挤在一起），8 步只改 CSS 把它一点点「化漂亮」 */
 export const MakeupCard: React.FC<MakeupCardProps> = ({ at = 0, className = '' }) => {
   const { active } = useScene();
   const step = Math.max(0, active - at);

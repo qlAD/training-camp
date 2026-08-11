@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion, Variants } from 'motion/react';
@@ -7,14 +7,14 @@ import { COLORS } from '../scene/theme';
 
 interface SloganRevealProps {
   text: string;
-  /** 起始场景序号 */
+  /* 起始场景序号 */
   at?: number;
-  /** 每词间隔（ms） */
+  /* 每词间隔（ms） */
   stagger?: number;
   className?: string;
 }
 
-/** 收尾 Slogan：逐词点亮（琥珀辉光常驻） */
+/* 收尾 Slogan：逐词点亮（琥珀辉光常驻） */
 export const SloganReveal: React.FC<SloganRevealProps> = ({
   text,
   at = 0,

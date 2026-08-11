@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion } from 'motion/react';
@@ -6,13 +6,13 @@ import { useTimeline } from '../scene/TimelineScene';
 import { EASE } from '../scene/theme';
 
 interface CheckoffProps {
-  /** 时间轴位置 */
+  /* 时间轴位置 */
   at: number;
   items: string[];
   className?: string;
 }
 
-/** 打卡清单：逐条打勾（0..n-1 项，n 总结） */
+/* 打卡清单：逐条打勾（0..n-1 项，n 总结） */
 export const Checkoff: React.FC<CheckoffProps> = ({ at, items, className = '' }) => {
   const { active } = useTimeline();
   const s = (i: number) => active >= at + i;

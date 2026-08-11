@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion } from 'motion/react';
@@ -7,12 +7,12 @@ import { EASE } from '../scene/theme';
 
 interface FlowTextProps {
   text: string;
-  /** 时间轴位置：active >= at 后开始逐词涌入 */
+  /* 时间轴位置：active >= at 后开始逐词涌入 */
   at: number;
   className?: string;
 }
 
-/** 逐词涌入文本：时间轴到 at 后按词依次滑入（保留未揭示词占位，避免跳动） */
+/* 逐词涌入文本：时间轴到 at 后按词依次滑入（保留未揭示词占位，避免跳动） */
 export const FlowText: React.FC<FlowTextProps> = ({ text, at, className = '' }) => {
   const { active } = useTimeline();
   const words = text.split(' ');

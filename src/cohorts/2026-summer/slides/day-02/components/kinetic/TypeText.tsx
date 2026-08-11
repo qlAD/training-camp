@@ -1,19 +1,19 @@
-'use client';
+﻿'use client';
 
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTimeline } from '../scene/TimelineScene';
 
 interface TypeTextProps {
-  /** 逐行文本，行间换行 */
+  /* 逐行文本，行间换行 */
   lines: string[];
-  /** 时间轴位置：active >= at 后才开始打字 */
+  /* 时间轴位置：active >= at 后才开始打字 */
   at: number;
   speed?: number;
   cursor?: string;
   className?: string;
 }
 
-/** 打字机：逐字符打出（含行分隔），时间轴到 at 后启动；setState 全部在定时器回调内 */
+/* 打字机：逐字符打出（含行分隔），时间轴到 at 后启动；setState 全部在定时器回调内 */
 export const TypeText: React.FC<TypeTextProps> = ({
   lines,
   at,

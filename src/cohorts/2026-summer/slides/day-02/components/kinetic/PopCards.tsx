@@ -1,18 +1,18 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion } from 'motion/react';
 import { useTimeline } from '../scene/TimelineScene';
 
 interface PopCardsProps {
-  /** 快闪关键词 / 徽章文字 */
+  /* 快闪关键词 / 徽章文字 */
   words: string[];
-  /** 时间轴位置：active >= at 后开始弹入 */
+  /* 时间轴位置：active >= at 后开始弹入 */
   at: number;
   className?: string;
 }
 
-/** 卡片弹入：时间轴每推进一块弹出下一张卡（弹入后保持） */
+/* 卡片弹入：时间轴每推进一块弹出下一张卡（弹入后保持） */
 export const PopCards: React.FC<PopCardsProps> = ({ words, at, className = '' }) => {
   const { active } = useTimeline();
   const shown = Math.max(0, active - at);

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { Building2, DoorOpen } from 'lucide-react';
@@ -7,12 +7,12 @@ import { useTimeline } from '../scene/TimelineScene';
 import { EASE } from '../scene/theme';
 
 interface PortDoorProps {
-  /** 时间轴位置 */
+  /* 时间轴位置 */
   at: number;
   className?: string;
 }
 
-/** 端口之门：IP 是楼的门牌号，端口是楼里的「门」（0 大楼 1 门80 2 门443 3 说明） */
+/* 端口之门：IP 是楼的门牌号，端口是楼里的「门」（0 大楼 1 门80 2 门443 3 说明） */
 export const PortDoor: React.FC<PortDoorProps> = ({ at, className = '' }) => {
   const { active } = useTimeline();
   const s = (i: number) => active >= at + i;

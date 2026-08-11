@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion } from 'motion/react';
@@ -6,7 +6,7 @@ import { useStage } from '../scene/StageClock';
 import { EASE } from '../scene/theme';
 
 interface BoxModelViewProps {
-  /** 时间轴位置 */
+  /* 时间轴位置 */
   at: number;
   className?: string;
 }
@@ -18,7 +18,7 @@ const LAYERS = [
   { key: 'content', label: 'content 内容', cls: 'border-lime-400/50 bg-lime-400/10' },
 ];
 
-/** 盒模型：margin > border > padding > content 嵌套盒从外到内逐层点亮（0-3 层 4 总结） */
+/* 盒模型：margin > border > padding > content 嵌套盒从外到内逐层点亮（0-3 层 4 总结） */
 export const BoxModelView: React.FC<BoxModelViewProps> = ({ at, className = '' }) => {
   const { active } = useStage();
   const s = (i: number) => active >= at + i;

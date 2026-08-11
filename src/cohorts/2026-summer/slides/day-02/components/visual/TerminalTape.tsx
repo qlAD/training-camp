@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTimeline } from '../scene/TimelineScene';
@@ -11,13 +11,13 @@ export interface InstallJob {
 }
 
 interface TerminalTapeProps {
-  /** 时间轴位置：active >= at 后开始逐行播放 */
+  /* 时间轴位置：active >= at 后开始逐行播放 */
   at: number;
   jobs: InstallJob[];
   className?: string;
 }
 
-/** 终端安装动画：三个窗口并排，各自逐行打出安装输出（内部定时器驱动，挂载即播） */
+/* 终端安装动画：三个窗口并排，各自逐行打出安装输出（内部定时器驱动，挂载即播） */
 export const TerminalTape: React.FC<TerminalTapeProps> = ({ at, jobs, className = '' }) => {
   const { active } = useTimeline();
   const started = active >= at;

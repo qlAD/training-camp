@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion } from 'motion/react';
@@ -11,7 +11,7 @@ interface GlowTitleProps {
   className?: string;
 }
 
-/** 霓虹标题：青系文字渐变 + 轻微光晕，入场上浮 + 去模糊 */
+/* 霓虹标题：青系文字渐变 + 轻微光晕，入场上浮 + 去模糊 */
 export const GlowTitle: React.FC<GlowTitleProps> = ({ text, sub, size = 'xl', className = '' }) => {
   const base = size === 'xl' ? 'text-3xl sm:text-4xl' : 'text-2xl sm:text-3xl';
   return (

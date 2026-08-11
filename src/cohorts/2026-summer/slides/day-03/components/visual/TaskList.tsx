@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion } from 'motion/react';
@@ -6,13 +6,13 @@ import { useStage } from '../scene/StageClock';
 import { EASE } from '../scene/theme';
 
 interface TaskListProps {
-  /** 时间轴位置 */
+  /* 时间轴位置 */
   at: number;
   items: string[];
   className?: string;
 }
 
-/** 学员任务清单：逐条打勾（0..n-1 项，n 完成语） */
+/* 学员任务清单：逐条打勾（0..n-1 项，n 完成语） */
 export const TaskList: React.FC<TaskListProps> = ({ at, items, className = '' }) => {
   const { active } = useStage();
   const s = (i: number) => active >= at + i;

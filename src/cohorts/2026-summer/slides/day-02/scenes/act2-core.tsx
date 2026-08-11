@@ -5,114 +5,113 @@ import { TimelineScene } from '../components/scene/TimelineScene';
 import { RevealLayer } from '../components/kinetic/RevealLayer';
 import { GlowTitle } from '../components/kinetic/GlowTitle';
 import { NetGrid } from '../components/fx/NetGrid';
-import { IPPlate } from '../components/visual/IPPlate';
-import { PortDoor } from '../components/visual/PortDoor';
-import { URLSplit } from '../components/visual/URLSplit';
-import { PhoneBook } from '../components/visual/PhoneBook';
-import { DNSTrip } from '../components/visual/DNSTrip';
-import { LetterFlow } from '../components/visual/LetterFlow';
-import { StatusBadges } from '../components/visual/StatusBadges';
+import { DataRipple } from '../components/fx/DataRipple';
+import { TechStackMap } from '../components/visual/TechStackMap';
+import { TerminalDemo } from '../components/visual/TerminalDemo';
+import { GitFlow } from '../components/visual/GitFlow';
+import { MarkdownGuide } from '../components/visual/MarkdownGuide';
+import { IDETour } from '../components/visual/IDETour';
 
-/* ---------- 镜头 6：IP 地址 ---------- */
-export const Shot06IP: React.FC = () => (
-  <TimelineScene length={6}>
+/* ---------- 镜头 7：全栈技术栈图谱 ---------- */
+export const Shot07TechStack: React.FC = () => (
+  <TimelineScene length={5}>
     <NetGrid />
     <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-6 px-10">
       <RevealLayer index={0}>
-        <GlowTitle text="IP：设备的门牌号" sub="172.16.0.1 这样的数字地址" />
+        <GlowTitle text="全栈技术栈图谱" />
       </RevealLayer>
       <RevealLayer index={1} className="w-full">
-        <IPPlate at={1} />
+        <TechStackMap at={1} />
       </RevealLayer>
     </div>
   </TimelineScene>
 );
 
-/* ---------- 镜头 7：端口 ---------- */
-export const Shot07Port: React.FC = () => (
+/* ---------- 镜头 8：终端基础命令 ---------- */
+export const Shot08Terminal: React.FC = () => (
+  <TimelineScene length={5}>
+    <DataRipple />
+    <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-6 px-10">
+      <RevealLayer index={0}>
+        <GlowTitle text="终端：真工程师的方向盘" />
+      </RevealLayer>
+      <RevealLayer index={1} className="w-full">
+        <TerminalDemo at={1} />
+      </RevealLayer>
+    </div>
+  </TimelineScene>
+);
+
+/* ---------- 镜头 9：Git安装与全局配置 ---------- */
+export const Shot09Git: React.FC = () => (
+  <TimelineScene length={5}>
+    <NetGrid />
+    <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-6 px-10">
+      <RevealLayer index={0}>
+        <GlowTitle text="Git：给代码拍快照" />
+      </RevealLayer>
+      <RevealLayer index={1} className="w-full">
+        <GitFlow at={1} />
+      </RevealLayer>
+    </div>
+  </TimelineScene>
+);
+
+/* ---------- 镜头 10：Gitee注册与仓库关联 ---------- */
+export const Shot10Gitee: React.FC = () => (
+  <TimelineScene length={4}>
+    <DataRipple />
+    <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-6 px-10">
+      <RevealLayer index={0}>
+        <GlowTitle text="Gitee：代码云端之家" />
+      </RevealLayer>
+      <RevealLayer index={1} className="w-full">
+        <GitFlow at={1} />
+      </RevealLayer>
+    </div>
+  </TimelineScene>
+);
+
+/* ---------- 镜头 11：Markdown完整语法 ---------- */
+export const Shot11Markdown: React.FC = () => (
   <TimelineScene length={4}>
     <NetGrid />
     <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-6 px-10">
       <RevealLayer index={0}>
-        <GlowTitle text="端口：门牌下的「门」" sub="一台服务器，同时服务很多程序" />
+        <GlowTitle text="Markdown：技术人的通用语言" />
       </RevealLayer>
       <RevealLayer index={1} className="w-full">
-        <PortDoor at={1} />
+        <MarkdownGuide at={1} />
       </RevealLayer>
     </div>
   </TimelineScene>
 );
 
-/* ---------- 镜头 8：URL 拆解 ---------- */
-export const Shot08URL: React.FC = () => (
-  <TimelineScene length={7}>
-    <NetGrid />
+/* ---------- 镜头 12：TRAE IDE安装初始化 ---------- */
+export const Shot12IDE: React.FC = () => (
+  <TimelineScene length={5}>
+    <DataRipple />
     <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-6 px-10">
       <RevealLayer index={0}>
-        <GlowTitle text="URL：一封信的完整地址" sub="协议 · 域名 · 端口 · 路径 · 参数" />
+        <GlowTitle text="TRAE IDE：主力编辑器" />
       </RevealLayer>
       <RevealLayer index={1} className="w-full">
-        <URLSplit at={1} />
+        <IDETour at={1} />
       </RevealLayer>
     </div>
   </TimelineScene>
 );
 
-/* ---------- 镜头 9：DNS 通讯录 ---------- */
-export const Shot09DNS: React.FC = () => (
-  <TimelineScene length={6}>
-    <NetGrid />
-    <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-6 px-10">
-      <RevealLayer index={0}>
-        <GlowTitle text="DNS：互联网的通讯录" sub="记名字，不记数字" />
-      </RevealLayer>
-      <RevealLayer index={1} className="w-full">
-        <PhoneBook at={1} />
-      </RevealLayer>
-    </div>
-  </TimelineScene>
-);
-
-/* ---------- 镜头 10：DNS 解析旅程 ---------- */
-export const Shot10DNSTrip: React.FC = () => (
-  <TimelineScene length={7}>
-    <NetGrid />
-    <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-6 px-10">
-      <RevealLayer index={0}>
-        <GlowTitle text="输入网址后发生了什么" sub="一次 DNS 解析的旅程" />
-      </RevealLayer>
-      <RevealLayer index={1} className="w-full">
-        <DNSTrip at={1} />
-      </RevealLayer>
-    </div>
-  </TimelineScene>
-);
-
-/* ---------- 镜头 11：HTTP 请求 ---------- */
-export const Shot11HTTP: React.FC = () => (
+/* ---------- 镜头 13：git clone与项目管理 ---------- */
+export const Shot13Clone: React.FC = () => (
   <TimelineScene length={4}>
     <NetGrid />
     <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-6 px-10">
       <RevealLayer index={0}>
-        <GlowTitle text="HTTP：浏览器写的信" sub="请求 = 方法 + 路径 + 头" />
+        <GlowTitle text="git clone 拉取项目" />
       </RevealLayer>
       <RevealLayer index={1} className="w-full">
-        <LetterFlow at={1} />
-      </RevealLayer>
-    </div>
-  </TimelineScene>
-);
-
-/* ---------- 镜头 12：状态码 ---------- */
-export const Shot12Status: React.FC = () => (
-  <TimelineScene length={4}>
-    <NetGrid />
-    <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-6 px-10">
-      <RevealLayer index={0}>
-        <GlowTitle text="服务器回的信" sub="状态码 200 / 404 / 500" />
-      </RevealLayer>
-      <RevealLayer index={1} className="w-full">
-        <StatusBadges at={1} />
+        <GitFlow at={1} />
       </RevealLayer>
     </div>
   </TimelineScene>

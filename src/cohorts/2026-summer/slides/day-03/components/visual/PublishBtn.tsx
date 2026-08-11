@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { Cloud, Rocket } from 'lucide-react';
@@ -7,13 +7,13 @@ import { useStage } from '../scene/StageClock';
 import { EASE } from '../scene/theme';
 
 interface PublishBtnProps {
-  /** 时间轴位置 */
+  /* 时间轴位置 */
   at: number;
   repo?: string;
   className?: string;
 }
 
-/** 发布按钮：大按钮按下 → 上传进度 → 云端仓库点亮（0 按钮 1 上传中 2 仓库卡 3 总结） */
+/* 发布按钮：大按钮按下 → 上传进度 → 云端仓库点亮（0 按钮 1 上传中 2 仓库卡 3 总结） */
 export const PublishBtn: React.FC<PublishBtnProps> = ({
   at,
   repo = 'gitee.com/you/profile',

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion } from 'motion/react';
@@ -7,14 +7,14 @@ import { COLORS, EASE, FONT_MONO } from '../scene/theme';
 import { Sparkles } from 'lucide-react';
 
 interface AITransformProps {
-  /** 起始场景序号：step 1 提示词面板、step 2 AI 脉冲、step 3 页面渲染 */
+  /* 起始场景序号：step 1 提示词面板、step 2 AI 脉冲、step 3 页面渲染 */
   at?: number;
   promptLines: string[];
   pageLines: string[];
   className?: string;
 }
 
-/** 三段式面板：提示词 → AI 脉冲 → 页面逐行渲染（镜头 11） */
+/* 三段式面板：提示词 → AI 脉冲 → 页面逐行渲染（镜头 11） */
 export const AITransform: React.FC<AITransformProps> = ({
   at = 0,
   promptLines,

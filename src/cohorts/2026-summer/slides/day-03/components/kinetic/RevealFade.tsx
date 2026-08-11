@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { AnimatePresence, motion } from 'motion/react';
@@ -6,13 +6,13 @@ import { useStage } from '../scene/StageClock';
 import { EASE } from '../scene/theme';
 
 interface RevealFadeProps {
-  /** 时间轴位置：active >= index 时该层出现 */
+  /* 时间轴位置：active >= index 时该层出现 */
   index: number;
   className?: string;
   children: React.ReactNode;
 }
 
-/** 揭示层：时间轴推进到 index 时淡入 + 上浮出现（挂载即播驱动） */
+/* 揭示层：时间轴推进到 index 时淡入 + 上浮出现（挂载即播驱动） */
 export const RevealFade: React.FC<RevealFadeProps> = ({ index, className = '', children }) => {
   const { active } = useStage();
   const visible = active >= index;

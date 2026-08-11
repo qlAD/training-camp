@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion } from 'motion/react';
@@ -6,7 +6,7 @@ import { useScene } from '../scene/SceneSlide';
 import { COLORS, EASE, FONT_MONO } from '../scene/theme';
 
 interface SkeletonTreeProps {
-  /** 起始场景序号：step1 头骨+html 节点，step2 脊柱+head，step3 肋骨+body，step4 全部点亮 */
+  /* 起始场景序号：step1 头骨+html 节点，step2 脊柱+head，step3 肋骨+body，step4 全部点亮 */
   at?: number;
   className?: string;
 }
@@ -18,7 +18,7 @@ const CODE_LINES = [
   { text: '</html>', tag: 'html' },
 ];
 
-/** 骨架隐喻：html/head/body 三层结构逐节拼出 + 代码行联动高亮（镜头 12） */
+/* 骨架隐喻：html/head/body 三层结构逐节拼出 + 代码行联动高亮（镜头 12） */
 export const SkeletonTree: React.FC<SkeletonTreeProps> = ({ at = 0, className = '' }) => {
   const { active } = useScene();
   const step = Math.max(0, active - at);

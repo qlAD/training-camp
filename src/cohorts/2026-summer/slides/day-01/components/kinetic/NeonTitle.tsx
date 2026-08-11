@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion } from 'motion/react';
@@ -7,7 +7,7 @@ import { EASE, TEXT_GRADIENT } from '../scene/theme';
 
 interface NeonTitleProps {
   text: string;
-  /** 起始场景序号 */
+  /* 起始场景序号 */
   at?: number;
   sub?: string;
   subAt?: number;
@@ -15,7 +15,7 @@ interface NeonTitleProps {
   size?: 'lg' | 'xl';
 }
 
-/** 渐变霓虹大字标题（clip-text 渐变 + 辉光 + 平滑 ease 入场） */
+/* 渐变霓虹大字标题（clip-text 渐变 + 辉光 + 平滑 ease 入场） */
 export const NeonTitle: React.FC<NeonTitleProps> = ({
   text,
   at = 0,

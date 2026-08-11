@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
@@ -14,12 +14,12 @@ export interface QuizQuestion {
 
 interface QuizBoardProps {
   questions: QuizQuestion[];
-  /** 起始场景序号：active > at 后开始出题 */
+  /* 起始场景序号：active > at 后开始出题 */
   at?: number;
   className?: string;
 }
 
-/** 交互弹题：点击选项即时对错反馈（镜头 16，唯一交互组件） */
+/* 交互弹题：点击选项即时对错反馈（镜头 16，唯一交互组件） */
 export const QuizBoard: React.FC<QuizBoardProps> = ({ questions, at = 0, className = '' }) => {
   const { active } = useScene();
   const started = active > at;

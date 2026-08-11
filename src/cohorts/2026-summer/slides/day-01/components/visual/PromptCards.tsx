@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion } from 'motion/react';
@@ -13,13 +13,13 @@ export interface PromptElement {
 
 interface PromptCardsProps {
   elements: PromptElement[];
-  /** 起始场景序号：step 1..5 五要素卡依次揭示，step 6 后正文打字 */
+  /* 起始场景序号：step 1..5 五要素卡依次揭示，step 6 后正文打字 */
   at?: number;
   promptLines: string[];
   className?: string;
 }
 
-/** 结构化提示词五要素卡依次揭示 + 正文打字（镜头 10） */
+/* 结构化提示词五要素卡依次揭示 + 正文打字（镜头 10） */
 export const PromptCards: React.FC<PromptCardsProps> = ({
   elements,
   at = 0,

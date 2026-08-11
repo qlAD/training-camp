@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion } from 'motion/react';
@@ -6,7 +6,7 @@ import { useStage } from '../scene/StageClock';
 import { EASE } from '../scene/theme';
 
 interface ProfileBuilderProps {
-  /** 时间轴位置 */
+  /* 时间轴位置 */
   at: number;
   className?: string;
 }
@@ -41,7 +41,7 @@ const PARTS = [
   },
 ];
 
-/** 合体：HTML/CSS/JS 三块代码依次并入 → 右侧预览卡渲染出完整个人简介（0-2 代码 3 预览 4 完成） */
+/* 合体：HTML/CSS/JS 三块代码依次并入 → 右侧预览卡渲染出完整个人简介（0-2 代码 3 预览 4 完成） */
 export const ProfileBuilder: React.FC<ProfileBuilderProps> = ({ at, className = '' }) => {
   const { active } = useStage();
   const s = (i: number) => active >= at + i;

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { CheckCircle2, AlertCircle, ServerCrash } from 'lucide-react';
@@ -6,7 +6,7 @@ import { motion } from 'motion/react';
 import { useTimeline } from '../scene/TimelineScene';
 
 interface StatusBadgesProps {
-  /** 时间轴位置 */
+  /* 时间轴位置 */
   at: number;
   className?: string;
 }
@@ -35,7 +35,7 @@ const BADGES = [
   },
 ];
 
-/** 状态码徽章：200/404/500 逐张弹入（0-2 徽章 3 说明） */
+/* 状态码徽章：200/404/500 逐张弹入（0-2 徽章 3 说明） */
 export const StatusBadges: React.FC<StatusBadgesProps> = ({ at, className = '' }) => {
   const { active } = useTimeline();
   const s = (i: number) => active >= at + i;

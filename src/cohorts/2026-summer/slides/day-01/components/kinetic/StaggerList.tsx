@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion, Variants } from 'motion/react';
@@ -13,14 +13,14 @@ export interface StaggerItem {
 
 interface StaggerListProps {
   items: StaggerItem[];
-  /** 起始场景序号 */
+  /* 起始场景序号 */
   at?: number;
   stagger?: number;
   className?: string;
   itemClassName?: string;
 }
 
-/** 列表依次揭示（要点/卡片），到达后逐个平滑入场并常驻 */
+/* 列表依次揭示（要点/卡片），到达后逐个平滑入场并常驻 */
 export const StaggerList: React.FC<StaggerListProps> = ({
   items,
   at = 0,

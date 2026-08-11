@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
@@ -16,7 +16,7 @@ interface MiniQuizProps {
   className?: string;
 }
 
-/** 三题验收：点击选项即时反馈，答对加分；setState 全在事件回调（天然合规） */
+/* 三题验收：点击选项即时反馈，答对加分；setState 全在事件回调（天然合规） */
 export const MiniQuiz: React.FC<MiniQuizProps> = ({ questions, className = '' }) => {
   const [qIdx, setQIdx] = useState(0);
   const [score, setScore] = useState(0);

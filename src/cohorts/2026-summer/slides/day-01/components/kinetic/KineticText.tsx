@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion, Variants } from 'motion/react';
@@ -7,11 +7,11 @@ import { EASE } from '../scene/theme';
 
 interface KineticTextProps {
   text: string;
-  /** 起始场景序号（active > at 时开始弹出） */
+  /* 起始场景序号（active > at 时开始弹出） */
   at?: number;
-  /** words = 逐词弹出；chars = 逐字弹出 */
+  /* words = 逐词弹出；chars = 逐字弹出 */
   mode?: 'words' | 'chars';
-  /** 每词/每字间隔（ms） */
+  /* 每词/每字间隔（ms） */
   stagger?: number;
   className?: string;
 }
@@ -27,7 +27,7 @@ const itemVariants: Variants = {
   },
 };
 
-/** 动能排版：大字逐词/逐字弹出（scale + blur + y，stagger） */
+/* 动能排版：大字逐词/逐字弹出（scale + blur + y，stagger） */
 export const KineticText: React.FC<KineticTextProps> = ({
   text,
   at = 0,

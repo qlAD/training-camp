@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion } from 'motion/react';
@@ -8,12 +8,12 @@ import { Trophy } from 'lucide-react';
 
 interface CheckListProps {
   items: string[];
-  /** 起始场景序号：step k 勾选第 k 项（k=1..5），step 6 目标徽章 */
+  /* 起始场景序号：step k 勾选第 k 项（k=1..5），step 6 目标徽章 */
   at?: number;
   className?: string;
 }
 
-/** 勾选清单：逐项打勾动画 + 目标徽章（镜头 15） */
+/* 勾选清单：逐项打勾动画 + 目标徽章（镜头 15） */
 export const CheckList: React.FC<CheckListProps> = ({ items, at = 0, className = '' }) => {
   const { active } = useScene();
   const step = Math.max(0, active - at);

@@ -1,9 +1,9 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion } from 'motion/react';
 
-/** 底部透视科技网格（可选，用于「代码/渲染」类镜头） */
+/* 底部透视科技网格（可选，用于「代码/渲染」类镜头） */
 export const PerspectiveGrid: React.FC = () => (
   <div
     className="absolute inset-x-0 bottom-0 h-1/2 pointer-events-none overflow-hidden"

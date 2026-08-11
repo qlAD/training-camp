@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { motion } from 'motion/react';
@@ -7,12 +7,12 @@ import { COLORS, EASE } from '../scene/theme';
 import { User, Bot } from 'lucide-react';
 
 interface HumanAISplitProps {
-  /** 起始场景序号：step 1 人侧点亮，step 2 AI 侧点亮 */
+  /* 起始场景序号：step 1 人侧点亮，step 2 AI 侧点亮 */
   at?: number;
   className?: string;
 }
 
-/** 人与 AI 分屏：人脑「决策」/ 机械臂「代码」（镜头 4） */
+/* 人与 AI 分屏：人脑「决策」/ 机械臂「代码」（镜头 4） */
 export const HumanAISplit: React.FC<HumanAISplitProps> = ({ at = 0, className = '' }) => {
   const { active } = useScene();
   const step = Math.max(0, active - at);
