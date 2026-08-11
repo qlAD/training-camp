@@ -10,15 +10,15 @@ import { CodeWindow, CodeLine } from '../components/visual/CodeWindow';
 import { BrowserPreview } from '../components/visual/BrowserPreview';
 import { CodingSteps } from '../components/visual/CodingSteps';
 import { PromptElements } from '../components/visual/PromptElements';
-import { CheckCircle2, AlertTriangle, RefreshCw, Eye } from 'lucide-react';
+import { CheckCircle2, AlertTriangle, RefreshCw, Eye, Globe, Save, GitCommit } from 'lucide-react';
 
 /* ---------- 镜头 1：冷开场 · 从碰运气到标准化 ---------- */
 const SHOT01_LINES: CodeLine[] = [
-  { text: '// Day 1 的做法：想到啥写啥', color: '#8B93A7' },
+  { text: '// Day 1 的代码全挤在这一坨里', color: '#8B93A7' },
   { text: 'const btn = document.querySelector("#btn");', color: '#FBBF24' },
   { text: 'btn.onclick = () => {', color: '#FBBF24' },
   { text: '  document.write("你好");', color: '#FBBF24' },
-  { text: '}; // 刷新就没了', color: '#8B93A7' },
+  { text: '}; // 没看懂为什么这样写', color: '#8B93A7' },
 ];
 
 export const Shot01Open: React.FC = () => (
@@ -46,13 +46,13 @@ export const Shot01Open: React.FC = () => (
       <RevealFade index={4}>
         <div className="mx-auto flex max-w-xl flex-wrap justify-center gap-2">
           <span className="rounded-lg border border-rose-400/30 bg-rose-400/10 px-3 py-1.5 text-xs font-bold text-rose-200">
-            ❌ 想到啥写啥
+            ❌ 代码全挤一个文件
           </span>
           <span className="rounded-lg border border-rose-400/30 bg-rose-400/10 px-3 py-1.5 text-xs font-bold text-rose-200">
-            ❌ 不思考结构
+            ❌ AI 给啥就用啥
           </span>
           <span className="rounded-lg border border-rose-400/30 bg-rose-400/10 px-3 py-1.5 text-xs font-bold text-rose-200">
-            ❌ 错了不知为啥
+            ❌ 没看懂代码
           </span>
         </div>
       </RevealFade>
@@ -165,7 +165,7 @@ export const Shot05PromptElements: React.FC = () => (
     <EditorGrid />
     <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-5 px-10">
       <RevealFade index={0}>
-        <BigTitle text="Step 3 · 提示词四要素" sub="Role + Task + Context + Output" />
+        <BigTitle text="Step 3 · 提示词四要素" sub="角色 · 目标 · 约束 · 示例" />
       </RevealFade>
       <RevealFade index={1} className="w-full">
         <PromptElements at={1} />
@@ -220,6 +220,44 @@ export const Shot06Step4: React.FC = () => (
       </RevealFade>
       <RevealFade index={5}>
         <p className="text-sm font-medium text-slate-300">AI 是副驾驶，你才是主驾驶 —— 审仔细，才能发出去</p>
+      </RevealFade>
+    </div>
+  </StageClock>
+);
+
+/* ---------- 镜头 6b：Step 5 · 验证与归档 ---------- */
+export const Shot06bVerifyArchive: React.FC = () => (
+  <StageClock length={7}>
+    <EditorGrid />
+    <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-5 px-10">
+      <RevealFade index={0}>
+        <BigTitle text="Step 5 · 验证与归档" sub="跑不通的代码不算交付" />
+      </RevealFade>
+      <RevealFade index={1} className="w-full">
+        <div className="mx-auto grid w-full max-w-2xl grid-cols-1 gap-3 sm:grid-cols-2">
+          {[
+            { icon: Globe, title: '浏览器真跑一遍', desc: '本地双击 html，实际点一遍', cls: 'border-sky-400/40 bg-sky-400/10', iconCls: 'text-sky-300' },
+            { icon: CheckCircle2, title: '确认无问题', desc: '样式没丢、交互能用', cls: 'border-emerald-400/40 bg-emerald-400/10', iconCls: 'text-emerald-300' },
+            { icon: Save, title: '存档', desc: '归档到 day03 文件夹', cls: 'border-amber-400/40 bg-amber-400/10', iconCls: 'text-amber-300' },
+            { icon: GitCommit, title: '提交 Git', desc: 'push 到 Gitee 留存记录', cls: 'border-violet-400/40 bg-violet-400/10', iconCls: 'text-violet-300' },
+          ].map((item, i) => {
+            const Icon = item.icon;
+            return (
+              <RevealFade key={item.title} index={2 + i}>
+                <div className={`flex items-start gap-3 rounded-xl border px-4 py-3 ${item.cls}`}>
+                  <Icon className={`mt-0.5 h-5 w-5 shrink-0 ${item.iconCls}`} />
+                  <div>
+                    <p className="text-sm font-bold text-slate-100">{item.title}</p>
+                    <p className="text-[11px] text-slate-400">{item.desc}</p>
+                  </div>
+                </div>
+              </RevealFade>
+            );
+          })}
+        </div>
+      </RevealFade>
+      <RevealFade index={6}>
+        <p className="text-sm font-medium text-slate-300">跑不通的代码不算交付 —— 验证归档，才算真正完成</p>
       </RevealFade>
     </div>
   </StageClock>

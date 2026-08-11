@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Code, Layers, Server, Terminal, Database, HardDrive } from 'lucide-react';
+import { Code, Layers, Server, Terminal, Database, HardDrive, TrendingUp, GraduationCap, Building2 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useTimeline } from '../scene/TimelineScene';
 import { COLORS, EASE } from '../scene/theme';
@@ -66,7 +66,7 @@ export const TechStackMap: React.FC<TechStackMapProps> = ({ at, className = '' }
                   boxShadow: lit ? `0 0 24px ${layer.color}22` : 'none',
                 }}
                 initial={{ opacity: 0, y: 20 }}
-                animate={lit ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                animate={{ opacity: lit ? 1 : 0, y: lit ? 0 : 20 }}
                 transition={{ duration: 0.5, ease: EASE }}
               >
                 <div className="mb-2 flex items-center gap-2">
@@ -110,7 +110,7 @@ export const TechStackMap: React.FC<TechStackMapProps> = ({ at, className = '' }
                             : 'none',
                         }}
                         initial={{ opacity: 0, scale: 0.85 }}
-                        animate={techLit ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.85 }}
+                        animate={{ opacity: techLit ? 1 : 0, scale: techLit ? 1 : 0.85 }}
                         transition={{ duration: 0.4, ease: EASE }}
                       >
                         <span
@@ -156,7 +156,7 @@ export const TechStackMap: React.FC<TechStackMapProps> = ({ at, className = '' }
                 <motion.div
                   className="flex justify-center"
                   initial={{ opacity: 0 }}
-                  animate={s(layerStep + 2) ? { opacity: 1 } : { opacity: 0 }}
+                  animate={{ opacity: s(layerStep + 2) ? 1 : 0 }}
                   transition={{ duration: 0.4 }}
                 >
                   <div className="flex flex-col items-center gap-0.5">
@@ -185,12 +185,56 @@ export const TechStackMap: React.FC<TechStackMapProps> = ({ at, className = '' }
         <motion.div
           className="mt-1 rounded-xl border border-amber-400/30 bg-amber-400/10 px-3 py-2"
           initial={{ opacity: 0, y: 10 }}
-          animate={s(6) ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+          animate={{ opacity: s(6) ? 1 : 0, y: s(6) ? 0 : 10 }}
           transition={{ duration: 0.5, ease: EASE }}
         >
           <p className="text-center text-xs font-bold" style={{ color: COLORS.amber }}>
             ⭐ 国内企业最常见组合：Vue3 + SpringBoot + MySQL
           </p>
+        </motion.div>
+
+        <motion.div
+          className="mt-3 rounded-xl border border-sky-400/20 bg-sky-400/5 p-3"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: s(7) ? 1 : 0, y: s(7) ? 0 : 10 }}
+          transition={{ duration: 0.5, ease: EASE }}
+        >
+          <div className="flex items-center gap-2 mb-2">
+            <TrendingUp className="h-4 w-4" style={{ color: COLORS.sky }} />
+            <span className="text-xs font-bold" style={{ color: COLORS.sky }}>全栈成长路线图</span>
+          </div>
+          <div className="flex items-center gap-1">
+            {['静态页', 'Vue/React', '后端框架', '数据库', '联调', '部署'].map((step, i) => (
+              <React.Fragment key={step}>
+                <span className="rounded bg-slate-800 px-1.5 py-0.5 text-[10px] text-slate-300">
+                  {step}
+                </span>
+                {i < 5 && <span className="text-[10px]" style={{ color: COLORS.sky }}>→</span>}
+              </React.Fragment>
+            ))}
+          </div>
+        </motion.div>
+
+        <motion.div
+          className="mt-2 grid grid-cols-2 gap-2"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: s(8) ? 1 : 0, y: s(8) ? 0 : 10 }}
+          transition={{ duration: 0.5, ease: EASE }}
+        >
+          <div className="rounded-xl border border-indigo-400/20 bg-indigo-400/5 p-2">
+            <div className="flex items-center gap-1.5 mb-1">
+              <GraduationCap className="h-3 w-3 text-indigo-300" />
+              <span className="text-[10px] font-bold text-indigo-300">高校</span>
+            </div>
+            <p className="text-[9px] text-slate-400">重原理 · 内功心法</p>
+          </div>
+          <div className="rounded-xl border border-rose-400/20 bg-rose-400/5 p-2">
+            <div className="flex items-center gap-1.5 mb-1">
+              <Building2 className="h-3 w-3 text-rose-300" />
+              <span className="text-[10px] font-bold text-rose-300">企业</span>
+            </div>
+            <p className="text-[9px] text-slate-400">重工程 · 招式交付</p>
+          </div>
         </motion.div>
       </div>
     </div>

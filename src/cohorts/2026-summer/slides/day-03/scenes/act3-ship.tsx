@@ -8,7 +8,7 @@ import { ChipPop } from '../components/kinetic/ChipPop';
 import { EditorGrid } from '../components/fx/EditorGrid';
 import { GlowDot } from '../components/fx/GlowDot';
 import { FileSplitDemo } from '../components/visual/FileSplitDemo';
-import { CheckCircle2, BookOpen, PenLine, Presentation, Rocket } from 'lucide-react';
+import { CheckCircle2, BookOpen, Key, Presentation, Rocket } from 'lucide-react';
 
 /* ---------- 镜头 14：单文件拆多文件 ---------- */
 export const Shot14FileSplit: React.FC = () => (
@@ -32,33 +32,33 @@ export const Shot15HandsOn: React.FC = () => (
     <GlowDot />
     <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-5 px-10">
       <RevealFade index={0}>
-        <BigTitle text="今日实操三件事" sub="动手：改风格 · 加内容 · 拆文件" />
+        <BigTitle text="今日实操三件事" sub="动手：接 API · 完善作品集 · 拆分重构" />
       </RevealFade>
       <RevealFade index={1} className="w-full">
         <div className="mx-auto w-full max-w-xl space-y-3">
           {[
             {
-              icon: PenLine,
-              title: '改配色和字体',
-              desc: '用 CSS 选择器改出你喜欢的风格',
-              tag: 'CSS',
-              tagCls: 'text-sky-300 bg-sky-400/15 border-sky-400/30',
-              done: true,
-            },
-            {
-              icon: Presentation,
-              title: '加头像和爱好',
-              desc: '用 HTML 标签添加图片和列表内容',
-              tag: 'HTML',
+              icon: Key,
+              title: '接入 DeepSeek API',
+              desc: '在 TRAE 内配置 Key，连通测试',
+              tag: 'API',
               tagCls: 'text-orange-300 bg-orange-400/15 border-orange-400/30',
               done: true,
             },
             {
+              icon: Presentation,
+              title: '完善个人静态作品集',
+              desc: 'Plan 模式聊结构 + Spec 模式生成区块',
+              tag: 'Vibe',
+              tagCls: 'text-sky-300 bg-sky-400/15 border-sky-400/30',
+              done: true,
+            },
+            {
               icon: Rocket,
-              title: '拆文件 + 发布',
-              desc: '拆成三件套，提交 Gitee 生成链接',
-              tag: 'Git',
-              tagCls: 'text-amber-300 bg-amber-400/15 border-amber-400/30',
+              title: '拆分单文件为多文件',
+              desc: '拆成 html/css/js 三件套并跑通',
+              tag: 'Refactor',
+              tagCls: 'text-emerald-300 bg-emerald-400/15 border-emerald-400/30',
               done: false,
             },
           ].map((item, i) => {
@@ -108,10 +108,9 @@ export const Shot16Homework: React.FC = () => (
             </div>
             <div className="space-y-2">
               {[
-                '把今天的个人简介页面重新做一遍',
-                '尝试用 Plan 模式让 AI 帮你改 3 个地方',
-                '把单文件拆成 HTML/CSS/JS 三件套',
-                '提交到 Gitee，拿到在线链接',
+                '把拆分完毕的静态作品集代码（html+css+js）归档到 day03 文件夹',
+                '把代码更新提交到 Gitee 远程仓库，提交评论附运行截图',
+                '保证代码本地双击 html 文件能直接打开、正常运行',
               ].map((task, i) => (
                 <div key={i} className="flex items-start gap-2 rounded-lg border border-white/5 bg-slate-900/40 px-3 py-2">
                   <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-slate-600 font-mono text-[9px] font-bold text-slate-500">
@@ -127,18 +126,21 @@ export const Shot16Homework: React.FC = () => (
               <CheckCircle2 className="h-4 w-4 text-emerald-300" />
               <span className="text-sm font-bold text-slate-100">自测清单</span>
             </div>
-            <div className="space-y-2">
+            <div className="space-y-1.5">
               {[
-                '能说清楚 Vibe Coding 的五步流程吗？',
-                '写提示词时会主动加上四要素吗？',
-                '知道什么时候用 Plan、什么时候用 Spec 吗？',
-                '能独立把单文件拆成三件套吗？',
+                'TRAE IDE 已接入 DeepSeek API，能在编辑器内直接对话生成代码',
+                '作品集页面结构清晰，至少包含自我介绍、技能、作品、联系方式',
+                '页面有基础交互（按钮点击或卡片悬停）且能正常响应',
+                '代码已拆分为 html、css、js 多文件，分层清晰',
+                '拆分后页面样式和交互均正常，没有"丢样式"',
+                '代码已归档到 day03 文件夹并提交到 Gitee，提交评论含运行截图',
+                '本地双击 html 文件可直接打开、正常运行',
               ].map((task, i) => (
-                <div key={i} className="flex items-start gap-2 rounded-lg border border-white/5 bg-slate-900/40 px-3 py-2">
+                <div key={i} className="flex items-start gap-2 rounded-lg border border-white/5 bg-slate-900/40 px-3 py-1.5">
                   <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-slate-600 font-mono text-[9px] font-bold text-slate-500">
                     ?
                   </span>
-                  <span className="text-[12px] leading-relaxed text-slate-300">{task}</span>
+                  <span className="text-[11px] leading-relaxed text-slate-300">{task}</span>
                 </div>
               ))}
             </div>

@@ -1,8 +1,8 @@
-﻿'use client';
+'use client';
 
 import React from 'react';
 import type { DayDeckRenderer } from '@/lib';
-import { Shot01Open, Shot02CodingSteps, Shot03Step1, Shot04Step2, Shot05PromptElements, Shot06Step4 } from './scenes/act1-structure';
+import { Shot01Open, Shot02CodingSteps, Shot03Step1, Shot04Step2, Shot05PromptElements, Shot06Step4, Shot06bVerifyArchive } from './scenes/act1-structure';
 import { Shot07Plugins, Shot08APISetup, Shot09PlanSpec, Shot10HTML, Shot11CSS, Shot12JS, Shot13Trio } from './scenes/act2-style-script';
 import { Shot14FileSplit, Shot15HandsOn, Shot16Homework, Shot17Summary } from './scenes/act3-ship';
 
@@ -13,6 +13,7 @@ const SHOTS: React.FC[] = [
   Shot04Step2,
   Shot05PromptElements,
   Shot06Step4,
+  Shot06bVerifyArchive,
   Shot07Plugins,
   Shot08APISetup,
   Shot09PlanSpec,
@@ -44,13 +45,13 @@ export const day03Deck: DayDeckRenderer = {
         subtitle: 'Day 1 代码的问题：想到啥写啥',
         layout: 'split_code',
         instructorNotes:
-          '左代码窗（Day 1 碰运气写法）+ 右浏览器预览（问题展示）。抛出痛点：没有流程，写代码全凭感觉。',
-        keyTakeaway: '痛点引入：为什么需要标准化流程',
+          '左代码窗（Day 1 单文件糊出来的代码）+ 右浏览器预览（问题展示）。抛出讲义三个痛点：代码全挤一个文件/AI给啥用啥/没看懂代码。引出今天要把"碰运气式聊天"升级为"有章法的标准流程"。',
+        keyTakeaway: '痛点引入：Day 1 主页的三个不舒服 → 今天升级为标准化流程',
       },
       {
         id: 'd3-s02',
         title: 'Vibe Coding 五步流程',
-        subtitle: '想清楚 · 拆明白 · 写清楚 · 审仔细 · 发出去',
+        subtitle: '想清楚 · 拆明白 · 写清楚 · 审仔细 · 验证归档',
         layout: 'cover',
         instructorNotes:
           '五步卡片逐张弹入：理清需求 / 拆解任务 / 写提示词 / 审查调整 / 迭代发布。建立流程框架。',
@@ -77,11 +78,11 @@ export const day03Deck: DayDeckRenderer = {
       {
         id: 'd3-s05',
         title: 'Step 3：提示词四要素',
-        subtitle: 'Role + Task + Context + Output',
+        subtitle: '角色 · 目标 · 约束 · 示例',
         layout: 'concept',
         instructorNotes:
-          '四要素卡片逐张弹入：角色 / 任务 / 上下文 / 输出格式。底部总结条显示四要素齐了才能让 AI 写出好代码。',
-        keyTakeaway: '提示词四要素：Role / Task / Context / Output',
+          '四要素卡片逐张弹入：角色 / 目标 / 约束 / 示例。底部总结条显示四要素齐了才能让 AI 写出好代码。',
+        keyTakeaway: '提示词四要素：角色 / 目标 / 约束 / 示例',
       },
       {
         id: 'd3-s06',
@@ -91,6 +92,14 @@ export const day03Deck: DayDeckRenderer = {
         instructorNotes:
           '左代码窗展示自查清单（5 条），右侧三张审查要点卡：打开看看 / 微调调整 / 注意陷阱。',
         keyTakeaway: '审查三要点：跑起来 / 微调 / 防陷阱',
+      },
+      {
+        id: 'd3-s06b',
+        title: 'Step 5 · 验证与归档',
+        subtitle: '跑不通的代码不算交付',
+        layout: 'steps',
+        instructorNotes: '第五步验证与归档：浏览器真跑一遍→确认无问题→存档→提交Git。强调"跑不通的代码不算交付"，与讲义五步法收尾对齐。',
+        keyTakeaway: '验证与归档：跑通→存档→提交 Git，跑不通不算交付',
       },
       {
         id: 'd3-s07',
@@ -116,8 +125,8 @@ export const day03Deck: DayDeckRenderer = {
         subtitle: '两种节奏，各有所长',
         layout: 'concept',
         instructorNotes:
-          '左右对比：Plan（快·粗·能跑就行）vs Spec（慢·精·按规范来）。底部"怎么选"总结。',
-        keyTakeaway: '练手用 Plan，做项目用 Spec',
+          '左右对比：Plan（先出图纸，梳理思路）vs Spec（按规格施工，精确生成）。底部"怎么选"总结：思路不清用 Plan，规格明确用 Spec。',
+        keyTakeaway: '思路不清用 Plan，规格明确用 Spec',
       },
       {
         id: 'd3-s10',
@@ -167,20 +176,20 @@ export const day03Deck: DayDeckRenderer = {
       {
         id: 'd3-s15',
         title: '今日实操三件事',
-        subtitle: '改风格 · 加内容 · 拆文件',
+        subtitle: '接 API · 完善作品集 · 拆分重构',
         layout: 'exercise',
         instructorNotes:
-          '三个实操任务逐条点亮：改配色字体 ✓ / 加头像爱好 ✓ / 拆文件发布（待完成）。学员现场跟练。',
-        keyTakeaway: '今日实操三件事',
+          '三件事依次展示：1.接入DeepSeek API（配置Key+连通测试）；2.基于Vibe Coding流程完善个人静态作品集（Plan模式聊结构+Spec模式生成区块）；3.完成单文件到多文件拆分重构（拆成html/css/js三件套并跑通）。与讲义"今天课堂三件事"完全对齐。',
+        keyTakeaway: '今日实操三件事：接 API · 完善作品集 · 拆分重构',
       },
       {
         id: 'd3-s16',
         title: '作业与自测清单',
-        subtitle: '巩固今天的五步流程',
+        subtitle: '3 项作业 + 7 项自测',
         layout: 'steps',
         instructorNotes:
-          '左右双栏：必做作业（4 项）+ 自测清单（4 题）。逐条展示，学员课后完成。',
-        keyTakeaway: '4 项作业 + 4 题自测',
+          '与讲义完全对齐：3项必做作业（归档day03/提交Gitee附截图/双击能打开）+ 7项自测清单（含API接入、页面结构、基础交互、拆分多文件、拆分后正常、归档提交附截图、双击能打开）。逐条展示，学员课后完成。',
+        keyTakeaway: '3 项作业 + 7 项自测',
       },
       {
         id: 'd3-s17',

@@ -42,7 +42,7 @@ export const Shot08ProjectTech: React.FC = () => (
       <RevealBlock index={1} className="w-full max-w-3xl">
         <RouteMap
           at={1}
-          stations={['启蒙', '作品', '后端', '部署', '上线']}
+          stations={['Day1 主页', 'Day3 拆文件', 'Day4 Vue', 'Day6 后端', 'Day8 联调', 'Day11 部署']}
         />
       </RevealBlock>
       <RevealBlock index={2} className="text-center">
@@ -102,13 +102,13 @@ export const Shot11FlowLoop: React.FC = () => (
   </SceneSlide>
 );
 
-/* ---------- 镜头 12：结构化提示词五要素 ---------- */
+/* ---------- 镜头 12：把需求说清楚 ---------- */
 export const Shot12PromptTemplate: React.FC = () => (
   <SceneSlide sceneCount={7}>
     <StageBackground variant="code" />
     <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-5 px-10">
       <RevealBlock index={0} className="text-center">
-        <NeonTitle text="把需求说清楚" at={0} sub="结构化提示词五要素" />
+        <NeonTitle text="把需求说清楚" at={0} sub="把需求写明白，AI 才能写得好" />
       </RevealBlock>
       <RevealBlock index={1} className="w-full max-w-3xl">
         <PromptTemplate at={1} />

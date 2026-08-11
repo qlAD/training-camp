@@ -4,7 +4,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { useStage } from '../scene/StageClock';
 import { EASE } from '../scene/theme';
-import { User, Target, BookOpen, FileCode } from 'lucide-react';
+import { User, Target, Sliders, FileCode } from 'lucide-react';
 
 interface PromptElementsProps {
   at: number;
@@ -23,27 +23,27 @@ const ELEMENTS = [
   },
   {
     icon: Target,
-    label: '任务',
-    desc: '帮我做一个个人简介页面',
-    tag: 'Task',
+    label: '目标',
+    desc: '帮我写个人简介页面',
+    tag: 'Goal',
     cls: 'border-sky-400/40 bg-sky-400/10',
     iconCls: 'text-sky-300',
     codeCls: 'text-sky-200',
   },
   {
-    icon: BookOpen,
-    label: '上下文',
-    desc: '我已经写好了 index.html 和 style.css',
-    tag: 'Context',
+    icon: Sliders,
+    label: '约束',
+    desc: '只用 HTML + CSS，深色简洁',
+    tag: 'Constraint',
     cls: 'border-amber-400/40 bg-amber-400/10',
     iconCls: 'text-amber-300',
     codeCls: 'text-amber-200',
   },
   {
     icon: FileCode,
-    label: '输出格式',
-    desc: '直接输出完整 HTML 文件',
-    tag: 'Output',
+    label: '示例',
+    desc: '参考这个页面的风格',
+    tag: 'Example',
     cls: 'border-emerald-400/40 bg-emerald-400/10',
     iconCls: 'text-emerald-300',
     codeCls: 'text-emerald-200',
@@ -94,11 +94,11 @@ export const PromptElements: React.FC<PromptElementsProps> = ({ at, className = 
         className="mt-4 rounded-xl border border-white/10 bg-slate-950/50 px-4 py-3"
       >
         <p className="text-center font-mono text-[12px] leading-relaxed text-slate-300">
-          <span className="text-orange-300">Role</span> | <span className="text-sky-300">Task</span> |{' '}
-          <span className="text-amber-300">Context</span> | <span className="text-emerald-300">Output</span>
+          <span className="text-orange-300">Role</span> | <span className="text-sky-300">Goal</span> |{' '}
+          <span className="text-amber-300">Constraint</span> | <span className="text-emerald-300">Example</span>
         </p>
         <p className="mt-1 text-center text-[11px] text-slate-500">
-          四要素齐了，AI 才知道「你是谁 · 要做什么 · 基于什么 · 怎么交」
+          四要素齐了，AI 才知道「你是谁 · 要达成什么 · 有什么限制 · 参考什么样子」
         </p>
       </motion.div>
     </div>

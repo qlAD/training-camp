@@ -67,8 +67,9 @@ export const PathCompare: React.FC<PathCompareProps> = ({ at = 0, className = ''
           className="flex flex-col items-center gap-1"
         >
           <motion.div
-            animate={{ x: s(2) ? [0, 4, 0] : 0 }}
-            transition={{ duration: 1.4, repeat: s(2) ? Infinity : 0, ease: 'easeInOut' }}
+            initial={{ x: 0 }}
+            animate={{ x: 0 }}
+            transition={{ duration: 0.3, ease: EASE }}
           >
             <ArrowRight className="h-5 w-5 text-teal-300" />
           </motion.div>

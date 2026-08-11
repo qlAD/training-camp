@@ -17,6 +17,7 @@ import { COLORS, EASE } from '../scene/theme';
 interface GitFlowProps {
   at?: number;
   className?: string;
+  showPull?: boolean;
 }
 
 const STEPS = [
@@ -27,21 +28,22 @@ const STEPS = [
   { icon: CloudDownload, label: 'pull', desc: '拉取协作', color: COLORS.sky },
 ];
 
-export const GitFlow: React.FC<GitFlowProps> = ({ at = 0, className = '' }) => {
+export const GitFlow: React.FC<GitFlowProps> = ({ at = 0, className = '', showPull = true }) => {
   const { active } = useTimeline();
   const s = (i: number) => active >= at + i;
+  const steps = showPull ? STEPS : STEPS.slice(0, 4);
 
   return (
     <div className={`w-full ${className}`}>
       <div className="flex items-stretch gap-2">
-        {STEPS.map((step, i) => {
+        {steps.map((step, i) => {
           const Icon = step.icon;
           const lit = s(i);
           return (
             <React.Fragment key={step.label}>
               <motion.div
                 initial={{ opacity: 0, y: 14 }}
-                animate={lit ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
+                animate={{ opacity: lit ? 1 : 0, y: lit ? 0 : 14 }}
                 transition={{ duration: 0.45, ease: EASE }}
                 className="flex min-w-0 flex-1 flex-col items-center gap-1.5 rounded-2xl border border-white/10 bg-slate-950/50 px-2 py-3"
                 style={{
@@ -72,10 +74,10 @@ export const GitFlow: React.FC<GitFlowProps> = ({ at = 0, className = '' }) => {
                 <span className="text-[10px] text-slate-500">{step.desc}</span>
               </motion.div>
 
-              {i < STEPS.length - 1 && (
+              {i < steps.length - 1 && (
                 <motion.span
                   initial={{ opacity: 0, scaleX: 0 }}
-                  animate={s(i + 1) ? { opacity: 1, scaleX: 1 } : { opacity: 0, scaleX: 0 }}
+                  animate={{ opacity: s(i + 1) ? 1 : 0, scaleX: s(i + 1) ? 1 : 0 }}
                   transition={{ duration: 0.35, ease: EASE }}
                   className="flex items-center justify-center text-sky-400/70"
                 >
@@ -89,7 +91,7 @@ export const GitFlow: React.FC<GitFlowProps> = ({ at = 0, className = '' }) => {
 
       <motion.div
         initial={{ opacity: 0, scale: 0.85 }}
-        animate={s(5) ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.85 }}
+        animate={{ opacity: s(5) ? 1 : 0, scale: s(5) ? 1 : 0.85 }}
         transition={{ type: 'spring', stiffness: 280, damping: 20 }}
         className="mx-auto mt-4 flex w-full max-w-md items-center gap-3 rounded-2xl border border-teal-400/40 bg-teal-400/10 px-5 py-3"
       >
@@ -101,7 +103,7 @@ export const GitFlow: React.FC<GitFlowProps> = ({ at = 0, className = '' }) => {
               gitee.com / you / project
             </p>
             <p className="text-[11px] text-teal-200/70">
-              五步走，代码安全躺在云端协作仓库
+              {showPull ? '五步走，代码安全躺在云端协作仓库' : '四步走，代码存好准备上云'}
             </p>
           </div>
         </div>
@@ -109,11 +111,11 @@ export const GitFlow: React.FC<GitFlowProps> = ({ at = 0, className = '' }) => {
 
       <motion.p
         initial={{ opacity: 0 }}
-        animate={s(6) ? { opacity: 1 } : { opacity: 0 }}
+        animate={{ opacity: s(6) ? 1 : 0 }}
         transition={{ duration: 0.5, ease: EASE }}
         className="mt-3 text-center text-sm text-slate-300"
       >
-        Git 管版本 · Gitee 托代码 · 五步走完整托管流程
+        {showPull ? 'Git 管版本 · Gitee 托代码 · 五步走完整托管流程' : 'Git 管版本 · 四步走打好基础'}
       </motion.p>
     </div>
   );

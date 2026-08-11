@@ -8,7 +8,7 @@ import { GlowTitle } from '../components/kinetic/GlowTitle';
 import { PopCards } from '../components/kinetic/PopCards';
 import { NetGrid } from '../components/fx/NetGrid';
 import { DataRipple } from '../components/fx/DataRipple';
-import { GitFlow } from '../components/visual/GitFlow';
+import { VersionClosedLoop } from '../components/visual/VersionClosedLoop';
 import { Checkoff } from '../components/visual/Checkoff';
 import { EASE, COLORS } from '../components/scene/theme';
 
@@ -60,16 +60,16 @@ export const Shot14HandsOn: React.FC = () => (
 
 /* ---------- 镜头 15：代码版本托管闭环 ---------- */
 export const Shot15VersionFlow: React.FC = () => (
-  <TimelineScene length={5}>
+  <TimelineScene length={7}>
     <NetGrid />
     <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-6 px-10">
       <RevealLayer index={0}>
         <GlowTitle text="代码版本托管闭环" sub="先 pull 后 push，养成肌肉记忆" />
       </RevealLayer>
       <RevealLayer index={1} className="w-full">
-        <GitFlow at={1} />
+        <VersionClosedLoop at={1} />
       </RevealLayer>
-      <RevealLayer index={5}>
+      <RevealLayer index={7}>
         <p className="bg-gradient-to-r from-sky-200 via-teal-200 to-lime-200 bg-clip-text text-center text-base font-black text-transparent">
           先 pull 后推是好习惯，养成肌肉记忆
         </p>
@@ -80,24 +80,23 @@ export const Shot15VersionFlow: React.FC = () => (
 
 /* ---------- 镜头 16：作业与自测清单 ---------- */
 const HOMEWORK_ITEMS = [
-  '写 Markdown 笔记',
-  '初始化 homework Git 仓库',
-  '关联 Gitee 远程',
-  '推送所有作业',
+  '写 Markdown 学习笔记存到 homework/day02（含标题/列表/加粗/引用）',
+  '对 homework 文件夹 git 初始化并关联 Gitee 远程',
+  '把 Day1+Day2 所有作业文件 commit 并 push 到 Gitee',
 ];
 
 const SELF_CHECK_ITEMS = [
-  '能在终端用 ls / cd 浏览目录',
-  '能用 git init 初始化仓库',
-  '能用 git add + git commit 提交文件',
-  '能关联 Gitee 远程仓库',
-  '能用 git push 推送代码',
-  '能用 git pull 拉取更新',
-  '能用 Markdown 写一篇笔记',
+  'Markdown 笔记至少用到标题/列表/加粗/引用四种语法',
+  '笔记已保存到 homework/day02 目录',
+  'homework 文件夹已完成 git 初始化',
+  '已配置 Git 全局用户名和邮箱',
+  'Gitee 远程仓库已与本地关联（令牌或 SSH 任选其一）',
+  'Day1、Day2 全部作业文件已 commit 并成功 push 到 Gitee',
+  '在 Gitee 网页端能看到自己推送的文件',
 ];
 
 export const Shot16Homework: React.FC = () => (
-  <TimelineScene length={6}>
+  <TimelineScene length={14}>
     <DataRipple />
     <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-4 px-10">
       <RevealLayer index={0}>
@@ -112,7 +111,7 @@ export const Shot16Homework: React.FC = () => (
       <RevealLayer index={5} className="w-full">
         <Checkoff at={5} items={SELF_CHECK_ITEMS} />
       </RevealLayer>
-      <RevealLayer index={6}>
+      <RevealLayer index={13}>
         <p className="bg-gradient-to-r from-sky-200 via-teal-200 to-lime-200 bg-clip-text text-center text-base font-black text-transparent">
           7 项自测清单确保完整
         </p>

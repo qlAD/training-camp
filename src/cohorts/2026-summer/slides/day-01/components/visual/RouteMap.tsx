@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React from 'react';
 import { motion } from 'motion/react';
@@ -8,7 +8,7 @@ import { Flag } from 'lucide-react';
 
 interface RouteMapProps {
   stations: string[];
-  /* 起始场景序号：step k 点亮第 k 站（k=1..5），step 6 旗帜落地 */
+  /* 起始场景序号：step k 点亮第 k 站（k=1..N），step N+1 旗帜落地 */
   at?: number;
   className?: string;
 }
@@ -36,7 +36,7 @@ export const RouteMap: React.FC<RouteMapProps> = ({ stations, at = 0, className 
           const lit = step >= i + 1;
           const isLast = i === total - 1;
           return (
-            <div key={i} className="relative z-10 flex w-1/5 flex-col items-center">
+            <div key={i} className="relative z-10 flex flex-1 flex-col items-center">
               <motion.div
                 className={`flex h-7 w-7 items-center justify-center rounded-full border-2 text-[11px] font-black ${
                   isLast && lit ? '' : ''

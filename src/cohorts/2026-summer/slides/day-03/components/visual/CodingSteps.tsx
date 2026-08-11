@@ -46,8 +46,8 @@ const STEPS = [
   },
   {
     icon: Rocket,
-    title: '迭代发布',
-    desc: '能跑就先发，再慢慢打磨',
+    title: '验证归档',
+    desc: '浏览器真跑一遍，存档提交 Git',
     cls: 'border-violet-400/40 bg-violet-400/10',
     iconCls: 'text-violet-300',
     numCls: 'bg-violet-400 text-slate-950',
@@ -91,7 +91,7 @@ export const CodingSteps: React.FC<CodingStepsProps> = ({ at, className = '' }) 
         transition={{ duration: 0.5, ease: EASE }}
         className="mt-4 text-center text-sm text-slate-300"
       >
-        Vibe Coding 五步曲：想清楚 · 拆明白 · 写清楚 · 审仔细 · 发出去
+        Vibe Coding 五步曲：想清楚 · 拆明白 · 写清楚 · 审仔细 · 验证归档
       </motion.p>
     </div>
   );

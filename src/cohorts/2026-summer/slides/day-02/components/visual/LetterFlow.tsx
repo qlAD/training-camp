@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React from 'react';
 import { Mail, ArrowRight } from 'lucide-react';
@@ -65,7 +65,7 @@ export const LetterFlow: React.FC<LetterFlowProps> = ({
         <motion.div
           initial={{ x: -20, opacity: 0 }}
           animate={s(1) ? { x: 20, opacity: 1 } : { x: -20, opacity: 0 }}
-          transition={{ duration: 1, repeat: s(1) ? Infinity : 0, repeatDelay: 1.2, ease: 'linear' }}
+          transition={{ duration: 0.8, ease: 'easeInOut' }}
         >
           <ArrowRight className="h-4 w-4 text-sky-300" />
         </motion.div>

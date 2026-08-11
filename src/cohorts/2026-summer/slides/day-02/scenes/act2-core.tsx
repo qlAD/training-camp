@@ -9,14 +9,16 @@ import { DataRipple } from '../components/fx/DataRipple';
 import { TechStackMap } from '../components/visual/TechStackMap';
 import { TerminalDemo } from '../components/visual/TerminalDemo';
 import { GitFlow } from '../components/visual/GitFlow';
+import { GiteeSetup } from '../components/visual/GiteeSetup';
 import { MarkdownGuide } from '../components/visual/MarkdownGuide';
 import { IDETour } from '../components/visual/IDETour';
+import { CloneFlow } from '../components/visual/CloneFlow';
 
 /* ---------- 镜头 7：全栈技术栈图谱 ---------- */
 export const Shot07TechStack: React.FC = () => (
-  <TimelineScene length={5}>
+  <TimelineScene length={9}>
     <NetGrid />
-    <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-6 px-10">
+    <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-4 px-10">
       <RevealLayer index={0}>
         <GlowTitle text="全栈技术栈图谱" />
       </RevealLayer>
@@ -51,7 +53,7 @@ export const Shot09Git: React.FC = () => (
         <GlowTitle text="Git：给代码拍快照" />
       </RevealLayer>
       <RevealLayer index={1} className="w-full">
-        <GitFlow at={1} />
+        <GitFlow at={1} showPull={false} />
       </RevealLayer>
     </div>
   </TimelineScene>
@@ -59,14 +61,14 @@ export const Shot09Git: React.FC = () => (
 
 /* ---------- 镜头 10：Gitee注册与仓库关联 ---------- */
 export const Shot10Gitee: React.FC = () => (
-  <TimelineScene length={4}>
+  <TimelineScene length={6}>
     <DataRipple />
     <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-6 px-10">
       <RevealLayer index={0}>
         <GlowTitle text="Gitee：代码云端之家" />
       </RevealLayer>
       <RevealLayer index={1} className="w-full">
-        <GitFlow at={1} />
+        <GiteeSetup at={1} />
       </RevealLayer>
     </div>
   </TimelineScene>
@@ -104,14 +106,14 @@ export const Shot12IDE: React.FC = () => (
 
 /* ---------- 镜头 13：git clone与项目管理 ---------- */
 export const Shot13Clone: React.FC = () => (
-  <TimelineScene length={4}>
+  <TimelineScene length={6}>
     <NetGrid />
     <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-6 px-10">
       <RevealLayer index={0}>
         <GlowTitle text="git clone 拉取项目" />
       </RevealLayer>
       <RevealLayer index={1} className="w-full">
-        <GitFlow at={1} />
+        <CloneFlow at={1} />
       </RevealLayer>
     </div>
   </TimelineScene>

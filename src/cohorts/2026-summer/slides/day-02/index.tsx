@@ -198,8 +198,8 @@ export const day02Deck: DayDeckRenderer = {
         subtitle: '写笔记 · 建仓库 · 推代码',
         layout: 'exercise',
         instructorNotes:
-          '三项作业：1.选一个知识点写Markdown学习笔记；2.homework文件夹git初始化；3.推送Day1+Day2所有作业到Gitee。七项自测清单逐项确认。',
-        keyTakeaway: '笔记 + 仓库 + 推送，完整跑通版本托管流程',
+          '与讲义完全对齐：3项作业（写笔记存homework/day02 + homework文件夹git初始化关联Gitee + 推送Day1+Day2所有作业到Gitee）+ 7项自测清单（含homework/day02路径、Git全局配置、令牌/SSH、Day1+Day2 push成功、Gitee网页端可见）。逐条确认。',
+        keyTakeaway: '3 项作业 + 7 项自测，完整跑通版本托管流程',
       },
       {
         id: 'd2-s17',

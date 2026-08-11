@@ -8,13 +8,13 @@ import { Typewriter } from '../kinetic/Typewriter';
 import { User, FileCode, Layers, Sliders, FileOutput } from 'lucide-react';
 
 interface PromptTemplateProps {
-  /* 起始场景序号：step 1..5 五要素依次点亮，step 6 正文打字 */
+  /* 起始场景序号：step 1..5 要素依次点亮，step 6 正文打字 */
   at?: number;
   promptLines?: string[];
   className?: string;
 }
 
-/* 结构化提示词五要素卡依次揭示 + 正文打字（镜头 10 扩展版） */
+/* 提示词要素卡依次揭示 + 正文打字 */
 export const PromptTemplate: React.FC<PromptTemplateProps> = ({
   at = 0,
   promptLines,

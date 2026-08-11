@@ -78,8 +78,9 @@ export const InstallFlow: React.FC<InstallFlowProps> = ({ at = 0, className = ''
             transition={{ duration: 0.4, ease: EASE }}
           >
             <motion.div
-              animate={{ x: s(stepIndex + 1) ? [0, 4, 0] : 0 }}
-              transition={{ duration: 1.2, repeat: s(stepIndex + 1) ? Infinity : 0, ease: 'easeInOut' }}
+              initial={{ x: 0 }}
+              animate={{ x: s(stepIndex + 1) ? 0 : 0 }}
+              transition={{ duration: 0.3, ease: EASE }}
               className="flex flex-col items-center"
             >
               <ArrowRight className="h-4 w-4" style={{ color: s(stepIndex + 1) ? COLORS.sky : 'rgba(148,163,184,0.3)' }} />

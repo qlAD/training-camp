@@ -55,7 +55,7 @@ export const day01Deck: DayDeckRenderer = {
     duration: '50 min',
     target: '零基础学员 · 无需编程经验',
     output: '一个 AI 生成的个人作品集主页（HTML）',
-    aiPractice: '结构化提示词五要素 + Vibe Coding 完整流程',
+    aiPractice: '把需求说清楚 + Vibe Coding 完整流程',
     slides: [
       {
         id: 'd1-s01',
@@ -81,7 +81,7 @@ export const day01Deck: DayDeckRenderer = {
         subtitle: '八大技术模块 · 考核标准 · 评优机制',
         layout: 'steps',
         instructorNotes:
-          '八大模块依次点亮：认知/工具/前端/工程化/后端/数据库/部署/复盘。明确考核方式和评优标准，强调每日小交付的重要性。',
+          '八大技术模块依次点亮：①认知打底 ②工具链 ③前端三剑客 ④前端工程化(Vue3) ⑤后端(SpringBoot) ⑥数据库(MySQL) ⑦部署上云 ⑧复盘归档。同时讲解考核标准、评优奖励机制、阶段性交付产出要求。明确前置知识基础与电脑硬件/软件配置最低标准。强调每日小交付是14天大项目的砖。',
         keyTakeaway: '每日小交付是14天大项目的砖，别等Day13才发现欠了作业',
       },
       {
@@ -126,7 +126,7 @@ export const day01Deck: DayDeckRenderer = {
         subtitle: '项目里程碑与技术路线',
         layout: 'steps',
         instructorNotes:
-          '用路线图展示两个项目在各阶段的交付物：Day1 AI生成主页→Day3拆多文件→Day4 Vue工程→Day5前端页面→Day6后端→Day8联调→Day11部署。',
+          '用路线图展示两个项目在各阶段的交付物：Day1 AI生成主页→Day3拆多文件→Day4 Vue工程→Day6 后端建库→Day8 第一轮联调→Day11 部署上公网。强调每个阶段都有可运行的交付物，不是听完就算了。',
         keyTakeaway: '每个阶段都有可运行的交付物，不是听完就算了',
       },
       {
@@ -159,11 +159,11 @@ export const day01Deck: DayDeckRenderer = {
       {
         id: 'd1-s12',
         title: '把需求说清楚',
-        subtitle: '结构化提示词五要素',
+        subtitle: '把需求写明白，AI 才能写得好',
         layout: 'prompt_template',
         instructorNotes:
-          '五要素卡片依次点亮（角色/任务/栈/约束/输出），下方打字机输出完整提示词。现场带着学员用这五要素写一条自己的提示词。',
-        keyTakeaway: '提示词五要素：角色 / 任务 / 栈 / 约束 / 输出',
+          '五张要素卡依次点亮（角色/任务/栈/约束/输出），下方打字机输出完整提示词。注意：Day 1 只是把需求说清楚的小贴士，不强调"五要素"术语（Day 3 才系统讲"提示词四要素"）。现场带学员用这些要素写一条自己的提示词。',
+        keyTakeaway: '把需求说清楚：角色 + 任务 + 技术栈 + 约束 + 输出',
       },
       {
         id: 'd1-s13',

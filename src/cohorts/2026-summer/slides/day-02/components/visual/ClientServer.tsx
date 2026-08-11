@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React from 'react';
 import { Monitor, Server, ArrowRight, ArrowLeft } from 'lucide-react';
@@ -46,7 +46,7 @@ export const ClientServer: React.FC<ClientServerProps> = ({
             <motion.div
               initial={{ x: -28, opacity: 0 }}
               animate={s(1) ? { x: 28, opacity: 1 } : { x: -28, opacity: 0 }}
-              transition={{ duration: 1.2, repeat: s(1) ? Infinity : 0, repeatDelay: 1.4, ease: 'linear' }}
+              transition={{ duration: 0.8, ease: 'easeInOut' }}
             >
               <ArrowRight className="h-4 w-4 text-sky-300" />
             </motion.div>
@@ -63,7 +63,7 @@ export const ClientServer: React.FC<ClientServerProps> = ({
             <motion.div
               initial={{ x: 28, opacity: 0 }}
               animate={s(3) ? { x: -28, opacity: 1 } : { x: 28, opacity: 0 }}
-              transition={{ duration: 1.2, repeat: s(3) ? Infinity : 0, repeatDelay: 1.4, ease: 'linear' }}
+              transition={{ duration: 0.8, ease: 'easeInOut' }}
             >
               <ArrowLeft className="h-4 w-4 text-teal-300" />
             </motion.div>
