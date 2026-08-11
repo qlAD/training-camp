@@ -85,7 +85,7 @@ export const ControlStatusBar: React.FC<ControlStatusBarProps> = ({
           </button>
         )}
         <span className="hidden lg:inline text-[11px] text-slate-500">
-          ⬅️➡️ 翻页 | F 全屏 | B 黑屏 | O 缩略图 | P 连播
+          ⬅️➡️ 翻页 | F 全屏 | W 网页全屏 | B 黑屏 | O 缩略图 | P 连播
         </span>
       </div>
     </div>

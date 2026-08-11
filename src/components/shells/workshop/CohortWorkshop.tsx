@@ -167,6 +167,7 @@ export default function CohortWorkshop({ materials }: CohortWorkshopProps) {
   const [prevSelectedDay, setPrevSelectedDay] = useState(selectedDay);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isWebFullscreen, setIsWebFullscreen] = useState(false);
   const [showNotes, setShowNotes] = useState(true);
   const [showGridModal, setShowGridModal] = useState(false);
   const [isBlackout, setIsBlackout] = useState(false);
@@ -202,11 +203,23 @@ export default function CohortWorkshop({ materials }: CohortWorkshopProps) {
     const el = stageRef.current;
     if (!el) return;
     try {
-      if (!document.fullscreenElement) await el.requestFullscreen();
-      else await document.exitFullscreen();
+      if (!document.fullscreenElement) {
+        setIsWebFullscreen(false); // 进入屏幕全屏前关闭网页全屏（互斥）
+        await el.requestFullscreen();
+      } else {
+        await document.exitFullscreen();
+      }
     } catch (e) {
       console.warn('全屏切换失败:', e);
     }
+  };
+  // --- 网页全屏（剧场模式）：不调用 Fullscreen API，仅在视口内最大化舞台 ---
+  const toggleWebFullscreen = async () => {
+    // 互斥：若当前处于屏幕全屏，先退出
+    if (document.fullscreenElement) {
+      try { await document.exitFullscreen(); } catch (e) { /* 忽略 */ }
+    }
+    setIsWebFullscreen((v) => !v);
   };
   useEffect(() => {
     const onFsChange = () => setIsFullscreen(!!document.fullscreenElement);
@@ -214,7 +227,7 @@ export default function CohortWorkshop({ materials }: CohortWorkshopProps) {
     return () => document.removeEventListener('fullscreenchange', onFsChange);
   }, []);
   useEffect(() => {
-    if (!isFullscreen) return;
+    if (!isFullscreen && !isWebFullscreen) return;
     let raf = 0;
     const compute = () => {
       raf = requestAnimationFrame(() => {
@@ -229,7 +242,7 @@ export default function CohortWorkshop({ materials }: CohortWorkshopProps) {
       cancelAnimationFrame(raf);
       window.removeEventListener('resize', compute);
     };
-  }, [isFullscreen]);
+  }, [isFullscreen, isWebFullscreen]);
 
   // --- 自动连播 ---
   useEffect(() => {
@@ -254,6 +267,9 @@ export default function CohortWorkshop({ materials }: CohortWorkshopProps) {
         if (showGridModal) {
           e.preventDefault();
           setShowGridModal(false);
+        } else if (isWebFullscreen) {
+          e.preventDefault();
+          setIsWebFullscreen(false);
         }
         return;
       }
@@ -268,6 +284,9 @@ export default function CohortWorkshop({ materials }: CohortWorkshopProps) {
       } else if (e.key === 'f' || e.key === 'F') {
         e.preventDefault();
         toggleFullscreen();
+      } else if (e.key === 'w' || e.key === 'W') {
+        e.preventDefault();
+        toggleWebFullscreen();
       } else if (e.key === 'b' || e.key === 'B') {
         e.preventDefault();
         setIsBlackout((p) => !p);
@@ -281,7 +300,7 @@ export default function CohortWorkshop({ materials }: CohortWorkshopProps) {
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
-  }, [currentView, currentSlideIndex, slidesLength, showGridModal]);
+  }, [currentView, currentSlideIndex, slidesLength, showGridModal, isWebFullscreen]);
 
   /* ---------- 导出 handlers 给 Navbar / PosterConfigPanel 用 ---------- */
   const handleExportPDF = () => {
@@ -322,6 +341,90 @@ export default function CohortWorkshop({ materials }: CohortWorkshopProps) {
   const PlanRenderer = materials.planLayoutRenderer;
   const PosterRenderer = materials.posterLayoutRenderer;
   const SlidesRenderer = materials.slidesDeckRenderer;
+
+  /* ---------- 舞台内容（两种全屏共用，网页全屏时独立渲染） ---------- */
+  const stageContent = (
+    <>
+      {isBlackout ? (
+        <div
+          onClick={() => setIsBlackout(false)}
+          className="w-full h-full bg-black flex items-center justify-center text-slate-600 text-sm cursor-pointer select-none"
+        >
+          屏幕暂停中 (按 B 键恢复)
+        </div>
+      ) : (
+        <>
+          <DualSketchWatermark />
+          <MedalHeaderBar
+            selectedDay={selectedDay}
+            currentSlideIndex={currentSlideIndex}
+            slidesLength={slidesLength}
+            stageName={currentDeck?.meta?.stageName ?? ''}
+            output={currentDeck?.meta?.output ?? ''}
+          />
+          <div className="relative flex-1 min-h-0 overflow-hidden">
+            {SlidesRenderer && currentDeck ? (
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={currentSlideIndex}
+                  className="h-full"
+                  initial={{ opacity: 0, scale: 0.985 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 1.015 }}
+                  transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <SlidesRenderer
+                    meta={materials.meta}
+                    decks={materials.slidesData}
+                    selectedDay={selectedDay}
+                    currentSlideIndex={currentSlideIndex}
+                  />
+                </motion.div>
+              </AnimatePresence>
+            ) : (
+              <div className="h-full flex items-center justify-center text-slate-400 text-sm">
+                本期未配置 slidesDeckRenderer 或 Day {selectedDay} 暂无课件
+              </div>
+            )}
+          </div>
+          <ControlStatusBar
+            currentSlideIndex={currentSlideIndex}
+            slidesLength={slidesLength}
+            onPrev={() => setCurrentSlideIndex((p) => Math.max(0, p - 1))}
+            onNext={() =>
+              setCurrentSlideIndex((p) => Math.min(slidesLength - 1, p + 1))
+            }
+            autoPlay={autoPlay}
+            onTogglePlay={() => setAutoPlay((v) => !v)}
+          />
+        </>
+      )}
+    </>
+  );
+
+  const stageActive = isFullscreen || isWebFullscreen;
+
+  /* ---------- 网页全屏：独立渲染纯舞台，跳过网站所有布局 ---------- */
+  if (isWebFullscreen) {
+    return (
+      <div
+        ref={stageRef}
+        className="fixed inset-0 z-[9999] bg-black overflow-hidden flex items-center justify-center"
+      >
+        <div
+          className="stage-scroll-scope text-white overflow-clip flex flex-col relative"
+          style={{
+            background: SLIDE_STAGE_BG,
+            width: SLIDE_DESIGN_W,
+            height: SLIDE_DESIGN_H,
+            transform: `scale(${fsScale})`,
+          }}
+        >
+          {stageContent}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800 antialiased font-sans print-reset">
@@ -681,18 +784,18 @@ export default function CohortWorkshop({ materials }: CohortWorkshopProps) {
                 <div
                   ref={stageRef}
                   className={`relative w-full ${
-                    isFullscreen
+                    stageActive
                       ? 'fixed inset-0 z-50 bg-black overflow-hidden flex items-center justify-center'
                       : ''
                   }`}
                 >
                   <div
                     className={`stage-scroll-scope w-full aspect-video ${
-                      isFullscreen ? 'rounded-none border-none shadow-none' : 'max-h-[720px]'
+                      stageActive ? 'rounded-none border-none shadow-none' : 'max-h-[720px]'
                     } text-white rounded-3xl shadow-2xl border border-slate-800 overflow-clip flex flex-col relative`}
                     style={{
                       background: SLIDE_STAGE_BG,
-                      ...(isFullscreen
+                      ...(stageActive
                         ? {
                             width: SLIDE_DESIGN_W,
                             height: SLIDE_DESIGN_H,
@@ -701,64 +804,11 @@ export default function CohortWorkshop({ materials }: CohortWorkshopProps) {
                         : {}),
                     }}
                   >
-                    {isBlackout ? (
-                      <div
-                        onClick={() => setIsBlackout(false)}
-                        className="w-full h-full bg-black flex items-center justify-center text-slate-600 text-sm cursor-pointer select-none"
-                      >
-                        屏幕暂停中 (按 B 键恢复)
-                      </div>
-                    ) : (
-                      <>
-                        <DualSketchWatermark />
-                        <MedalHeaderBar
-                          selectedDay={selectedDay}
-                          currentSlideIndex={currentSlideIndex}
-                          slidesLength={slidesLength}
-                          stageName={currentDeck?.meta?.stageName ?? ''}
-                          output={currentDeck?.meta?.output ?? ''}
-                        />
-                        <div className="relative flex-1 min-h-0 overflow-hidden">
-                          {SlidesRenderer && currentDeck ? (
-                            <AnimatePresence mode="wait" initial={false}>
-                              <motion.div
-                                key={currentSlideIndex}
-                                className="h-full"
-                                initial={{ opacity: 0, scale: 0.985 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 1.015 }}
-                                transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                              >
-                                <SlidesRenderer
-                                  meta={materials.meta}
-                                  decks={materials.slidesData}
-                                  selectedDay={selectedDay}
-                                  currentSlideIndex={currentSlideIndex}
-                                />
-                              </motion.div>
-                            </AnimatePresence>
-                          ) : (
-                            <div className="h-full flex items-center justify-center text-slate-400 text-sm">
-                              本期未配置 slidesDeckRenderer 或 Day {selectedDay} 暂无课件
-                            </div>
-                          )}
-                        </div>
-                        <ControlStatusBar
-                          currentSlideIndex={currentSlideIndex}
-                          slidesLength={slidesLength}
-                          onPrev={() => setCurrentSlideIndex((p) => Math.max(0, p - 1))}
-                          onNext={() =>
-                            setCurrentSlideIndex((p) => Math.min(slidesLength - 1, p + 1))
-                          }
-                          autoPlay={autoPlay}
-                          onTogglePlay={() => setAutoPlay((v) => !v)}
-                        />
-                      </>
-                    )}
+                    {stageContent}
                   </div>
 
-                  {/* 小屏尺寸过小提示遮罩：仅 < md 且非全屏时显示，覆盖舞台避免内容挤压 */}
-                  {!isFullscreen && (
+                  {/* 小屏尺寸过小提示遮罩：仅 < md 且非任一全屏时显示 */}
+                  {!stageActive && (
                     <div className="md:hidden absolute inset-0 z-40 rounded-3xl overflow-hidden pointer-events-auto">
                       <div className="w-full h-full bg-slate-950/95 backdrop-blur-xl flex flex-col items-center justify-center p-6 sm:p-8 text-center space-y-4">
                         <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-400/20">
